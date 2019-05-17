@@ -3,19 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "description": "Draw Every Day",
-  "main": "index.js",
+  "main": "src/root/index.js",
+  "author": "warau0",
+  "license": "ISC",
   "scripts": {
-    "clean": "rm dist/bundle.js",
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "clean": "rm -rf dist",
+    "start": "parcel src/root/index.html",
+    "build": "yarn clean && parcel build src/root/index.html"
   },
   "keywords": [
     "Drawing",
     "Art"
   ],
-  "author": "warau0",
-  "license": "ISC",
+  "alias": {
+    "assets": "./src/assets",
+    "components": "./src/components",
+    "constants": "./src/constants",
+    "context": "./src/context",
+    "hooks": "./src/hooks",
+    "routes": "./src/routes"
+  },
   "dependencies": {
+    "assets": "^3.0.1",
+    "autoprefixer": "^9.5.1",
+    "classnames": "^2.2.6",
+    "constants": "^0.0.2",
+    "context": "^0.0.1",
+    "hooks": "^0.3.2",
+    "postcss-custom-properties": "^8.0.10",
+    "postcss-modules": "^1.4.1",
+    "postcss-nested": "^4.1.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0"
@@ -24,6 +41,7 @@
     "@babel/core": "^7.0.0-0",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "stylelint-config-recommended": "^2.2.0"
   }
 }

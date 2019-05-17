@@ -1,0 +1,15 @@
+:root {
+  /* Colors */
+
+  /* Sizes */
+
+  --pad-xs: .25rem;
+  --pad-sm: .5rem;
+  --pad: 1rem;
+  --pad-md: 1.5rem;
+  --pad-lg: 2rem;
+
+  /* Z-index */
+
+  --z-header: 4;
+}

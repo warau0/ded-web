@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from './styles.pcss';
+
 export default class Error extends React.Component {
   constructor(props) {
     super(props);
@@ -16,13 +18,13 @@ export default class Error extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <>
-          <h1>:(</h1>
+        <div className={styles.error}>
+          <h1 className={styles.title}>:(</h1>
           <p>
             Oopsie Woopsie! UwU we made a fucky wucky!! A wittle fucko boingo!
             The code monkeys at our headquarters are working VEWY HAWD to fix this!
-            </p>
-        </>
+          </p>
+        </div>
       );
     }
 

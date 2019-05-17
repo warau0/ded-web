@@ -1,0 +1,19 @@
+{
+  "modules": true,
+  "plugins": {
+    "postcss-nested": {},
+    "postcss-custom-properties": {
+      "preserve": false,
+      "importFrom": "src/constants/constants.css"
+    },
+    "autoprefixer": {
+      "browsers": [
+        ">1%",
+        "last 4 versions",
+        "Firefox ESR",
+        "not ie < 9"
+      ],
+      "flexbox": "no-2009"
+    }
+  }
+}
