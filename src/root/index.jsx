@@ -4,8 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import './styles.pcss'
 
-import { LoginProvider } from 'context/loginContext';
-import { ThemeProvider } from 'context/themeContext';
+import { ThemeProvider, LoginProvider } from 'context';
 
 import Error from 'components/error';
 import Header from 'components/header';
@@ -16,7 +15,9 @@ const App = () => (
   <BrowserRouter>
     <LoginProvider>
       <ThemeProvider>
-        <Header />
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
 
         <Wrapper>
           <Error>

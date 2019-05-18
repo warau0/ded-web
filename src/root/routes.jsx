@@ -1,7 +1,7 @@
 import React, { useContext, lazy } from 'react';
 import { Route } from "react-router-dom";
 
-import { LoginContext } from 'context/loginContext';
+import { LoginContext } from 'context';
 
 const Intro = lazy(() => import('routes/intro'));
 const Dashboard = lazy(() => import('routes/dashboard'));

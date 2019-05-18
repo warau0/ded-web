@@ -1,4 +1,15 @@
 .wrapper {
   padding-top: 48px; /* header offset */
   padding-bottom: 48px; /* Avoid content hugging bottom of browser */
+  flex: 1;
+
+  &.light {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+  }
+
+  &.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
 }

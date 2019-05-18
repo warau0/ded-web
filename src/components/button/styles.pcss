@@ -3,14 +3,57 @@
   border-radius: var(--pad);
   border-width: 0;
   letter-spacing: 2px;
-  color: #FFFFFF;
-  background-color: rgba(104, 156, 252, 1);
   text-transform: uppercase;
   font-size: .6rem;
   transition: box-shadow .25s;
+  cursor: pointer;
 
-  &:hover, &:focus {
-    outline: none;
-    box-shadow: 0px 0px 0px 4px rgba(104, 156, 252, 0.25);
+  &.hideOutline {
+    &:hover, &:focus {
+      outline: none;
+    }
+  }
+
+  &.square {
+    border-radius: 0;
+  }
+
+  &.plainText {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* Brands */
+
+  &.base {
+    color: #FFFFFF;
+    background-color: rgba(104, 156, 252, 1);
+
+    &:hover, &:focus {
+      box-shadow: 0px 0px 0px 4px rgba(104, 156, 252, 0.25);
+    }
+  }
+
+  &.white {
+    color: #222222;
+    background-color: #FFFFFF;
+
+    &:hover, &:focus {
+      box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  &.ghost {
+    color: #222222;
+    background-color: transparent;
+  }
+
+  &.success {
+    color: #FFFFFF;
+    background-color: var(--success);
+
+    &:hover, &:focus {
+      box-shadow: 0px 0px 0px 4px rgba(63, 182, 123, 0.25);
+    }
   }
 }

@@ -1,0 +1,116 @@
+.openButton {
+  margin-right: var(--pad-sm);
+  cursor: pointer;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, .65);
+  z-index: var(--z-overlay);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.overlayAfterOpen {
+    opacity: 1;
+}
+
+.overlayBeforeClose {
+    opacity: 0;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  bottom: auto;
+  right: auto;
+  margin-right: -50%;
+  max-width: 95%;
+  min-width: 350px;
+  padding: 0;
+  transform: translate(-50%,-50%);
+
+  &:focus {
+    outline: none;
+  }
+
+  .tabs {
+    display: flex;
+    height: 42px;
+
+    .tab {
+      flex: 1;
+    }
+  }
+
+  .innerContent {
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad) var(--pad-md);
+
+    .input {
+      border: none;
+      height: var(--form-height);
+      margin: var(--pad-sm) 0;
+      padding: var(--pad-sm);
+    }
+
+    .confirmButton {
+      height: var(--form-height);
+      margin: var(--pad-sm) 0;
+    }
+
+    .alternateAction {
+      color: var(--success);
+      text-align: center;
+      padding: var(--pad-sm) 0;
+      margin: 0;
+      font-size: .8rem;
+    }
+  }
+}
+
+.content.light {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+
+  .tabs .tab {
+    color: var(--light-text);
+
+    &.inactive {
+      background-color: #DDDDDD;
+    }
+  }
+
+  .innerContent {
+    .input {
+      background-color: var(--light-header);
+      color: var(--light-text);
+    }
+  }
+}
+
+.content.dark {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+
+  .tabs .tab {
+    color: var(--dark-text);
+
+    &.inactive {
+      background-color: var(--dark-header);
+    }
+  }
+
+  .innerContent {
+    .input {
+      background-color: var(--dark-header);
+      color: var(--dark-text);
+    }
+  }
+}

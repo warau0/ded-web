@@ -1,6 +1,16 @@
 :root {
   /* Colors */
 
+  --success: #3FB67B;
+
+  --light-bg: #F5F5F5;
+  --light-text: #222222;
+  --light-header: #FFFFFF;
+
+  --dark-bg: #36393f;
+  --dark-text: #C5C8C6;
+  --dark-header: #202225;
+
   /* Sizes */
 
   --pad-xs: .25rem;
@@ -9,7 +19,10 @@
   --pad-md: 1.5rem;
   --pad-lg: 2rem;
 
+  --form-height: 36px;
+
   /* Z-index */
 
   --z-header: 4;
+  --z-overlay: 10;
 }

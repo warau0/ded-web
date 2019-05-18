@@ -1,18 +1,23 @@
-import React, { useContext } from 'react';
+import React, { memo, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import Button from 'components/button';
-import { ThemeContext } from 'context/themeContext';
+import ThemeButton from 'components/themeButton';
+import { ThemeContext, LoginContext } from 'context';
 import logo from 'assets/logo.png';
-import { THEME } from 'constants';
+
+const LoginModal = lazy(() => import('components/loginModal'));
 
 import * as styles from './styles.pcss';
 
-export default () => {
-  const [ theme, setTheme ] = useContext(ThemeContext);
+export default memo(() => {
+  const [theme] = useContext(ThemeContext);
+  const [isLoggedIn] = useContext(LoginContext);
 
+  console.log('Render <Header />');
   return (
-    <div className={styles.header}>
+    <div className={cn(styles.header, styles[theme])}>
       <div className={styles.left}>
         <Link to='' className={styles.logo} tabIndex={-1}>
           <img src={logo} alt='Logo' />
@@ -21,13 +26,15 @@ export default () => {
       </div>
 
       <div className={styles.right}>
-        <Button>{'Upload'}</Button>
-        <Link to='profile'>Profile</Link>
-
-        <button onClick={() => {setTheme(theme === THEME.LIGHT ? 'dark' : 'light')}}>
-          Theme: {theme === THEME.LIGHT ? 'light' : 'dark'}
-        </button>
+        {isLoggedIn
+          ? <Button
+              className={styles.actionButton}
+              text='Upload'
+            />
+          : <LoginModal />
+        }
+        <ThemeButton />
       </div>
     </div>
   );
-};
+});

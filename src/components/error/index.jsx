@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from 'components/button';
+
 import styles from './styles.pcss';
 
 export default class Error extends React.Component {
@@ -16,6 +18,7 @@ export default class Error extends React.Component {
   }
 
   render() {
+    console.log('Render <Error />');
     if (this.state.hasError) {
       return (
         <div className={styles.error}>
@@ -24,6 +27,12 @@ export default class Error extends React.Component {
             Oopsie Woopsie! UwU we made a fucky wucky!! A wittle fucko boingo!
             The code monkeys at our headquarters are working VEWY HAWD to fix this!
           </p>
+
+          <Button
+            brand='white'
+            onClick={() => location.reload()}
+            text='Reload'
+          />
         </div>
       );
     }
