@@ -31,10 +31,12 @@ const LoginModal = memo(() => {
   const _closeModal = useCallback(() => setShow(false), []);
   const _openLoginTab = useCallback(() => setTabIndex(0), []);
   const _openRegisterTab = useCallback(() => setTabIndex(1), []);
-  const _login = useCallback(() => login({ loginUsername, loginPassword })
-    .then(({ token }) => setIsLoggedIn(token)),
-      [loginUsername, loginPassword]
-    );
+  const _login = useCallback(() => login({
+    username: loginUsername,
+    password: loginPassword,
+  }).then(({ token }) => setIsLoggedIn(token)),
+    [loginUsername, loginPassword]
+  );
   const _register = useCallback(() => register({
     username: registerUsername,
     email: registerEmail,

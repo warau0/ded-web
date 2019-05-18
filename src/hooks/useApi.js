@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import fetch from 'cross-fetch';
 
 import { STORAGE } from 'constants';
+import { LoginContext } from 'context';
 
 export default (API) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [_, setIsLoggedIn] = useContext(LoginContext);
 
   const callApi = async (data = null) => {
     try {
@@ -14,7 +17,7 @@ export default (API) => {
       const token = localStorage.getItem(STORAGE.TOKEN);
       const result = await fetch(API.URL, {
         method: API.METHOD,
-        body: JSON.stringify(data),
+        ...(API.METHOD !== 'GET') && { body: JSON.stringify(data) },
         headers: {
           'Content-Type': 'application/json',
           ...token && { 'Authorization': `Bearer ${token}` },
@@ -25,6 +28,10 @@ export default (API) => {
 
       // Validation error
       if (result.status >= 400) {
+        if (result.status === 401) { // Unauthorized.
+          setIsLoggedIn(false);
+        }
+
         throw json
         ? (typeof json === 'object' ? [].concat(...Object.values(json)) : json)
         : 'An internal server error occurred.'
