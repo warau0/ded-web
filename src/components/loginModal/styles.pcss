@@ -30,8 +30,8 @@
   bottom: auto;
   right: auto;
   margin-right: -50%;
-  max-width: 95%;
-  min-width: 350px;
+  max-width: var(--modal-size);
+  min-width: var(--modal-size);
   padding: 0;
   transform: translate(-50%,-50%);
 
@@ -41,7 +41,7 @@
 
   .tabs {
     display: flex;
-    height: 42px;
+    height: var(--header-height);
 
     .tab {
       flex: 1;
@@ -73,6 +73,10 @@
       font-size: .8rem;
     }
   }
+}
+
+.error {
+  margin: var(--pad-sm) 0;
 }
 
 .content.light {

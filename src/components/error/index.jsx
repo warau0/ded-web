@@ -18,7 +18,6 @@ export default class Error extends React.Component {
   }
 
   render() {
-    console.log('Render <Error />');
     if (this.state.hasError) {
       return (
         <div className={styles.error}>

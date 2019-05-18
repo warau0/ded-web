@@ -2,6 +2,7 @@
   /* Colors */
 
   --success: #3FB67B;
+  --error: #DC3545;
 
   --light-bg: #F5F5F5;
   --light-text: #222222;
@@ -19,7 +20,9 @@
   --pad-md: 1.5rem;
   --pad-lg: 2rem;
 
-  --form-height: 36px;
+  --modal-size: 450px;
+  --header-height: 56px;
+  --form-height: 42px;
 
   /* Z-index */
 

@@ -11,9 +11,9 @@ const Button = memo(({
   plainText,
   text,
   plainFocus,
+  loading,
   ...restProps
 }) => {
-  console.log('Render <Button />', text);
   return (
     <button
       className={cn(styles.button, {
@@ -23,9 +23,10 @@ const Button = memo(({
         [styles.hideOutline]: !plainFocus,
         [className]: className,
       })}
+      disabled={loading}
       {...restProps}
     >
-      {text ? text : children}
+      {loading ? 'Please wait ...' : (text ? text : children)}
     </button>
   );
 });

@@ -9,11 +9,11 @@ const LoginProvider = ({ children }) => {
 
   const saveIsLoggedIn = token => {
     if (token) {
-      localStorage.setItem(STORAGE.TOKEN, value);
+      localStorage.setItem(STORAGE.TOKEN, token);
     } else {
       localStorage.removeItem(STORAGE.TOKEN);
     }
-    setIsLoggedIn(token);
+    setIsLoggedIn(token ? true : false);
   };
 
   return (

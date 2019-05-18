@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
@@ -15,17 +16,17 @@ const App = () => (
   <BrowserRouter>
     <LoginProvider>
       <ThemeProvider>
-        <Suspense fallback={null}>
-          <Header />
-        </Suspense>
+        <Error>
+          <Suspense fallback={null}>
+            <Header />
+          </Suspense>
 
-        <Wrapper>
-          <Error>
-            <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Wrapper>
               <Routes />
-            </Suspense>
-          </Error>
-        </Wrapper>
+            </Wrapper>
+          </Suspense>
+        </Error>
       </ThemeProvider>
     </LoginProvider>
   </BrowserRouter>

@@ -15,7 +15,6 @@ export default memo(() => {
   const [theme] = useContext(ThemeContext);
   const [isLoggedIn] = useContext(LoginContext);
 
-  console.log('Render <Header />');
   return (
     <div className={cn(styles.header, styles[theme])}>
       <div className={styles.left}>
@@ -28,7 +27,7 @@ export default memo(() => {
       <div className={styles.right}>
         {isLoggedIn
           ? <Button
-              className={styles.actionButton}
+              className={styles.uploadButton}
               text='Upload'
             />
           : <LoginModal />

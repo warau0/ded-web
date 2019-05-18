@@ -10,12 +10,15 @@ import cn from 'classnames';
 import Modal from 'react-modal';
 
 import Button from 'components/button';
-import { ThemeContext } from 'context';
+import ErrorMessage from 'components/errorMessage';
+import { ThemeContext, LoginContext } from 'context';
+import { API } from 'constants';
+import { useApi } from 'hooks';
 
 import * as styles from './styles.pcss';
 
 const LoginModal = memo(() => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -24,9 +27,30 @@ const LoginModal = memo(() => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
 
-  const loginUsernameRef = useRef(null);
+  const _openModal = useCallback(() => setShow(true), []);
+  const _closeModal = useCallback(() => setShow(false), []);
+  const _openLoginTab = useCallback(() => setTabIndex(0), []);
+  const _openRegisterTab = useCallback(() => setTabIndex(1), []);
+  const _login = useCallback(() => login({ loginUsername, loginPassword })
+    .then(({ token }) => setIsLoggedIn(token)),
+      [loginUsername, loginPassword]
+    );
+  const _register = useCallback(() => register({
+    username: registerUsername,
+    email: registerEmail,
+    password: registerPassword,
+    password_confirmation: registerPasswordConfirm,
+  }).then(({ token }) => setIsLoggedIn(token)),
+    [registerUsername, registerEmail, registerPassword, registerPasswordConfirm]
+  );
 
   const [theme] = useContext(ThemeContext);
+  const [_, setIsLoggedIn] = useContext(LoginContext);
+
+  const loginUsernameRef = useRef(null);
+
+  const [login, loginLoading, loginError] = useApi(API.LOGIN);
+  const [register, registerLoading, registerError] = useApi(API.REGISTER);
 
   useState(() => {
     Modal.setAppElement('#root');
@@ -38,19 +62,14 @@ const LoginModal = memo(() => {
     }
   }, [show])
 
-  const _openModal = useCallback(() => setShow(true), []);
-  const _closeModal = useCallback(() => setShow(false), []);
-
-  const _openLoginTab = useCallback(() => setTabIndex(0), []);
-  const _openRegisterTab = useCallback(() => setTabIndex(1), []);
-
   const _renderLogin = () => (
     <>
+      <ErrorMessage className={styles.error} error={loginError} />
       <input
         type='text'
         className={styles.input}
-        placeholder='Email or Username'
-        aria-label='Email or username'
+        placeholder='Username'
+        aria-label='Username'
         value={loginUsername}
         onChange={e => setLoginUsername(e.target.value)}
         ref={loginUsernameRef}
@@ -67,6 +86,8 @@ const LoginModal = memo(() => {
         square
         brand='success'
         className={styles.confirmButton}
+        onClick={_login}
+        loading={loginLoading}
         text='Login'
       />
       <Button
@@ -83,6 +104,7 @@ const LoginModal = memo(() => {
 
   const _renderRegister = () => (
     <>
+      <ErrorMessage className={styles.error} error={registerError} />
       <input
         type='text'
         className={styles.input}
@@ -119,6 +141,8 @@ const LoginModal = memo(() => {
         square
         brand='success'
         className={styles.confirmButton}
+        onClick={_register}
+        loading={registerLoading}
         text='Register'
       />
       <Button
@@ -133,7 +157,6 @@ const LoginModal = memo(() => {
     </>
   );
 
-  console.log('Render <LoginModal />');
   return (
     <>
       <Button

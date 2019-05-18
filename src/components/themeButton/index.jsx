@@ -13,7 +13,7 @@ export default memo(() => {
   const toggleTheme = () => {
     setTheme(theme === THEME.LIGHT ? 'dark' : 'light')
   }
-  console.log('Render <ThemeButton />');
+
   return (
     <button onClick={toggleTheme} className={styles.ghost}>
       <img
