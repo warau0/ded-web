@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { STORAGE } from 'constants';
+import { STORAGE } from 'ded-constants';
 
 const LoginContext = createContext([false, () => {}]);
 

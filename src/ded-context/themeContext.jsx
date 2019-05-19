@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { THEME, STORAGE } from 'constants';
+import { THEME, STORAGE } from 'ded-constants';
 
 const ThemeContext = createContext([THEME.LIGHT, () => {}]);
 

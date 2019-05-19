@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -17,18 +17,19 @@
     "Art"
   ],
   "alias": {
-    "assets": "./src/assets",
-    "components": "./src/components",
-    "constants": "./src/constants",
-    "context": "./src/context",
-    "hooks": "./src/hooks",
-    "routes": "./src/routes"
+    "ded-assets": "./src/ded-assets",
+    "ded-components": "./src/ded-components",
+    "ded-constants": "./src/ded-constants",
+    "ded-context": "./src/ded-context",
+    "ded-hooks": "./src/ded-hooks",
+    "ded-routes": "./src/ded-routes"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "assets": "^3.0.1",
     "autoprefixer": "^9.5.1",
     "classnames": "^2.2.6",
+    "components": "^0.1.0",
     "constants": "^0.0.2",
     "context": "^0.0.1",
     "cross-fetch": "^3.0.2",
@@ -40,7 +41,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "routes": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

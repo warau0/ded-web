@@ -1,11 +1,11 @@
 import React, { useContext, lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-import { LoginContext } from 'context';
+import { LoginContext } from 'ded-context';
 
-const Intro = lazy(() => import('routes/intro'));
-const Dashboard = lazy(() => import('routes/dashboard'));
-const Profile = lazy(() => import('routes/profile'));
+const Intro = lazy(() => import('ded-routes/intro'));
+const Dashboard = lazy(() => import('ded-routes/dashboard'));
+const Profile = lazy(() => import('ded-routes/profile'));
 
 export default () => {
   const [isLoggedIn] = useContext(LoginContext);

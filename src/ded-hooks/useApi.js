@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import fetch from 'cross-fetch';
 
-import { STORAGE } from 'constants';
-import { LoginContext } from 'context';
+import { STORAGE } from 'ded-constants';
+import { LoginContext } from 'ded-context';
 
 export default (API) => {
   const [loading, setLoading] = useState(false);

@@ -9,11 +9,11 @@ import React, {
 import cn from 'classnames';
 import Modal from 'react-modal';
 
-import Button from 'components/button';
-import ErrorMessage from 'components/errorMessage';
-import { ThemeContext, LoginContext } from 'context';
-import { API } from 'constants';
-import { useApi } from 'hooks';
+import Button from 'ded-components/button';
+import ErrorMessage from 'ded-components/errorMessage';
+import { ThemeContext, LoginContext } from 'ded-context';
+import { API } from 'ded-constants';
+import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 

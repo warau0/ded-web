@@ -2,14 +2,14 @@ import React, { memo, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import Button from 'components/button';
-import ThemeButton from 'components/themeButton';
-import { ThemeContext, LoginContext } from 'context';
-import logo from 'assets/logo.png';
+import Button from 'ded-components/button';
+import ThemeButton from 'ded-components/themeButton';
+import { ThemeContext, LoginContext } from 'ded-context';
+import logo from 'ded-assets/logo.png';
 
 import * as styles from './styles.pcss';
 
-const LoginModal = lazy(() => import('components/loginModal'));
+const LoginModal = lazy(() => import('ded-components/loginModal'));
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);

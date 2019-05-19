@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './styles.pcss';
 
-import { ThemeProvider, LoginProvider } from 'context';
+import { ThemeProvider, LoginProvider } from 'ded-context';
 
-import Error from 'components/error';
-import Header from 'components/header';
-import Wrapper from 'components/wrapper';
+import Error from 'ded-components/error';
+import Header from 'ded-components/header';
+import Wrapper from 'ded-components/wrapper';
 import Routes from './routes';
 
 const App = () => (

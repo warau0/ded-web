@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-import icon from 'assets/error.png';
+import icon from 'ded-assets/error.png';
 
 import * as styles from './styles.pcss';
 
@@ -32,7 +32,10 @@ ErrorMessage.defaultProps = {
 
 ErrorMessage.propTypes = {
   className: PropTypes.string,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 export default ErrorMessage;

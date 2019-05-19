@@ -4,7 +4,7 @@
     "postcss-nested": {},
     "postcss-custom-properties": {
       "preserve": false,
-      "importFrom": "src/constants/constants.css"
+      "importFrom": "src/ded-constants/constants.css"
     },
     "autoprefixer": {
       "browsers": [
