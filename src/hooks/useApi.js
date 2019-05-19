@@ -50,5 +50,7 @@ export default (API) => {
     }
   };
 
-  return [callApi, loading, error];
+  const clearError = () => setError(null);
+
+  return [callApi, loading, error, clearError];
 };

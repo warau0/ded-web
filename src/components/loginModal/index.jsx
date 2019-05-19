@@ -30,13 +30,28 @@ const LoginModal = memo(() => {
   const [theme] = useContext(ThemeContext);
   const [_, setIsLoggedIn] = useContext(LoginContext);
 
-  const [login, loginLoading, loginError] = useApi(API.LOGIN);
-  const [register, registerLoading, registerError] = useApi(API.REGISTER);
+  const [login, loginLoading, loginError, clearLoginError] = useApi(API.LOGIN);
+  const [register, registerLoading, registerError, clearRegisterError] = useApi(API.REGISTER);
 
-  const _openModal = useCallback(() => setShow(true), []);
-  const _closeModal = useCallback(() => setShow(false), []);
-  const _openLoginTab = useCallback(() => setTabIndex(0), []);
-  const _openRegisterTab = useCallback(() => setTabIndex(1), []);
+  const _openModal = useCallback(() => {
+    clearRegisterError();
+    clearLoginError();
+    setTabIndex(0);
+    setShow(true);
+  }, []);
+  const _closeModal = useCallback(() => {
+    setShow(false);
+    clearRegisterError();
+    clearLoginError();
+  }, []);
+  const _openLoginTab = useCallback(() => {
+    clearRegisterError();
+    setTabIndex(0);
+  }, []);
+  const _openRegisterTab = useCallback(() => {
+    clearLoginError();
+    setTabIndex(1);
+  }, []);
   const _login = useCallback(() => login({
     username: loginUsername,
     password: loginPassword,
@@ -72,6 +87,7 @@ const LoginModal = memo(() => {
         aria-label='Username'
         value={loginUsername}
         onChange={e => setLoginUsername(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _login(); }}
         ref={loginUsernameRef}
       />
       <input
@@ -81,6 +97,7 @@ const LoginModal = memo(() => {
         aria-label='Password'
         value={loginPassword}
         onChange={e => setLoginPassword(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _login(); }}
       />
       <Button
         square
@@ -112,6 +129,7 @@ const LoginModal = memo(() => {
         aria-label='Username'
         value={registerUsername}
         onChange={e => setRegisterUsername(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
       />
       <input
         type='email'
@@ -120,6 +138,7 @@ const LoginModal = memo(() => {
         aria-label='Email'
         value={registerEmail}
         onChange={e => setRegisterEmail(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
       />
       <input
         type='password'
@@ -128,6 +147,7 @@ const LoginModal = memo(() => {
         aria-label='Password'
         value={registerPassword}
         onChange={e => setRegisterPassword(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
       />
       <input
         type='password'
@@ -136,6 +156,7 @@ const LoginModal = memo(() => {
         aria-label='Confirm password'
         value={registerPasswordConfirm}
         onChange={e => setRegisterPasswordConfirm(e.target.value)}
+        onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
       />
       <Button
         square

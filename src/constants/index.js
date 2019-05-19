@@ -1,3 +1,5 @@
+import config from '../../config.json';
+
 export const THEME = {
   LIGHT: 'light',
   DARK: 'dark',
@@ -8,7 +10,7 @@ export const STORAGE = {
   THEME: 'dedTheme',
 };
 
-export const API_URL = 'http://localhost:8000';
+export const { API_URL } = config;
 
 export const API = {
   LOGIN: {

@@ -7,6 +7,9 @@ npm install
 npm install -g parcel-bundler
 ```
 
+Create config file in root:
+config.json: { "API_URL": "YOUR_API" }
+
 To run in hot module reloading mode:
 
 ```sh
