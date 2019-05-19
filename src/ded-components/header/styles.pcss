@@ -1,15 +1,18 @@
-.header {
-  display: flex;
-  justify-content: space-between;
+.headerContainer {
+  border-bottom: 2px solid;
   position: fixed;
   right: 0;
   left: 0;
   top: 0;
-  padding: var(--pad-sm) var(--pad);
-  border-bottom: 1px solid;
   z-index: var(--z-header);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--pad-sm);
+  padding-bottom: var(--pad-sm);
   height: var(--header-height);
-  flex-shrink: 0;
 
   .left {
     display: flex;
@@ -42,25 +45,25 @@
     list-style: none;
     margin: 0;
     padding: 0;
+  }
 
-    .uploadButton {
-      margin-right: var(--pad-sm);
-    }
+  .menuItem {
+    margin-left: var(--pad);
   }
 }
 
-.header.light {
+.headerContainer.light {
   background-color: var(--light-header);
-  border-color: var(--light-text);
+  border-color: var(--light-border);
 
   .left .logo span {
     color: var(--light-text);
   }
 }
 
-.header.dark {
+.headerContainer.dark {
   background-color: var(--dark-header);
-  border-color: var(--dark-text);
+  border-color: var(--dark-border);
 
   .left .logo span {
     color: var(--dark-text);

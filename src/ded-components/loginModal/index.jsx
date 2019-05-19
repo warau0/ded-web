@@ -180,11 +180,7 @@ const LoginModal = memo(() => {
 
   return (
     <>
-      <Button
-        className={styles.openButton}
-        onClick={_openModal}
-        text='Login'
-      />
+      <Button onClick={_openModal} text='Login' />
 
       <Modal
         isOpen={show}

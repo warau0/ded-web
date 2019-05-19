@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Layout from 'ded-components/layout';
+
 export default () => (
-  <div>
+  <Layout>
     Intro page, nothing here yet. Log in to start posting.
-  </div>
+  </Layout>
 );

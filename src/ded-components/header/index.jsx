@@ -4,6 +4,8 @@ import cn from 'classnames';
 
 import Button from 'ded-components/button';
 import ThemeButton from 'ded-components/themeButton';
+import UserMenu from 'ded-components/userMenu';
+import Layout from 'ded-components/layout';
 import { ThemeContext, LoginContext } from 'ded-context';
 import logo from 'ded-assets/logo.png';
 
@@ -16,26 +18,26 @@ export default memo(() => {
   const [isLoggedIn] = useContext(LoginContext);
 
   return (
-    <div className={cn(styles.header, styles[theme])}>
-      <div className={styles.left}>
-        <Link to='/' className={styles.logo} tabIndex={-1}>
-          <img src={logo} alt='Logo' />
-          <span>Draw Every Day!</span>
-        </Link>
-      </div>
+    <div className={cn(styles.headerContainer, styles[theme])}>
+      <Layout className={styles.header}>
+        <div className={styles.left}>
+          <Link to='/' className={styles.logo} tabIndex={-1}>
+            <img src={logo} alt='Logo' />
+            <span>Draw Every Day!</span>
+          </Link>
+        </div>
 
-      <div className={styles.right}>
-        {isLoggedIn
-          ? (
-            <Button
-              className={styles.uploadButton}
-              text='Upload'
-            />
-          )
-          : <LoginModal />
-        }
-        <ThemeButton />
-      </div>
+        <div className={styles.right}>
+          <div className={styles.menuItem}>
+            {isLoggedIn
+              ? <Button text='Upload' />
+              : <LoginModal />
+            }
+          </div>
+          <div className={styles.menuItem}><ThemeButton /></div>
+          {isLoggedIn && <div className={styles.menuItem}><UserMenu /></div>}
+        </div>
+      </Layout>
     </div>
   );
 });

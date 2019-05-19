@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Layout from 'ded-components/layout';
+
 export default () => {
   return (
-    <Link to='profile'>To profile</Link>
+    <Layout>
+      <Link to='profile'>To profile</Link>
+    </Layout>
   );
 };

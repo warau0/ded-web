@@ -7,10 +7,12 @@
   --light-bg: #F5F5F5;
   --light-text: #222222;
   --light-header: #FFFFFF;
+  --light-border: #E5E5E5;
 
   --dark-bg: #36393f;
   --dark-text: #C5C8C6;
   --dark-header: #202225;
+  --dark-border: #C5C8C6;
 
   /* Sizes */
 
@@ -24,9 +26,11 @@
   --modal-size: 450px;
   --header-height: 56px;
   --form-height: 42px;
+  --header-icon-size: 34px;
 
   /* Z-index */
 
   --z-header: 4;
+  --z-menu: 9;
   --z-overlay: 10;
 }
