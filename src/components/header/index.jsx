@@ -7,9 +7,9 @@ import ThemeButton from 'components/themeButton';
 import { ThemeContext, LoginContext } from 'context';
 import logo from 'assets/logo.png';
 
-const LoginModal = lazy(() => import('components/loginModal'));
-
 import * as styles from './styles.pcss';
+
+const LoginModal = lazy(() => import('components/loginModal'));
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
@@ -18,18 +18,20 @@ export default memo(() => {
   return (
     <div className={cn(styles.header, styles[theme])}>
       <div className={styles.left}>
-        <Link to='' className={styles.logo} tabIndex={-1}>
+        <Link to='/' className={styles.logo} tabIndex={-1}>
           <img src={logo} alt='Logo' />
-          <span>{'Draw Every Day!'}</span>
+          <span>Draw Every Day!</span>
         </Link>
       </div>
 
       <div className={styles.right}>
         {isLoggedIn
-          ? <Button
+          ? (
+            <Button
               className={styles.uploadButton}
               text='Upload'
             />
+          )
           : <LoginModal />
         }
         <ThemeButton />

@@ -1,9 +1,9 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
-import './styles.pcss'
+import './styles.pcss';
 
 import { ThemeProvider, LoginProvider } from 'context';
 

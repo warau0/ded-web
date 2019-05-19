@@ -1,0 +1,38 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["assets", "./src/assets"],
+          ["components", "./src/components"],
+          ["constants", "./src/constants"],
+          ["context", "./src/context"],
+          ["hooks", "./src/hooks"],
+          ["routes", "./src/routes"]
+        ],
+        "extensions": [".js", ".jsx", ".png", ".jpg", ".json"]
+      }
+    }
+  },
+  "rules": {
+    "linebreak-style": "off",
+    "no-underscore-dangle": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "quotes": ["error", "single", {
+      "avoidEscape": true,
+      "allowTemplateLiterals": true
+    }],
+    "no-unused-vars": ["error", {
+      "varsIgnorePattern": "^_$"
+    }],
+    "arrow-body-style": "off",
+    "no-restricted-globals": "off",
+    "no-nested-ternary": "off",
+    "import/prefer-default-export": "off"
+  }
+}

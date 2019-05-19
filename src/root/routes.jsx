@@ -1,5 +1,5 @@
 import React, { useContext, lazy } from 'react';
-import { Route } from "react-router-dom";
+import { Route } from 'react-router-dom';
 
 import { LoginContext } from 'context';
 
@@ -13,10 +13,10 @@ export default () => {
   return (
     <>
       {isLoggedIn
-        ? <Route path="/" exact component={Dashboard} />
-        : <Route path="/" exact component={Intro} />
+        ? <Route path='/' exact component={Dashboard} />
+        : <Route path='/' exact component={Intro} />
       }
-      <Route path="/profile" component={Profile} />
+      <Route path='/profile' component={Profile} />
     </>
   );
 };

@@ -20,7 +20,7 @@ export default (API) => {
         ...(API.METHOD !== 'GET') && { body: JSON.stringify(data) },
         headers: {
           'Content-Type': 'application/json',
-          ...token && { 'Authorization': `Bearer ${token}` },
+          ...token && { Authorization: `Bearer ${token}` },
         },
       });
 
@@ -33,14 +33,14 @@ export default (API) => {
         }
 
         throw json
-        ? (typeof json === 'object' ? [].concat(...Object.values(json)) : json)
-        : 'An internal server error occurred.'
+          ? (typeof json === 'object' ? [].concat(...Object.values(json)) : json)
+          : 'An internal server error occurred.';
       }
 
       // No error, return response.
       setLoading(false);
       return json;
-    } catch(err) {
+    } catch (err) {
       const e = err.message
         ? err.message
         : Array.isArray(err) ? err : err.toString();
@@ -51,4 +51,4 @@ export default (API) => {
   };
 
   return [callApi, loading, error];
-}
+};

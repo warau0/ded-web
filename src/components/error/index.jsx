@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from 'components/button';
 
@@ -9,16 +10,19 @@ export default class Error extends React.Component {
     super(props);
 
     this.state = {
-      hasError: false
+      hasError: false,
     };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
   render() {
-    if (this.state.hasError) {
+    const { hasError } = this.state;
+    const { children } = this.props;
+
+    if (hasError) {
       return (
         <div className={styles.error}>
           <h1 className={styles.title}>:(</h1>
@@ -36,6 +40,13 @@ export default class Error extends React.Component {
       );
     }
 
-    return this.props.children;
+    return children;
   }
 }
+
+Error.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};

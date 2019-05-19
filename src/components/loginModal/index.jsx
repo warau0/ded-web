@@ -27,6 +27,12 @@ const LoginModal = memo(() => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
 
+  const [theme] = useContext(ThemeContext);
+  const [_, setIsLoggedIn] = useContext(LoginContext);
+
+  const [login, loginLoading, loginError] = useApi(API.LOGIN);
+  const [register, registerLoading, registerError] = useApi(API.REGISTER);
+
   const _openModal = useCallback(() => setShow(true), []);
   const _closeModal = useCallback(() => setShow(false), []);
   const _openLoginTab = useCallback(() => setTabIndex(0), []);
@@ -35,24 +41,16 @@ const LoginModal = memo(() => {
     username: loginUsername,
     password: loginPassword,
   }).then(({ token }) => setIsLoggedIn(token)),
-    [loginUsername, loginPassword]
-  );
+  [loginUsername, loginPassword]);
   const _register = useCallback(() => register({
     username: registerUsername,
     email: registerEmail,
     password: registerPassword,
     password_confirmation: registerPasswordConfirm,
   }).then(({ token }) => setIsLoggedIn(token)),
-    [registerUsername, registerEmail, registerPassword, registerPasswordConfirm]
-  );
-
-  const [theme] = useContext(ThemeContext);
-  const [_, setIsLoggedIn] = useContext(LoginContext);
+  [registerUsername, registerEmail, registerPassword, registerPasswordConfirm]);
 
   const loginUsernameRef = useRef(null);
-
-  const [login, loginLoading, loginError] = useApi(API.LOGIN);
-  const [register, registerLoading, registerError] = useApi(API.REGISTER);
 
   useState(() => {
     Modal.setAppElement('#root');
@@ -62,7 +60,7 @@ const LoginModal = memo(() => {
     if (show) {
       setTimeout(() => loginUsernameRef.current.focus(), 0);
     }
-  }, [show])
+  }, [show]);
 
   const _renderLogin = () => (
     <>
@@ -154,7 +152,7 @@ const LoginModal = memo(() => {
         plainFocus
         className={styles.alternateAction}
         onClick={_openLoginTab}
-        text={`Already have an account?`}
+        text='Already have an account?'
       />
     </>
   );
