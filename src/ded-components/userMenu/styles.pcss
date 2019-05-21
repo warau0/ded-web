@@ -5,34 +5,37 @@
     height: var(--header-icon-size);
     width: var(--header-icon-size);
     padding: 2px;
+    transition: box-shadow 0.25s ease-out, background-color 0.25s ease-out;
 
     &:hover, &:focus {
       outline: none;
-      box-shadow: 0px 0px 0px 2px rgba(104, 156, 252, 0.25);
-      background-color: rgba(104, 156, 252, 0.25);
+      box-shadow: 0px 0px 0px 2px var(--focus);
+      background-color: var(--focus);
     }
 
     .avatar {
-      border-radius: 18px;
+      border-radius: 15px;
       height: 100%;
     }
   }
 
   .menu {
     position: absolute;
-    right: 0;
+    right: -2px;
     top: 50px;
-    background-color: #FFFFFF;
-    border: 2px solid #EfEFEF;
+    border: 2px solid;
     border-radius: 10px;
-    padding: 1rem;
-    min-width: 350px;
+    min-width: var(--menu-width);
     z-index: var(--z-menu);
+
+    .borderTop {
+      border-top: 2px solid;
+    }
 
     .triangleContainer {
       overflow: hidden;
       height: 15px;
-      right: 5px;
+      right: 7px;
       top: -15px;
       width: 20px;
       position: absolute;
@@ -42,8 +45,93 @@
         transform: rotate(45deg);
         height: 100%;
         width: 100%;
-        background-color: #FFFFFF;
-        border: 2px solid #EfEFEF;
+        border: 2px solid;
+      }
+    }
+
+    .menuContent {
+      overflow: hidden;
+      border-radius: 10px;
+
+      .menuHeader {
+        margin: 0;
+        padding: var(--pad);
+      }
+
+      .menuList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          border-top: 2px solid;
+
+          p, a, button {
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            border-radius: 0;
+            padding: var(--pad-sm) var(--pad);
+            display: block;
+            text-decoration: none;
+            margin: 0;
+          }
+
+          a, button {
+            color: var(--link);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+.menuAnchor.light .menu {
+  background-color: var(--light-popup);
+  color: var(--light-text);
+  border-color: var(--light-border);
+
+  .borderTop {
+    border-color: var(--light-border);
+  }
+
+  .triangleContainer .triangle {
+    border-color: var(--light-border);
+    background: var(--light-popup);
+  }
+
+  .menuContent .menuList li {
+    border-color: var(--light-border);
+
+    a, button {
+      &:hover, &:focus {
+        background-color: var(--light-hover);
+      }
+    }
+  }
+}
+
+.menuAnchor.dark .menu {
+  background-color: var(--dark-popup);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+
+  .borderTop {
+    border-color: var(--dark-border);
+  }
+
+  .triangleContainer .triangle {
+    border-color: var(--dark-border);
+    background: var(--dark-popup);
+  }
+
+  .menuContent .menuList li {
+    border-color: var(--dark-border);
+
+    a, button {
+      &:hover, &:focus {
+        background-color: var(--dark-hover);
       }
     }
   }

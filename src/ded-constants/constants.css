@@ -3,16 +3,24 @@
 
   --success: #3FB67B;
   --error: #DC3545;
+  --link: #1CB0F6;
+  --focus: rgba(104, 156, 252, 0.25);
 
   --light-bg: #F5F5F5;
   --light-text: #222222;
+  --dark-text-faded: rgba(0, 0, 0, 0.2);
   --light-header: #FFFFFF;
   --light-border: #E5E5E5;
+  --light-popup: #FFFFFF;
+  --light-hover: #F7F7F7;
 
-  --dark-bg: #36393f;
-  --dark-text: #C5C8C6;
+  --dark-bg: #36393F;
+  --dark-text: #DCDDDE;
+  --dark-text-faded: rgba(255, 255, 255, 0.2);
   --dark-header: #202225;
   --dark-border: #C5C8C6;
+  --dark-popup: #2F3136;
+  --dark-hover: #292B2F;
 
   /* Sizes */
 
@@ -27,6 +35,7 @@
   --header-height: 56px;
   --form-height: 42px;
   --header-icon-size: 34px;
+  --menu-width: 350px;
 
   /* Z-index */
 

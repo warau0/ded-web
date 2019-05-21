@@ -1,14 +1,14 @@
 {
   "name": "ded-web",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
   "author": "warau0",
   "license": "ISC",
   "scripts": {
-    "clean": "rm -rf dist",
-    "start": "parcel src/root/index.html",
+    "clean": "rm -rf dist && rm -rf .cache",
+    "start": "yarn clean && parcel src/root/index.html",
     "build": "yarn clean && parcel build src/root/index.html",
     "lint": "eslint \"src/**/*.jsx\" \"src/**/*.js\""
   },
