@@ -21,4 +21,8 @@ export const API = {
     METHOD: 'POST',
     URL: `${API_URL}/register`,
   },
+  NOTIFICATIONS: {
+    METHOD: 'GET',
+    URL: `${API_URL}/notifications`,
+  },
 };

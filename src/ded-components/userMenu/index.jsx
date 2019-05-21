@@ -1,10 +1,17 @@
-import React, { memo, useState, useContext } from 'react';
+import React, {
+  memo,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import Button from 'ded-components/button';
 import { LoginContext, ThemeContext } from 'ded-context';
 import defaultAvatar from 'ded-assets/default-avatar.png';
+import { API } from 'ded-constants';
+import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
@@ -13,11 +20,15 @@ let hideTimeout = null;
 export default memo(() => {
   const [show, setShow] = useState(false);
 
-  const [notifications] = useState([]); // Temp before API implemented.
-  const [notificationsLoading] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS);
 
   const [_, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
+
+  useEffect(() => {
+    getNotifications().then(res => setNotifications(res.notifications));
+  }, []);
 
   const _showMenu = () => {
     clearTimeout(hideTimeout);
@@ -40,7 +51,7 @@ export default memo(() => {
     if (notificationsLoading) {
       return <li><p>Loading!</p></li>;
     }
-    if (!notifications.length) {
+    if (!notifications || !notifications.length) {
       return <li><p>You don&apos;t have any notifications.</p></li>;
     }
 
