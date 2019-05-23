@@ -1,0 +1,157 @@
+:root {
+  --header-height: 35px;
+  --hour-height: 25px;
+}
+
+.scheduleContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .schedule {
+    display: flex;
+    border: 2px solid;
+    transition: .3s height ease;
+    overflow: hidden;
+    width: 100%;
+    border-radius: var(--border-radius);
+
+    &.tall {
+      height: calc((var(--hour-height) * 24) + var(--header-height));
+    }
+
+    &.short {
+      height: 150px;
+    }
+
+    .dayView {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .days {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+
+        .hour {
+          flex: 1;
+          border-right: 1px solid;
+          font-size: .6rem;
+          text-align: center;
+          padding: var(--pad-xs);
+
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+    }
+
+    .weekView {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+
+      .day {
+        flex: 1;
+        border-right: 1px solid ;
+
+        &:last-child {
+          border: none;
+        }
+
+        .hour {
+          border-bottom: 1px solid;
+          font-size: .6rem;
+          height: var(--hour-height);
+          padding: var(--pad-xs);
+          margin-left: 35px;
+
+          span {
+            position: relative;
+            bottom: -9px;
+            left: -35px;
+          }
+        }
+      }
+    }
+
+    .dayHeader {
+      height: var(--header-height);
+      text-align: center;
+      font-weight: 500;
+      border-bottom: 1px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .expandButton {
+    position: absolute;
+    bottom: -15px;
+    border: 2px solid;
+    height: 30px;
+    width: 30px;
+    padding: .4rem;
+
+    img {
+      height: 100%;
+
+      &.flip {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.scheduleContainer.light {
+  .schedule {
+    background-color: var(--light-popup);
+    border-color: var(--light-border);
+
+    .dayView .days .hour {
+      border-color: var(--light-border);
+    }
+
+    .weekView .day {
+      border-color: var(--light-border);
+
+      .hour {
+        border-color: var(--light-border);
+      }
+    }
+
+    .dayHeader {
+      border-color: var(--light-border);
+    }
+  }
+}
+
+.scheduleContainer.dark {
+  .schedule {
+    background-color: var(--dark-popup);
+    border-color: var(--dark-border);
+
+    .dayView .days .hour {
+      border-color: var(--dark-border);
+    }
+
+    .weekView .day {
+      border-color: var(--dark-border);
+
+      .hour {
+        border-color: var(--dark-border);
+      }
+    }
+
+    .dayHeader {
+      border-color: var(--dark-border);
+    }
+  }
+
+  .expandButton img {
+    filter: invert(100%);
+  }
+}

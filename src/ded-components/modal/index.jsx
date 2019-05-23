@@ -39,8 +39,7 @@ const ModalComponent = memo(({
       <Button
         className={styles.close}
         onClick={onClose}
-        brand='ghost'
-        ghostFocus
+        brand='mono'
         text='X'
         noPadding
         aria-label='close'
