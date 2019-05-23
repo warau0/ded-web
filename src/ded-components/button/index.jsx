@@ -15,6 +15,7 @@ const Button = memo(({
   loading,
   type,
   noPadding,
+  ghostFocus,
   ...restProps
 }) => {
   return (
@@ -27,6 +28,7 @@ const Button = memo(({
         [styles.plainText]: plainText,
         [styles.hideOutline]: !plainFocus,
         [styles.noPadding]: noPadding,
+        [styles.ghostFocus]: ghostFocus,
         [className]: className,
       })}
       type={type}
@@ -49,6 +51,7 @@ Button.defaultProps = {
   loading: false,
   className: null,
   noPadding: false,
+  ghostFocus: false,
 };
 
 Button.propTypes = {
@@ -65,6 +68,7 @@ Button.propTypes = {
   loading: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
   noPadding: PropTypes.bool,
+  ghostFocus: PropTypes.bool,
 };
 
 export default Button;

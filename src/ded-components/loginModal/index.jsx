@@ -7,8 +7,8 @@ import React, {
   useContext,
 } from 'react';
 import cn from 'classnames';
-import Modal from 'react-modal';
 
+import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
 import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext, LoginContext } from 'ded-context';
@@ -67,10 +67,6 @@ const LoginModal = memo(() => {
 
   const loginUsernameRef = useRef(null);
 
-  useState(() => {
-    Modal.setAppElement('#root');
-  });
-
   useEffect(() => {
     if (show) {
       setTimeout(() => loginUsernameRef.current.focus(), 0);
@@ -82,6 +78,7 @@ const LoginModal = memo(() => {
       <ErrorMessage className={styles.error} error={loginError} />
       <input
         type='text'
+        name='username'
         className={styles.input}
         placeholder='Username'
         aria-label='Username'
@@ -92,6 +89,7 @@ const LoginModal = memo(() => {
       />
       <input
         type='password'
+        name='password'
         className={styles.input}
         placeholder='Password'
         aria-label='Password'
@@ -124,6 +122,7 @@ const LoginModal = memo(() => {
       <ErrorMessage className={styles.error} error={registerError} />
       <input
         type='text'
+        name='username'
         className={styles.input}
         placeholder='Username'
         aria-label='Username'
@@ -133,6 +132,7 @@ const LoginModal = memo(() => {
       />
       <input
         type='email'
+        name='email'
         className={styles.input}
         placeholder='Email'
         aria-label='Email'
@@ -142,6 +142,7 @@ const LoginModal = memo(() => {
       />
       <input
         type='password'
+        name='password'
         className={styles.input}
         placeholder='Password'
         aria-label='Password'
@@ -151,6 +152,7 @@ const LoginModal = memo(() => {
       />
       <input
         type='password'
+        name='password_confirm'
         className={styles.input}
         placeholder='Confirm password'
         aria-label='Confirm password'
@@ -183,19 +185,11 @@ const LoginModal = memo(() => {
       <Button onClick={_openModal} text='Login' />
 
       <Modal
-        isOpen={show}
-        closeTimeoutMS={200}
-        onRequestClose={_closeModal}
-        contentLabel='Login modal'
-        shouldCloseOnOverlayClick
-        className={cn(styles.content, styles[theme])}
-        overlayClassName={{
-          base: styles.overlay,
-          afterOpen: styles.overlayAfterOpen,
-          beforeClose: styles.overlayBeforeClose,
-        }}
+        show={show}
+        onClose={_closeModal}
+        label='Login modal'
       >
-        <div className={styles.tabs}>
+        <div className={cn(styles.tabs, styles[theme])}>
           <Button
             brand='ghost'
             square
@@ -218,7 +212,7 @@ const LoginModal = memo(() => {
           />
         </div>
 
-        <div className={styles.innerContent}>
+        <div className={cn(styles.innerContent, styles[theme])}>
           {tabIndex === 0 ? _renderLogin() : _renderRegister()}
         </div>
       </Modal>
