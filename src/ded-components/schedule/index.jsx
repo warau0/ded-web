@@ -1,46 +1,120 @@
-import React, { memo, useState, useContext } from 'react';
+import React, {
+  memo,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import cn from 'classnames';
 
 import { ThemeContext } from 'ded-context';
 import Button from 'ded-components/button';
 import arrow from 'ded-assets/arrow.png';
+import plus from 'ded-assets/plus-circle.png';
+import { API } from 'ded-constants';
+import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
 const hours = [...Array(24).keys()].slice(1);
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const today = days[new Date().getDay() - 1];
+const today = new Date().getDay() - 1;
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
 
   const [expand, setExpand] = useState(false);
+  const [plans, setPlans] = useState([]);
+  const [getPlans] = useApi(API.NOTIFICATIONS);
+
+  useEffect(() => {
+    getPlans().then(res => setPlans(res.plans));
+  }, []);
 
   const _toggleExpand = () => {
     setExpand(!expand);
+  };
+
+  const _renderTime = hour => <span>{`${`0${hour}`.slice(-2)}:00`}</span>;
+
+  const _renderPlan = (dayIndex, hour) => {
+    const actualDay = [1, 2, 3, 4, 5, 6, 0][dayIndex];
+    const plan = plans[actualDay] && plans[actualDay][hour]
+      ? plans[actualDay] && plans[actualDay][hour]
+      : null;
+
+    if (plan) {
+      const duration = (plan.duration + hour > 24) ? (24 - hour) : plan.duration;
+
+      return (
+        <Button
+          brand='ghost'
+          plainText
+          noPadding
+          className={cn(
+            styles.plan,
+            styles[`size-${duration}`],
+            styles[plan.brand],
+          )}
+          onClick={() => console.log('plan', hour)}
+        >
+          {plan.text}
+        </Button>
+      );
+    }
+
+    return (
+      <Button
+        brand='ghost'
+        plainText
+        noPadding
+        className={styles.emptyPlan}
+        onClick={() => console.log('empty', hour)}
+      >
+        <img src={plus} alt='+' />
+      </Button>
+    );
   };
 
   return (
     <div className={cn(styles.scheduleContainer, styles[theme])}>
       <div className={cn(styles.schedule, (expand ? styles.tall : styles.short))}>
         {expand ? (
+          /**
+           * Week view
+           */
           <div className={styles.weekView}>
-            {days.map(day => (
+            {days.map((day, dayIndex) => (
               <div className={styles.day} key={day}>
                 <div className={styles.dayHeader}>{day}</div>
                 {hours.map(hour => (
                   <div className={styles.hour} key={hour}>
-                    <span>{`${`0${hour}`.slice(-2)}:00`}</span>
+                    {_renderTime(hour)}
+                    {_renderPlan(dayIndex, hour - 1)}
                   </div>
                 ))}
+                <div className={styles.hour} key={23}>
+                  {_renderPlan(today, 23)}
+                </div>
               </div>
             ))}
           </div>
         ) : (
+          /**
+           * Day view
+           */
           <div className={styles.dayView}>
-            <div className={styles.dayHeader}>{today}</div>
+            <div className={styles.dayHeader}>{days[today]}</div>
             <div className={styles.days}>
-              {hours.map(hour => <div className={styles.hour} key={hour}>{`${`0${hour}`.slice(-2)}:00`}</div>)}
+              <div className={styles.hour} key={0}>
+                {_renderTime(0)}
+                {_renderPlan(today, 0)}
+              </div>
+              {hours.map(hour => (
+                <div className={styles.hour} key={hour}>
+                  {_renderTime(hour)}
+                  {_renderPlan(today, hour)}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -49,7 +123,6 @@ export default memo(() => {
       <Button
         onClick={_toggleExpand}
         brand='mono'
-        ghostFocus
         aria-label={expand ? 'Hide full schedule' : 'Show full schedule'}
         className={styles.expandButton}
         round

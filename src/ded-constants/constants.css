@@ -40,6 +40,8 @@
 
   /* Z-index */
 
+  --z-schedule-plan: 1;
+  --z-schedule-expand: 2;
   --z-header: 4;
   --z-menu: 9;
   --z-overlay: 10;
