@@ -11,7 +11,7 @@
   --dark-text-faded: rgba(0, 0, 0, 0.2);
   --light-header: #FFFFFF;
   --light-border: #E5E5E5;
-  --light-popup: #FFFFFF;
+  --light-element: #FFFFFF;
   --light-hover: #F7F7F7;
 
   --dark-bg: #36393F;
@@ -19,8 +19,8 @@
   --dark-text-faded: rgba(255, 255, 255, 0.2);
   --dark-header: #202225;
   --dark-border: #C5C8C6;
-  --dark-popup: #2F3136;
-  --dark-hover: #292B2F;
+  --dark-element: #2F3136;
+  --dark-hover: #4E5258;
 
   /* Sizes */
 

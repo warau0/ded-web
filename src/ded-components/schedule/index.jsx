@@ -34,7 +34,7 @@ export default memo(() => {
     setExpand(!expand);
   };
 
-  const _renderTime = hour => <span>{`${`0${hour}`.slice(-2)}:00`}</span>;
+  const _renderTime = hour => `${`0${hour}`.slice(-2)}:00`;
 
   const _renderPlan = (dayIndex, hour) => {
     const actualDay = [1, 2, 3, 4, 5, 6, 0][dayIndex];
@@ -45,34 +45,40 @@ export default memo(() => {
     if (plan) {
       const duration = (plan.duration + hour > 24) ? (24 - hour) : plan.duration;
 
+      /* eslint-disable jsx-a11y/click-events-have-key-events */
+      /* eslint-disable jsx-a11y/no-static-element-interactions */
       return (
-        <Button
-          brand='ghost'
-          plainText
-          noPadding
+        <div
           className={cn(
             styles.plan,
             styles[`size-${duration}`],
             styles[plan.brand],
+            { [styles.sm]: duration === 1 },
           )}
           onClick={() => console.log('plan', hour)}
         >
-          {plan.text}
-        </Button>
+          <div className={styles.text}>
+            {plan.text}
+          </div>
+          {duration > 1 && (
+            <div className={styles.timestamp}>
+              {`${_renderTime(hour)} - ${_renderTime(hour + duration)}`}
+            </div>
+          )}
+        </div>
       );
     }
 
     return (
-      <Button
-        brand='ghost'
-        plainText
-        noPadding
+      <div
         className={styles.emptyPlan}
         onClick={() => console.log('empty', hour)}
       >
         <img src={plus} alt='+' />
-      </Button>
+      </div>
     );
+    /* eslint-enable jsx-a11y/click-events-have-key-events */
+    /* eslint-enable jsx-a11y/no-static-element-interactions */
   };
 
   return (
@@ -88,7 +94,7 @@ export default memo(() => {
                 <div className={styles.dayHeader}>{day}</div>
                 {hours.map(hour => (
                   <div className={styles.hour} key={hour}>
-                    {_renderTime(hour)}
+                    <span>{_renderTime(hour)}</span>
                     {_renderPlan(dayIndex, hour - 1)}
                   </div>
                 ))}
@@ -106,12 +112,12 @@ export default memo(() => {
             <div className={styles.dayHeader}>{days[today]}</div>
             <div className={styles.days}>
               <div className={styles.hour} key={0}>
-                {_renderTime(0)}
+                <span>{_renderTime(0)}</span>
                 {_renderPlan(today, 0)}
               </div>
               {hours.map(hour => (
                 <div className={styles.hour} key={hour}>
-                  {_renderTime(hour)}
+                  <span>{_renderTime(hour)}</span>
                   {_renderPlan(today, hour)}
                 </div>
               ))}
