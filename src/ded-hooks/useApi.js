@@ -10,12 +10,12 @@ export default (API) => {
 
   const [_, setIsLoggedIn] = useContext(LoginContext);
 
-  const callApi = async (data = null) => {
+  const callApi = async (urlParam = null, data = null) => {
     try {
       setLoading(true);
       setError(null);
       const token = localStorage.getItem(STORAGE.TOKEN);
-      const result = await fetch(API.URL, {
+      const result = await fetch(API.URL(urlParam), {
         method: API.METHOD,
         ...(API.METHOD !== 'GET') && { body: JSON.stringify(data) },
         headers: {

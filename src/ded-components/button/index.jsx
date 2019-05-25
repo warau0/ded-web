@@ -63,7 +63,7 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  brand: PropTypes.oneOf(['base', 'ghost', 'white', 'success', 'mono']),
+  brand: PropTypes.oneOf(['base', 'ghost', 'white', 'success', 'mono', 'danger']),
   className: PropTypes.string,
   square: PropTypes.bool,
   round: PropTypes.bool,

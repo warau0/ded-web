@@ -246,6 +246,68 @@
   }
 }
 
+.editModal {
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+
+  h2, textarea, .inputContainer {
+    margin: 0 0 var(--pad) 0;
+  }
+
+  textarea {
+    border: none;
+    padding: var(--pad-sm);
+    width: 100% !important; /* Disable width drag */
+    min-height: 50px;
+  }
+
+  .inputContainer {
+    display: flex;
+
+    label {
+      flex-direction: column;
+      display: flex;
+      flex: 1;
+      font-size: .8rem;
+      font-weight: 500;
+    }
+
+    select, input {
+      border: none;
+      padding: var(--pad-xs);
+      margin-top: var(--pad-sm);
+      height: var(--form-height);
+    }
+
+    .dayInput {
+      margin: 0 var(--pad);
+    }
+
+    .startInput {
+      margin: 0 var(--pad) 0 0;
+    }
+
+    .hourInput {
+      width: 0; /* Overwrite style for flex to kick in. */
+    }
+  }
+
+  .footer {
+    margin-top: var(--pad-sm);
+    display: flex;
+    justify-content: space-between;
+
+    .submitContainer {
+      display: inline-block;
+
+      :last-child {
+        margin-left: var(--pad);
+      }
+    }
+  }
+}
+
 .scheduleContainer.light {
   .schedule {
     background-color: var(--light-element);
@@ -305,5 +367,19 @@
 
   .expandButton img {
     filter: invert(100%);
+  }
+}
+
+.editModal.light {
+  select, input, textarea {
+    background-color: var(--light-header);
+    color: var(--light-text);
+  }
+}
+
+.editModal.dark {
+  select, input, textarea {
+    background-color: var(--dark-header);
+    color: var(--dark-text);
   }
 }

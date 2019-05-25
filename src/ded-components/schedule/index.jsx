@@ -3,6 +3,7 @@ import React, {
   useState,
   useContext,
   useEffect,
+  useCallback,
 } from 'react';
 import cn from 'classnames';
 
@@ -11,35 +12,78 @@ import Button from 'ded-components/button';
 import arrow from 'ded-assets/arrow.png';
 import plus from 'ded-assets/plus-circle.png';
 import { API } from 'ded-constants';
+import Modal from 'ded-components/modal';
 import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
 const hours = [...Array(24).keys()].slice(1);
-const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const today = new Date().getDay() - 1;
+const days = [
+  { id: 1, name: 'Monday' },
+  { id: 2, name: 'Tuesday' },
+  { id: 3, name: 'Wednesday' },
+  { id: 4, name: 'Thursday' },
+  { id: 5, name: 'Friday' },
+  { id: 6, name: 'Saturday' },
+  { id: 0, name: 'Sunday' },
+];
+const today = new Date().getDay();
+const colors = [
+  'Tomato', 'Flamingo', 'Tangerine', 'Banana',
+  'Sage', 'Basil', 'Peacock', 'Blueberry',
+  'Lavender', 'Grape', 'Graphite', 'Sky',
+];
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editPlan, setEditPlan] = useState(null);
   const [expand, setExpand] = useState(false);
   const [plans, setPlans] = useState([]);
-  const [getPlans] = useApi(API.NOTIFICATIONS);
+  const [getPlans] = useApi(API.PLANS.GET);
+  const [putPlan, putLoading] = useApi(API.PLANS.PUT);
+  const [postPlan, postLoading] = useApi(API.PLANS.POST);
+  const [deletePlan, deleteLoading] = useApi(API.PLANS.DELETE);
 
   useEffect(() => {
     getPlans().then(res => setPlans(res.plans));
   }, []);
 
+  const _closeEditModal = useCallback(() => setShowEditModal(false), []);
+
   const _toggleExpand = () => {
     setExpand(!expand);
   };
 
+  const _submitPlan = useCallback(() => {
+    const insertPlan = (result) => {
+      console.log(result); // TODO
+    };
+
+    if (editPlan.id) {
+      putPlan(editPlan.id, editPlan).then(insertPlan);
+    } else {
+      postPlan(null, editPlan).then(insertPlan);
+    }
+  }, [editPlan]);
+
+  const _deletePlan = useCallback(() => deletePlan(editPlan.id)
+    .then(() => {
+      const newPlans = plans;
+      if (newPlans[editPlan.day] && newPlans[editPlan.day][editPlan.start]) {
+        delete newPlans[editPlan.day][editPlan.start];
+        setPlans(newPlans);
+      }
+      setEditPlan(null);
+      _closeEditModal();
+    }), [editPlan]);
+
   const _renderTime = hour => `${`0${hour}`.slice(-2)}:00`;
 
   const _renderPlan = (dayIndex, hour) => {
-    const actualDay = [1, 2, 3, 4, 5, 6, 0][dayIndex];
-    const plan = plans[actualDay] && plans[actualDay][hour]
-      ? plans[actualDay] && plans[actualDay][hour]
+    const plan = plans[dayIndex] && plans[dayIndex][hour]
+      ? plans[dayIndex] && plans[dayIndex][hour]
       : null;
 
     if (plan) {
@@ -52,10 +96,13 @@ export default memo(() => {
           className={cn(
             styles.plan,
             styles[`size-${duration}`],
-            styles[plan.brand],
+            styles[plan.color],
             { [styles.sm]: duration === 1 },
           )}
-          onClick={() => console.log('plan', hour)}
+          onClick={() => {
+            setEditPlan({ ...plan, day: dayIndex });
+            setShowEditModal(true);
+          }}
         >
           <div className={styles.text}>
             {plan.text}
@@ -72,7 +119,15 @@ export default memo(() => {
     return (
       <div
         className={styles.emptyPlan}
-        onClick={() => console.log('empty', hour)}
+        onClick={() => {
+          setEditPlan({ // Default plan
+            day: dayIndex,
+            start: hour,
+            duration: 1,
+            color: 'sky',
+          });
+          setShowEditModal(true);
+        }}
       >
         <img src={plus} alt='+' />
       </div>
@@ -89,13 +144,13 @@ export default memo(() => {
            * Week view
            */
           <div className={styles.weekView}>
-            {days.map((day, dayIndex) => (
-              <div className={styles.day} key={day}>
-                <div className={styles.dayHeader}>{day}</div>
+            {days.map(day => (
+              <div className={styles.day} key={day.id}>
+                <div className={styles.dayHeader}>{day.name}</div>
                 {hours.map(hour => (
                   <div className={styles.hour} key={hour}>
                     <span>{_renderTime(hour)}</span>
-                    {_renderPlan(dayIndex, hour - 1)}
+                    {_renderPlan(day.id, hour - 1)}
                   </div>
                 ))}
                 <div className={styles.hour} key={23}>
@@ -109,7 +164,7 @@ export default memo(() => {
            * Day view
            */
           <div className={styles.dayView}>
-            <div className={styles.dayHeader}>{days[today]}</div>
+            <div className={styles.dayHeader}>{days.find(day => day.id === today).name}</div>
             <div className={styles.days}>
               <div className={styles.hour} key={0}>
                 <span>{_renderTime(0)}</span>
@@ -136,6 +191,91 @@ export default memo(() => {
       >
         <img src={arrow} className={cn({ [styles.flip]: expand })} alt='^' />
       </Button>
+
+      <Modal
+        show={showEditModal}
+        onClose={_closeEditModal}
+        label='Plan modal'
+      >
+        {editPlan && (
+          <div className={cn(styles.editModal, styles[theme])}>
+            <h2>{editPlan.id ? 'Edit plan' : 'Create a plan'}</h2>
+            <textarea
+              placeholder='What do you plan to do?'
+              value={editPlan.text}
+              onChange={e => setEditPlan({ ...editPlan, text: e.target.value })}
+            />
+            <div className={styles.inputContainer}>
+              <label htmlFor='color'>
+                Color
+                <select
+                  id='color'
+                  name='color'
+                  value={editPlan.color}
+                  onChange={e => setEditPlan({ ...editPlan, color: e.target.value })}
+                >
+                  {colors.map(color => (
+                    <option key={color} value={color.toLowerCase()}>{color}</option>
+                  ))}
+                </select>
+              </label>
+              <label className={styles.dayInput} htmlFor='day'>
+                Day
+                <select
+                  id='day'
+                  name='day'
+                  value={editPlan.day}
+                  onChange={e => setEditPlan({ ...editPlan, day: e.target.value })}
+                >
+                  {days.map(day => (
+                    <option key={day.id} value={day.id}>{day.name}</option>
+                  ))}
+                </select>
+              </label>
+              <label className={styles.startInput} htmlFor='start'>
+                Start
+                <select
+                  id='start'
+                  name='start'
+                  value={editPlan.start}
+                  onChange={e => setEditPlan({ ...editPlan, start: e.target.value })}
+                >
+                  <option value={0}>{_renderTime(0)}</option>
+                  {hours.map(hour => (
+                    <option key={hour} value={parseInt(hour, 10)}>{_renderTime(hour)}</option>
+                  ))}
+                </select>
+              </label>
+              <label htmlFor='hours' className={styles.hourInput}>
+                Hours
+                <input
+                  id='hours'
+                  name='hours'
+                  value={editPlan.duration}
+                  onChange={e => setEditPlan({ ...editPlan, duration: e.target.value })}
+                />
+              </label>
+            </div>
+            <div className={styles.footer}>
+              <div>
+                {editPlan.id && (
+                  <Button
+                    text='Delete'
+                    brand='danger'
+                    square
+                    onClick={_deletePlan}
+                    loading={deleteLoading}
+                  />
+                )}
+              </div>
+              <div className={styles.submitContainer}>
+                <Button text='Cancel' brand='mono' square onClick={_closeEditModal} />
+                <Button text='Submit' brand='success' square onClick={_submitPlan} loading={putLoading || postLoading} />
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 });

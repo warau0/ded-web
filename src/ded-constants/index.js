@@ -15,14 +15,34 @@ export const { API_URL } = config;
 export const API = {
   LOGIN: {
     METHOD: 'POST',
-    URL: `${API_URL}/login`,
+    URL: () => `${API_URL}/login`,
   },
   REGISTER: {
     METHOD: 'POST',
-    URL: `${API_URL}/register`,
+    URL: () => `${API_URL}/register`,
   },
   NOTIFICATIONS: {
-    METHOD: 'GET',
-    URL: `${API_URL}/notifications`,
+    GET: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/notifications`,
+    },
+  },
+  PLANS: {
+    GET: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/plans`,
+    },
+    PUT: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/plans/${id}`,
+    },
+    POST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/plans`,
+    },
+    DELETE: {
+      METHOD: 'DELETE',
+      URL: id => `${API_URL}/plans/${id}`,
+    },
   },
 };

@@ -52,12 +52,12 @@ const LoginModal = memo(() => {
     clearLoginError();
     setTabIndex(1);
   }, []);
-  const _login = useCallback(() => login({
+  const _login = useCallback(() => login(null, {
     username: loginUsername,
     password: loginPassword,
   }).then(({ token }) => setIsLoggedIn(token)),
   [loginUsername, loginPassword]);
-  const _register = useCallback(() => register({
+  const _register = useCallback(() => register(null, {
     username: registerUsername,
     email: registerEmail,
     password: registerPassword,

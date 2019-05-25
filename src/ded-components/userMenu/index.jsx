@@ -21,7 +21,7 @@ export default memo(() => {
   const [show, setShow] = useState(false);
 
   const [notifications, setNotifications] = useState([]);
-  const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS);
+  const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS.GET);
 
   const [_, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
