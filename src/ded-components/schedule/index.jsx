@@ -58,7 +58,12 @@ export default memo(() => {
 
   const _submitPlan = useCallback(() => {
     const insertPlan = (result) => {
-      console.log(result); // TODO
+      const newPlans = plans;
+      if (!newPlans[result.day]) newPlans[result.day] = {};
+      newPlans[result.day][result.start] = result;
+      setPlans(newPlans);
+      setEditPlan(null);
+      _closeEditModal();
     };
 
     if (editPlan.id) {
