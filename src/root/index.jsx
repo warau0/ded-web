@@ -10,6 +10,7 @@ import { ThemeProvider, LoginProvider } from 'ded-context';
 import Error from 'ded-components/error';
 import Header from 'ded-components/header';
 import Wrapper from 'ded-components/wrapper';
+import Authenticate from 'ded-components/authenticate';
 import Routes from './routes';
 
 const App = () => (
@@ -17,15 +18,17 @@ const App = () => (
     <LoginProvider>
       <ThemeProvider>
         <Error>
-          <Suspense fallback={null}>
-            <Header />
-          </Suspense>
+          <Authenticate>
+            <Suspense fallback={null}>
+              <Header />
+            </Suspense>
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <Wrapper>
-              <Routes />
-            </Wrapper>
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Wrapper>
+                <Routes />
+              </Wrapper>
+            </Suspense>
+          </Authenticate>
         </Error>
       </ThemeProvider>
     </LoginProvider>

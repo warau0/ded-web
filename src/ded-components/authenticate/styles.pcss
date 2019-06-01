@@ -1,0 +1,28 @@
+.loginOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-login-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 500ms ease-in-out;
+  font-size: 1rem;
+
+  &.entering { opacity: 1; }
+  &.entered { opacity: 1; }
+  &.exiting { opacity: 0; }
+  &.exited { opacity: 0; }
+
+  &.light {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+  }
+
+  &.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+}

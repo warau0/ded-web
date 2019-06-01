@@ -21,6 +21,10 @@ export const API = {
     METHOD: 'POST',
     URL: () => `${API_URL}/register`,
   },
+  VERIFY_TOKEN: {
+    METHOD: 'GET',
+    URL: () => `${API_URL}/verify_token`,
+  },
   NOTIFICATIONS: {
     GET: {
       METHOD: 'GET',

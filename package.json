@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.6.5",
+  "version": "0.7.0",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -42,6 +42,7 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",
+    "react-transition-group": "^4.1.0",
     "routes": "^2.1.0"
   },
   "devDependencies": {
