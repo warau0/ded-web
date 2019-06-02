@@ -7,7 +7,7 @@ import ThemeButton from 'ded-components/themeButton';
 import UserMenu from 'ded-components/userMenu';
 import Layout from 'ded-components/layout';
 import { ThemeContext, LoginContext } from 'ded-context';
-import logo from 'ded-assets/logo.png';
+import { logo } from 'ded-assets';
 
 import * as styles from './styles.pcss';
 

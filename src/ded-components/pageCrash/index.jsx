@@ -5,7 +5,7 @@ import Button from 'ded-components/button';
 
 import styles from './styles.pcss';
 
-export default class Error extends React.Component {
+export default class PageCrash extends React.Component {
   constructor(props) {
     super(props);
 
@@ -44,7 +44,7 @@ export default class Error extends React.Component {
   }
 }
 
-Error.propTypes = {
+PageCrash.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

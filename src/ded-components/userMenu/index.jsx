@@ -9,7 +9,7 @@ import cn from 'classnames';
 
 import Button from 'ded-components/button';
 import { LoginContext, ThemeContext } from 'ded-context';
-import defaultAvatar from 'ded-assets/default-avatar.png';
+import { defaultAvatar } from 'ded-assets';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 

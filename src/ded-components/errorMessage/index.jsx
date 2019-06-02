@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-import icon from 'ded-assets/error.png';
+import { error as errorIcon } from 'ded-assets';
 
 import * as styles from './styles.pcss';
 
@@ -17,7 +17,7 @@ const ErrorMessage = memo(({
       [className]: className,
     })}
     >
-      <img className={styles.icon} src={icon} alt='Error' />
+      <img className={styles.icon} src={errorIcon} alt='Error' />
       <div>
         {Array.isArray(error) ? (error.map(o => <p key={o}>{o}</p>)) : <p>{error}</p>}
       </div>

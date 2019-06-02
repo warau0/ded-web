@@ -7,7 +7,7 @@ import './styles.pcss';
 
 import { ThemeProvider, LoginProvider } from 'ded-context';
 
-import Error from 'ded-components/error';
+import PageCrash from 'ded-components/pageCrash';
 import Header from 'ded-components/header';
 import Wrapper from 'ded-components/wrapper';
 import Authenticate from 'ded-components/authenticate';
@@ -17,7 +17,7 @@ const App = () => (
   <BrowserRouter>
     <LoginProvider>
       <ThemeProvider>
-        <Error>
+        <PageCrash>
           <Authenticate>
             <Suspense fallback={null}>
               <Header />
@@ -29,7 +29,7 @@ const App = () => (
               </Wrapper>
             </Suspense>
           </Authenticate>
-        </Error>
+        </PageCrash>
       </ThemeProvider>
     </LoginProvider>
   </BrowserRouter>

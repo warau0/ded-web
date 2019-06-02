@@ -1,8 +1,7 @@
 import React, { useContext, memo } from 'react';
 
 import { ThemeContext } from 'ded-context/themeContext';
-import moon from 'ded-assets/moon.png';
-import sun from 'ded-assets/sun.png';
+import { sun, moon } from 'ded-assets';
 import { THEME } from 'ded-constants';
 
 import * as styles from './styles.pcss';

@@ -7,13 +7,13 @@ import React, {
 } from 'react';
 import cn from 'classnames';
 
+import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext } from 'ded-context';
-import Button from 'ded-components/button';
-import arrow from 'ded-assets/arrow.png';
-import plus from 'ded-assets/plus-circle.png';
+import { arrow, plus } from 'ded-assets';
 import { API } from 'ded-constants';
-import Modal from 'ded-components/modal';
 import { useApi } from 'ded-hooks';
+import Button from 'ded-components/button';
+import Modal from 'ded-components/modal';
 
 import * as styles from './styles.pcss';
 
@@ -42,9 +42,9 @@ export default memo(() => {
   const [expand, setExpand] = useState(false);
   const [plans, setPlans] = useState([]);
   const [getPlans] = useApi(API.PLANS.GET);
-  const [putPlan, putLoading] = useApi(API.PLANS.PUT);
-  const [postPlan, postLoading] = useApi(API.PLANS.POST);
-  const [deletePlan, deleteLoading] = useApi(API.PLANS.DELETE);
+  const [putPlan, putLoading, putError, clearPutError] = useApi(API.PLANS.PUT);
+  const [postPlan, postLoading, postError, clearPostError] = useApi(API.PLANS.POST);
+  const [deletePlan, deleteLoading, deleteError, clearDeleteError] = useApi(API.PLANS.DELETE);
 
   useEffect(() => {
     getPlans().then(res => setPlans(res.plans));
@@ -66,23 +66,33 @@ export default memo(() => {
       _closeEditModal();
     };
 
+    clearPutError();
+    clearPostError();
+    clearDeleteError();
     if (editPlan.id) {
-      putPlan(editPlan.id, editPlan).then(insertPlan);
+      putPlan(editPlan.id, editPlan).then(insertPlan).catch(() => {});
     } else {
-      postPlan(null, editPlan).then(insertPlan);
+      postPlan(null, editPlan).then(insertPlan).catch(() => {});
     }
   }, [editPlan]);
 
-  const _deletePlan = useCallback(() => deletePlan(editPlan.id)
-    .then(() => {
-      const newPlans = plans;
-      if (newPlans[editPlan.day] && newPlans[editPlan.day][editPlan.start]) {
-        delete newPlans[editPlan.day][editPlan.start];
-        setPlans(newPlans);
-      }
-      setEditPlan(null);
-      _closeEditModal();
-    }), [editPlan]);
+  const _deletePlan = useCallback(() => {
+    clearPutError();
+    clearPostError();
+    clearDeleteError();
+
+    deletePlan(editPlan.id)
+      .then(() => {
+        const newPlans = plans;
+        if (newPlans[editPlan.day] && newPlans[editPlan.day][editPlan.start]) {
+          delete newPlans[editPlan.day][editPlan.start];
+          setPlans(newPlans);
+        }
+        setEditPlan(null);
+        _closeEditModal();
+      })
+      .catch(() => {});
+  }, [editPlan]);
 
   const _renderTime = hour => `${`0${hour}`.slice(-2)}:00`;
 
@@ -205,11 +215,18 @@ export default memo(() => {
         {editPlan && (
           <div className={cn(styles.editModal, styles[theme])}>
             <h2>{editPlan.id ? 'Edit plan' : 'Create a plan'}</h2>
+
+            <ErrorMessage
+              className={styles.error}
+              error={putError || postError || deleteError}
+            />
+
             <textarea
               placeholder='What do you plan to do?'
               value={editPlan.text}
               onChange={e => setEditPlan({ ...editPlan, text: e.target.value })}
             />
+
             <div className={styles.inputContainer}>
               <label htmlFor='color'>
                 Color
@@ -224,6 +241,7 @@ export default memo(() => {
                   ))}
                 </select>
               </label>
+
               <label className={styles.dayInput} htmlFor='day'>
                 Day
                 <select
@@ -237,6 +255,7 @@ export default memo(() => {
                   ))}
                 </select>
               </label>
+
               <label className={styles.startInput} htmlFor='start'>
                 Start
                 <select
@@ -251,6 +270,7 @@ export default memo(() => {
                   ))}
                 </select>
               </label>
+
               <label htmlFor='hours' className={styles.hourInput}>
                 Hours
                 <input
@@ -261,6 +281,7 @@ export default memo(() => {
                 />
               </label>
             </div>
+
             <div className={styles.footer}>
               <div>
                 {editPlan.id && (

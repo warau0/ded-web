@@ -55,14 +55,14 @@ const LoginModal = memo(() => {
   const _login = useCallback(() => login(null, {
     username: loginUsername,
     password: loginPassword,
-  }).then(({ token }) => setIsLoggedIn(token)),
+  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {}),
   [loginUsername, loginPassword]);
   const _register = useCallback(() => register(null, {
     username: registerUsername,
     email: registerEmail,
     password: registerPassword,
     password_confirmation: registerPasswordConfirm,
-  }).then(({ token }) => setIsLoggedIn(token)),
+  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {}),
   [registerUsername, registerEmail, registerPassword, registerPasswordConfirm]);
 
   const loginUsernameRef = useRef(null);
