@@ -50,7 +50,16 @@ export default memo(() => {
     getPlans().then(res => setPlans(res.plans));
   }, []);
 
-  const _closeEditModal = useCallback(() => setShowEditModal(false), []);
+  const clearErrors = () => {
+    clearPutError();
+    clearPostError();
+    clearDeleteError();
+  };
+
+  const _closeEditModal = useCallback(() => {
+    setShowEditModal(false);
+    clearErrors();
+  }, []);
 
   const _toggleExpand = () => {
     setExpand(!expand);
@@ -66,9 +75,7 @@ export default memo(() => {
       _closeEditModal();
     };
 
-    clearPutError();
-    clearPostError();
-    clearDeleteError();
+    clearErrors();
     if (editPlan.id) {
       putPlan(editPlan.id, editPlan).then(insertPlan).catch(() => {});
     } else {
@@ -77,9 +84,7 @@ export default memo(() => {
   }, [editPlan]);
 
   const _deletePlan = useCallback(() => {
-    clearPutError();
-    clearPostError();
-    clearDeleteError();
+    clearErrors();
 
     deletePlan(editPlan.id)
       .then(() => {
