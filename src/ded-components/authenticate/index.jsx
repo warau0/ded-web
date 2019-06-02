@@ -5,21 +5,24 @@ import cn from 'classnames';
 
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
-import { ThemeContext } from 'ded-context';
+import { ThemeContext, LoginContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
 const Authenticate = memo(({ children }) => {
-  const [showOverlay, setShowOverlay] = useState(true);
-
   const [verifyToken] = useApi(API.VERIFY_TOKEN);
 
   const [theme] = useContext(ThemeContext);
+  const [isLoggedIn] = useContext(LoginContext);
+
+  const [showOverlay, setShowOverlay] = useState(!!isLoggedIn);
 
   useState(() => {
-    verifyToken()
-      .then(() => setShowOverlay(false))
-      .catch(() => setShowOverlay(false));
+    if (isLoggedIn) {
+      verifyToken()
+        .then(() => setShowOverlay(false))
+        .catch(() => setShowOverlay(false));
+    }
   });
 
   return (
@@ -38,7 +41,7 @@ const Authenticate = memo(({ children }) => {
         )}
       </Transition>
 
-      {!showOverlay && children}
+      {((isLoggedIn && !showOverlay) || !isLoggedIn) && children}
     </>
   );
 });
