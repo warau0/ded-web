@@ -7,6 +7,7 @@ import React, {
   useContext,
 } from 'react';
 import cn from 'classnames';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
@@ -14,6 +15,7 @@ import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext, LoginContext } from 'ded-context';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
+import config from '../../../config.json';
 
 import * as styles from './styles.pcss';
 
@@ -26,12 +28,16 @@ const LoginModal = memo(() => {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
+  const [registerRecaptcha, setRegisterRecaptcha] = useState(null);
 
   const [theme] = useContext(ThemeContext);
   const [_, setIsLoggedIn] = useContext(LoginContext);
 
   const [login, loginLoading, loginError, clearLoginError] = useApi(API.LOGIN);
   const [register, registerLoading, registerError, clearRegisterError] = useApi(API.REGISTER);
+
+  const recaptchaRef = useRef(null);
+  const loginUsernameRef = useRef(null);
 
   const _openModal = useCallback(() => {
     clearRegisterError();
@@ -62,10 +68,17 @@ const LoginModal = memo(() => {
     email: registerEmail,
     password: registerPassword,
     password_confirmation: registerPasswordConfirm,
-  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {}),
-  [registerUsername, registerEmail, registerPassword, registerPasswordConfirm]);
-
-  const loginUsernameRef = useRef(null);
+    recaptcha: registerRecaptcha,
+  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {
+    recaptchaRef.current.reset();
+  }),
+  [
+    registerUsername,
+    registerEmail,
+    registerPassword,
+    registerPasswordConfirm,
+    registerRecaptcha,
+  ]);
 
   useEffect(() => {
     if (show) {
@@ -160,6 +173,14 @@ const LoginModal = memo(() => {
         onChange={e => setRegisterPasswordConfirm(e.target.value)}
         onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
       />
+      <div className={styles.captcha}>
+        <ReCAPTCHA
+          sitekey={config.RECAPTCHA_KEY}
+          onChange={setRegisterRecaptcha}
+          theme={theme}
+          ref={recaptchaRef}
+        />
+      </div>
       <Button
         square
         brand='success'
