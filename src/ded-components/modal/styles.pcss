@@ -9,9 +9,21 @@
   min-width: var(--modal-size);
   padding: 0;
   transform: translate(-50%,-50%);
+  max-height: 100%;
 
   &:focus {
     outline: none;
+  }
+
+  @mixin phone {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    max-width: 100%;
+    min-width: 100%;
+    transform: initial;
   }
 
   .close {
@@ -27,6 +39,11 @@
     font-size: .8rem;
     padding-left: 2px;
     padding-bottom: 3px;
+
+    @mixin phone {
+      top: 5px;
+      right: 5px;
+    }
   }
 }
 

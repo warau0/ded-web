@@ -24,6 +24,11 @@
 
   /* Sizes */
 
+  --screen-wide: 1456px;
+  --screen-lg: 1024px;
+  --screen-md: 785px;
+  --screen-sm: 476px;
+
   --pad-xs: .25rem;
   --pad-sm: .5rem;
   --pad: 1rem;
