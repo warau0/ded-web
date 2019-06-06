@@ -240,9 +240,16 @@ export default memo(() => {
                   name='color'
                   value={editPlan.color}
                   onChange={e => setEditPlan({ ...editPlan, color: e.target.value })}
+                  className={styles[editPlan.color.toLowerCase()]}
                 >
                   {colors.map(color => (
-                    <option key={color} value={color.toLowerCase()}>{color}</option>
+                    <option
+                      className={styles[color.toLowerCase()]}
+                      key={color}
+                      value={color.toLowerCase()}
+                    >
+                      {color}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -254,6 +261,7 @@ export default memo(() => {
                   name='day'
                   value={editPlan.day}
                   onChange={e => setEditPlan({ ...editPlan, day: e.target.value })}
+                  className={styles.select}
                 >
                   {days.map(day => (
                     <option key={day.id} value={day.id}>{day.name}</option>
@@ -268,6 +276,7 @@ export default memo(() => {
                   name='start'
                   value={editPlan.start}
                   onChange={e => setEditPlan({ ...editPlan, start: e.target.value })}
+                  className={styles.select}
                 >
                   <option value={0}>{_renderTime(0)}</option>
                   {hours.map(hour => (

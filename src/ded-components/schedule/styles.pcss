@@ -57,16 +57,16 @@
   &.size-24 { width: calc(100% * 24 + 15px); }
 }
 
-.plan {
+.plan, select, option {
   &.tomato { background-color: #D50001; color: #FFFFFF; }
-  &.flamingo { background-color: #E67B73; color: #222222 }
-  &.tangerine { background-color: #F4511E; color: #222222 }
-  &.banana { background-color: #F6bF26; color: #222222 }
-  &.sage { background-color: #33B579; color: #222222 }
+  &.flamingo { background-color: #E67B73; color: #FFFFFF; }
+  &.tangerine { background-color: #F4511E; color: #FFFFFF; }
+  &.banana { background-color: #F6BF26; color: #222222; }
+  &.sage { background-color: #33B579; color: #FFFFFF; }
   &.basil { background-color: #0B8043; color: #FFFFFF; }
-  &.peacock { background-color: #039BE5; color: #222222 }
+  &.peacock { background-color: #039BE5; color: #FFFFFF; }
   &.blueberry { background-color: #3F51B5; color: #FFFFFF; }
-  &.lavender { background-color: #616161; color: #FFFFFF; }
+  &.lavender { background-color: #7986CB; color: #FFFFFF; }
   &.grape { background-color: #8E24AA; color: #FFFFFF; }
   &.graphite { background-color: #616161; color: #FFFFFF; }
   &.sky { background-color: #4285F4; color: #FFFFFF; }
@@ -371,14 +371,14 @@
 }
 
 .editModal.light {
-  select, input, textarea {
+  .select, input, textarea {
     background-color: var(--light-header);
     color: var(--light-text);
   }
 }
 
 .editModal.dark {
-  select, input, textarea {
+  .select, input, textarea {
     background-color: var(--dark-header);
     color: var(--dark-text);
   }
