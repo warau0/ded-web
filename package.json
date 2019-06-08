@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -26,14 +26,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "assets": "^3.0.1",
     "autoprefixer": "^9.5.1",
     "classnames": "^2.2.6",
-    "components": "^0.1.0",
-    "constants": "^0.0.2",
-    "context": "^0.0.1",
     "cross-fetch": "^3.0.2",
-    "hooks": "^0.3.2",
     "postcss-custom-properties": "^8.0.10",
     "postcss-mixins": "^6.2.1",
     "postcss-modules": "^1.4.1",
@@ -44,8 +39,7 @@
     "react-google-recaptcha": "^1.0.5",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",
-    "react-transition-group": "^4.1.0",
-    "routes": "^2.1.0"
+    "react-transition-group": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

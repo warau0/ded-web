@@ -18,7 +18,7 @@ import { ThemeContext } from 'ded-context';
 import * as styles from './styles.pcss';
 
 const LoginModal = memo(() => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [images, setImages] = useState([]);
 
   const [theme] = useContext(ThemeContext);
