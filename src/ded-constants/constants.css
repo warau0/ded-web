@@ -51,4 +51,5 @@
   --z-menu: 9;
   --z-overlay: 10;
   --z-login-overlay: 100;
+  --z-close-modal: 101;
 }

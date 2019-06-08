@@ -68,6 +68,13 @@ export default memo(() => {
   const _submitPlan = useCallback(() => {
     const insertPlan = (result) => {
       const newPlans = plans;
+      Object.keys(newPlans).forEach((dayKey) => {
+        Object.keys(newPlans[dayKey]).forEach((hourKey) => {
+          if (newPlans[dayKey][hourKey].id === result.id) {
+            delete newPlans[dayKey][hourKey];
+          }
+        });
+      });
       if (!newPlans[result.day]) newPlans[result.day] = {};
       newPlans[result.day][result.start] = result;
       setPlans(newPlans);

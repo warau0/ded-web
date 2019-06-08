@@ -2,7 +2,6 @@ import React, { memo, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import Button from 'ded-components/button';
 import ThemeButton from 'ded-components/themeButton';
 import UserMenu from 'ded-components/userMenu';
 import Layout from 'ded-components/layout';
@@ -12,6 +11,7 @@ import { logo } from 'ded-assets';
 import * as styles from './styles.pcss';
 
 const LoginModal = lazy(() => import('ded-components/loginModal'));
+const UploadModal = lazy(() => import('ded-components/uploadModal'));
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
@@ -30,7 +30,7 @@ export default memo(() => {
         <div className={styles.right}>
           <div className={styles.menuItem}>
             {isLoggedIn
-              ? <Button text='Upload' />
+              ? <UploadModal />
               : <LoginModal />
             }
           </div>

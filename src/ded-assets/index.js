@@ -2,6 +2,8 @@ import arrow from './arrow.png';
 import defaultAvatar from './default-avatar.png';
 import error from './error.png';
 import failure from './failure.png';
+import images from './images.png';
+import loader from './loader.gif';
 import logo from './logo.png';
 import moon from './moon.png';
 import plus from './plus-circle.png';
@@ -13,6 +15,8 @@ export {
   defaultAvatar,
   error,
   failure,
+  images,
+  loader,
   logo,
   moon,
   plus,

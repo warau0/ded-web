@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import { ThemeContext, LoginContext } from 'ded-context';
+import { loader } from 'ded-assets';
 
 import * as styles from './styles.pcss';
 
@@ -27,7 +28,7 @@ const Authenticate = memo(({ children }) => {
 
   return (
     <>
-      <Transition in={showOverlay} timeout={500} unmountOnExit>
+      <Transition in={showOverlay} timeout={400} unmountOnExit>
         {state => (
           <div
             className={cn(
@@ -36,7 +37,8 @@ const Authenticate = memo(({ children }) => {
               styles[theme],
             )}
           >
-            Checking login ...
+            Checking login...
+            <img src={loader} alt='Loader' />
           </div>
         )}
       </Transition>

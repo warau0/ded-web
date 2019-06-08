@@ -1,0 +1,22 @@
+.imageList {
+  display: flex;
+  overflow-y: hidden;
+  height: 0;
+  transition: height .4s ease-out;
+  margin: 0 var(--pad-sm);
+
+  &.hasContent {
+    height: 100px;
+    overflow-x: scroll;
+  }
+
+  :last-child.thumbPreview {
+    margin-right: 0;
+  }
+
+  .thumbPreview {
+    max-height: 100%;
+    margin-right: var(--pad-sm);
+    padding: var(--pad-sm) 0;
+  }
+}

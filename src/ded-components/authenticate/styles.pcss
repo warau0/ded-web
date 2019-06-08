@@ -6,10 +6,15 @@
   right: 0;
   z-index: var(--z-login-overlay);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 400ms ease-in-out;
   font-size: 1rem;
+
+  > img {
+    height: 40px;
+  }
 
   &.entering { opacity: 1; }
   &.entered { opacity: 1; }

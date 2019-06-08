@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.7.6",
+  "version": "0.8.0",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -35,8 +35,8 @@
     "cross-fetch": "^3.0.2",
     "hooks": "^0.3.2",
     "postcss-custom-properties": "^8.0.10",
-    "postcss-modules": "^1.4.1",
     "postcss-mixins": "^6.2.1",
+    "postcss-modules": "^1.4.1",
     "postcss-nested": "^4.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",

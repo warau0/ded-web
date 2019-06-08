@@ -1,0 +1,42 @@
+.container {
+  background-color: #581F8D;
+
+  .dropzone {
+    height: 225px;
+    background: radial-gradient(755px at 80% -80%, #581F8D 0, #FFCA41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 16px;
+    transition: all .4s ease-out;
+    opacity: .8;
+
+    &.highlight {
+      opacity: 1;
+    }
+
+    &.compact {
+      height: 125px;
+    }
+
+    .dropIndicator {
+      border: 3px dashed rgba(255, 255, 255, .6);
+      padding: var(--pad) var(--pad-md);
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #FFFFFF;
+
+      .icon {
+        height: 32px;
+        width: 32px;
+        margin-right: var(--pad-sm);
+      }
+    }
+
+    .fileInput {
+      display: none;
+    }
+  }
+}
