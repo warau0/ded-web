@@ -49,4 +49,22 @@ export const API = {
       URL: id => `${API_URL}/plans/${id}`,
     },
   },
+  TAGS: {
+    GET: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/tags`,
+    },
+    PUT: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/tags/${id}`,
+    },
+    POST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/tags`,
+    },
+    DELETE: {
+      METHOD: 'DELETE',
+      URL: id => `${API_URL}/tags/${id}`,
+    },
+  },
 };

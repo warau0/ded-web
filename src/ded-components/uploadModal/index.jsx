@@ -3,6 +3,7 @@ import React, {
   useState,
   useCallback,
   useContext,
+  useEffect,
 } from 'react';
 import cn from 'classnames';
 import CreatableSelect from 'react-select/creatable';
@@ -13,12 +14,18 @@ import ErrorMessage from 'ded-components/errorMessage';
 import Dropzone from 'ded-components/dropzone';
 import UploadPreview from 'ded-components/uploadPreview';
 import { ThemeContext } from 'ded-context';
+import { API } from 'ded-constants';
+import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
 const LoginModal = memo(() => {
-  const [show, setShow] = useState(true);
+  const [getTags] = useApi(API.TAGS.GET);
+
+  const [show, setShow] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [fetchedTags, setFetchedTags] = useState(false);
+  const [tagOptions, setTagOptions] = useState([]);
 
   // Form data
   const [images, setImages] = useState([]);
@@ -29,6 +36,17 @@ const LoginModal = memo(() => {
   const [tags, setTags] = useState([]);
 
   const [theme] = useContext(ThemeContext);
+
+  useEffect(() => {
+    if (show && !fetchedTags) {
+      getTags().then(res => setTagOptions(res.tags.map(tag => ({
+        id: tag.id,
+        value: tag.text,
+        label: tag.text,
+      }))));
+      setFetchedTags(true);
+    }
+  }, [show]);
 
   const _openModal = useCallback(() => {
     setShow(true);
@@ -58,12 +76,6 @@ const LoginModal = memo(() => {
     console.log('hours', hours);
     console.log('tags', tags);
   };
-
-  const tagOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
 
   return (
     <>
