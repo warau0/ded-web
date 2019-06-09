@@ -5,15 +5,78 @@
   .inputContainer {
     margin: var(--pad);
 
-    textarea {
-      border: none;
-      padding: var(--pad-sm);
-      width: 100% !important;
-      min-height: 50px;
+    .inputRow {
+      display: flex;
+
+      .label {
+        flex-direction: column;
+        display: flex;
+        flex: 1;
+        font-size: .8rem;
+        font-weight: 500;
+
+        .labelText {
+          margin: var(--pad-sm) 0;
+        }
+      }
+
+      .hours {
+        width: 75px;
+        flex: 0;
+        margin-right: var(--pad);
+
+        input {
+          padding: var(--pad-xs);
+          height: var(--form-height);
+          border: 1px solid #CCCCCC;
+          border-radius: 4px;
+        }
+      }
+
+      .tags {
+        height: 100%;
+        font-weight: 400;
+      }
+
+      .checkboxes {
+        width: 75px;
+        margin-right: var(--pad);
+        display: flex;
+        flex-direction: column;
+
+        .checkbox {
+          flex: 1;
+          font-weight: 500;
+          font-size: .8rem;
+          display: flex;
+          align-items: center;
+
+          label {
+            display: flex;
+            cursor: pointer;
+          }
+
+          input {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .textareaContainer {
+        flex: 1;
+
+        textarea {
+          border: 1px solid #CCCCCC;
+          border-radius: 4px;
+          padding: var(--pad-sm);
+          width: 100% !important;
+          min-height: 50px;
+        }
+      }
     }
 
     .submitContainer {
-      margin-top: var(--pad-sm);
+      margin-top: var(--pad);
       display: flex;
       justify-content: flex-end;
 

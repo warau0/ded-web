@@ -39,7 +39,7 @@
   --border-radius: 10px;
   --modal-size: 450px;
   --header-height: 56px;
-  --form-height: 42px;
+  --form-height: 38px;
   --header-icon-size: 34px;
   --menu-width: 350px;
 
@@ -50,6 +50,6 @@
   --z-header: 4;
   --z-menu: 9;
   --z-overlay: 10;
+  --z-close-modal: 11;
   --z-login-overlay: 100;
-  --z-close-modal: 101;
 }

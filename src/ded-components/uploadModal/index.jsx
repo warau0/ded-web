@@ -1,12 +1,11 @@
 import React, {
   memo,
   useState,
-  useEffect,
   useCallback,
-  useRef,
   useContext,
 } from 'react';
 import cn from 'classnames';
+import CreatableSelect from 'react-select/creatable';
 
 import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
@@ -18,8 +17,16 @@ import { ThemeContext } from 'ded-context';
 import * as styles from './styles.pcss';
 
 const LoginModal = memo(() => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
+  const [tagInput, setTagInput] = useState('');
+
+  // Form data
   const [images, setImages] = useState([]);
+  const [nsfw, setNsfw] = useState(false);
+  const [priv, setPriv] = useState(false);
+  const [description, setDescription] = useState('');
+  const [hours, setHours] = useState('');
+  const [tags, setTags] = useState([]);
 
   const [theme] = useContext(ThemeContext);
 
@@ -30,13 +37,33 @@ const LoginModal = memo(() => {
     setShow(false);
     setTimeout(() => {
       setImages([]);
-    }, 500); // Clear data after modal has faded out.
+      setNsfw(false);
+      setPriv(false);
+      setDescription('');
+      setHours('');
+      setTags([]);
+    }, 200); // Clear data after modal has faded out.
   }, []);
 
   const _onFilesAdded = (files) => {
     const newImages = images.concat(files);
     setImages(newImages);
   };
+
+  const _submit = () => {
+    console.log('nsfw', nsfw);
+    console.log('priv', priv);
+    console.log('desc', description);
+    console.log('images', images);
+    console.log('hours', hours);
+    console.log('tags', tags);
+  };
+
+  const tagOptions = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ];
 
   return (
     <>
@@ -56,13 +83,78 @@ const LoginModal = memo(() => {
           <UploadPreview images={images} />
 
           <div className={styles.inputContainer}>
-            <textarea
-              placeholder='Anything you want to say?'
-            />
+            <div className={styles.inputRow}>
+              <div className={styles.checkboxes}>
+                <div className={styles.checkbox}>
+                  <label htmlFor='nsfw'>
+                    <input
+                      type='checkbox'
+                      id='nsfw'
+                      value={nsfw}
+                      onChange={() => setNsfw(!nsfw)}
+                    />
+                    Nsfw
+                  </label>
+                </div>
+                <div className={styles.checkbox}>
+                  <label htmlFor='private'>
+                    <input
+                      type='checkbox'
+                      id='private'
+                      value={priv}
+                      onChange={() => setPriv(!priv)}
+                    />
+                    Private
+                  </label>
+                </div>
+              </div>
+              <div className={styles.textareaContainer}>
+                <textarea
+                  placeholder='Anything you want to say?'
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputRow}>
+              <label htmlFor='hours' className={cn(styles.label, styles.hours)}>
+                <span className={styles.labelText}>Hours</span>
+                <input
+                  id='hours'
+                  name='hours'
+                  value={hours}
+                  placeholder={0}
+                  type='number'
+                  min={0}
+                  max={999}
+                  onChange={(e) => { if (e.target.value.length <= 3) setHours(e.target.value); }}
+                />
+              </label>
+
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label className={styles.label} htmlFor='tags'>
+                <span className={styles.labelText}>Tags</span>
+                <CreatableSelect
+                  options={tagOptions}
+                  isMulti
+                  aria-label='tags'
+                  inputId='tags'
+                  name='tags'
+                  placeholder='Anatomy, master study, animation, etc ...'
+                  className={styles.tags}
+                  value={tags}
+                  onChange={value => setTags(value)}
+                  onInputChange={(e) => { if (e.length <= 50) setTagInput(e); }}
+                  inputValue={tagInput}
+                />
+              </label>
+            </div>
+
 
             <div className={styles.submitContainer}>
-              <Button text='Cancel' brand='mono' square />
-              <Button text='Submit' brand='success' square />
+              <Button text='Cancel' brand='mono' square onClick={_closeModal} />
+              <Button text='Submit' brand='success' square onClick={_submit} />
             </div>
           </div>
 
