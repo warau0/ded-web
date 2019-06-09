@@ -18,8 +18,9 @@ import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
-const LoginModal = memo(() => {
+const UploadModal = memo(() => {
   const [getTags] = useApi(API.TAGS.GET);
+  const [postSubmission] = useApi(API.SUBMISSIONS.POST);
 
   const [show, setShow] = useState(false);
   const [tagInput, setTagInput] = useState('');
@@ -68,12 +69,18 @@ const LoginModal = memo(() => {
   };
 
   const _submit = () => {
-    console.log('nsfw', nsfw);
-    console.log('priv', priv);
-    console.log('desc', description);
-    console.log('images', images);
-    console.log('hours', hours);
-    console.log('tags', tags);
+    const uploadForm = new FormData();
+
+    uploadForm.append('description', description || '');
+    uploadForm.append('hours', hours || 0);
+    uploadForm.append('nsfw', nsfw ? 1 : 0);
+    uploadForm.append('private', priv ? 1 : 0);
+    uploadForm.append('tags', JSON.stringify(tags));
+    images.forEach(file => uploadForm.append('images[]', file));
+
+    postSubmission(null, uploadForm, false).then(() => {
+      _closeModal();
+    }).catch(() => {});
   };
 
   return (
@@ -176,4 +183,4 @@ const LoginModal = memo(() => {
   );
 });
 
-export default LoginModal;
+export default UploadModal;

@@ -67,4 +67,22 @@ export const API = {
       URL: id => `${API_URL}/tags/${id}`,
     },
   },
+  SUBMISSIONS: {
+    GET: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/submissions`,
+    },
+    PUT: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/submissions/${id}`,
+    },
+    POST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/submissions`,
+    },
+    DELETE: {
+      METHOD: 'DELETE',
+      URL: id => `${API_URL}/submissions/${id}`,
+    },
+  },
 };

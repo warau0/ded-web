@@ -10,16 +10,16 @@ export default (API) => {
 
   const [_, setIsLoggedIn] = useContext(LoginContext);
 
-  const callApi = async (urlParam = null, data = null) => {
+  const callApi = async (urlParam = null, data = null, isJson = true) => {
     try {
       setLoading(true);
       setError(null);
       const token = localStorage.getItem(STORAGE.TOKEN);
       const result = await fetch(API.URL(urlParam), {
         method: API.METHOD,
-        ...(API.METHOD !== 'GET') && { body: JSON.stringify(data) },
+        ...(API.METHOD !== 'GET') && { body: isJson ? JSON.stringify(data) : data },
         headers: {
-          'Content-Type': 'application/json',
+          ...isJson && { 'Content-Type': 'application/json' },
           ...token && { Authorization: `Bearer ${token}` },
         },
       });
