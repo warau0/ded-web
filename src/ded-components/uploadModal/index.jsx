@@ -12,6 +12,7 @@ import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
 import Dropzone from 'ded-components/dropzone';
 import UploadPreview from 'ded-components/uploadPreview';
+import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext } from 'ded-context';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
@@ -20,7 +21,10 @@ import * as styles from './styles.pcss';
 
 const UploadModal = memo(() => {
   const [getTags] = useApi(API.TAGS.GET);
-  const [postSubmission] = useApi(API.SUBMISSIONS.POST);
+  const [
+    postSubmission, postSubmissionLoading,
+    postSubmissionError, clearPostSubmissionError,
+  ] = useApi(API.SUBMISSIONS.POST);
 
   const [show, setShow] = useState(false);
   const [tagInput, setTagInput] = useState('');
@@ -60,6 +64,7 @@ const UploadModal = memo(() => {
       setDescription('');
       setHours('');
       setTags([]);
+      clearPostSubmissionError();
     }, 200); // Clear data after modal has faded out.
   }, []);
 
@@ -70,6 +75,7 @@ const UploadModal = memo(() => {
 
   const _submit = () => {
     const uploadForm = new FormData();
+    clearPostSubmissionError();
 
     uploadForm.append('description', description || '');
     uploadForm.append('hours', hours || 0);
@@ -99,6 +105,11 @@ const UploadModal = memo(() => {
             images={images}
           />
           <UploadPreview images={images} />
+
+          <ErrorMessage
+            className={styles.error}
+            error={postSubmissionError}
+          />
 
           <div className={styles.inputContainer}>
             <div className={styles.inputRow}>
@@ -172,8 +183,20 @@ const UploadModal = memo(() => {
 
 
             <div className={styles.submitContainer}>
-              <Button text='Cancel' brand='mono' square onClick={_closeModal} />
-              <Button text='Submit' brand='success' square onClick={_submit} />
+              <Button
+                text='Cancel'
+                brand='mono'
+                square
+                onClick={_closeModal}
+                disabled={postSubmissionLoading}
+              />
+              <Button
+                text='Submit'
+                brand='success'
+                square
+                onClick={_submit}
+                loading={postSubmissionLoading}
+              />
             </div>
           </div>
 
