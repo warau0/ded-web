@@ -28,8 +28,8 @@
         input {
           padding: var(--pad-xs);
           height: var(--form-height);
-          border: 1px solid #CCCCCC;
-          border-radius: 4px;
+          border: 1px solid;
+          border-radius: var(--form-border-radius);
         }
       }
 
@@ -41,11 +41,9 @@
       .checkboxes {
         width: 75px;
         margin-right: var(--pad);
-        display: flex;
-        flex-direction: column;
 
         .checkbox {
-          flex: 1;
+          height: 25px;
           font-weight: 500;
           font-size: .8rem;
           display: flex;
@@ -66,8 +64,8 @@
         flex: 1;
 
         textarea {
-          border: 1px solid #CCCCCC;
-          border-radius: 4px;
+          border: 1px solid;
+          border-radius: var(--form-border-radius);
           padding: var(--pad-sm);
           width: 100% !important;
           min-height: 50px;
@@ -88,19 +86,49 @@
 }
 
 .innerContent.light {
-  .inputContainer {
-    textarea {
+  .inputContainer .inputRow {
+    input, textarea, .tags > div {
       background-color: var(--light-header);
       color: var(--light-text);
+      border-color: var(--light-form-border);
     }
   }
 }
 
 .innerContent.dark {
-  .inputContainer {
-    textarea {
+  .inputContainer .inputRow {
+    input, textarea, .tags > div {
       background-color: var(--dark-header);
       color: var(--dark-text);
+      border-color: var(--dark-form-border);
+    }
+  }
+
+  .tags {
+    :global {
+      .tags__input input {
+        color: var(--dark-text) !important;
+      }
+
+      .tags__multi-value {
+        background-color: var(--dark-bg);
+
+        .tags__multi-value__label {
+          color: var(--dark-text);
+        }
+      }
+
+      .tags__clear-indicator, .tags__dropdown-indicator {
+        color: var(--dark-text);
+
+        &:hover {
+          color: #FFFFFF;
+        }
+      }
+
+      .tags__option--is-focused {
+        background-color: var(--dark-bg);
+      }
     }
   }
 }

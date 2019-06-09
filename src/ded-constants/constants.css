@@ -13,6 +13,7 @@
   --light-border: #E5E5E5;
   --light-element: #FFFFFF;
   --light-hover: #F7F7F7;
+  --light-form-border: #CCCCCC;
 
   --dark-bg: #36393F;
   --dark-text: #DCDDDE;
@@ -21,6 +22,7 @@
   --dark-border: #C5C8C6;
   --dark-element: #2F3136;
   --dark-hover: #4E5258;
+  --dark-form-border: #444444;
 
   /* Sizes */
 
@@ -37,6 +39,7 @@
   --pad-xl: 3rem;
 
   --border-radius: 10px;
+  --form-border-radius: 4px;
   --modal-size: 450px;
   --header-height: 56px;
   --form-height: 38px;

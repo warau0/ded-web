@@ -10,7 +10,6 @@ import CreatableSelect from 'react-select/creatable';
 
 import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
-import ErrorMessage from 'ded-components/errorMessage';
 import Dropzone from 'ded-components/dropzone';
 import UploadPreview from 'ded-components/uploadPreview';
 import { ThemeContext } from 'ded-context';
@@ -159,6 +158,7 @@ const LoginModal = memo(() => {
                   onChange={value => setTags(value)}
                   onInputChange={(e) => { if (e.length <= 50) setTagInput(e); }}
                   inputValue={tagInput}
+                  classNamePrefix='tags'
                 />
               </label>
             </div>
