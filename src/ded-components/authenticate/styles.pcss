@@ -12,10 +12,6 @@
   transition: opacity 400ms ease-in-out;
   font-size: 1rem;
 
-  > img {
-    height: 40px;
-  }
-
   &.entering { opacity: 1; }
   &.entered { opacity: 1; }
   &.exiting { opacity: 0; }
@@ -29,5 +25,9 @@
   &.dark {
     background-color: var(--dark-bg);
     color: var(--dark-text);
+  }
+
+  .loader {
+    margin-top: var(--pad);
   }
 }

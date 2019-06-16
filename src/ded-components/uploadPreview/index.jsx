@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-import { loader } from 'ded-assets';
+import Loader from 'ded-components/loader';
 
 import styles from './styles.pcss';
 
@@ -19,7 +19,12 @@ const UploadPreview = ({ images }) => {
 
         const reader = new FileReader();
         reader.onload = (e) => {
-          document.getElementById(id).src = e.target.result;
+          const img = document.getElementById(id);
+          const loader = document.getElementById(`${id}:loader`);
+
+          img.src = e.target.result;
+          img.style.display = 'inline-block';
+          loader.style.display = 'none';
         };
         reader.readAsDataURL(image);
       }
@@ -36,13 +41,19 @@ const UploadPreview = ({ images }) => {
       {images.map((image) => {
         const id = `${image.name}:${image.size}`;
         return (
-          <img
-            key={id}
-            id={id}
-            src={loader}
-            alt={image.name}
-            className={styles.thumbPreview}
-          />
+          <Fragment key={id}>
+            <img
+              id={id}
+              alt={image.name}
+              className={styles.thumbPreview}
+            />
+            <Loader
+              id={`${id}:loader`}
+              alt={image.name}
+              className={styles.thumbLoader}
+              size='sm'
+            />
+          </Fragment>
         );
       })}
     </div>

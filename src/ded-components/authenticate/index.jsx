@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import { ThemeContext, LoginContext } from 'ded-context';
-import { loader } from 'ded-assets';
+import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
@@ -38,7 +38,7 @@ const Authenticate = memo(({ children }) => {
             )}
           >
             Checking login...
-            <img src={loader} alt='Loader' />
+            <Loader className={styles.loader} />
           </div>
         )}
       </Transition>
