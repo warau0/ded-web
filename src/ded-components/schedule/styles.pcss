@@ -93,6 +93,12 @@
       height: 150px;
     }
 
+    .timestampEnd, .dayEnd {
+      @mixin phone {
+        display: none;
+      }
+    }
+
     .dayView {
       flex: 1;
       display: flex;
@@ -116,7 +122,7 @@
             border: none;
           }
 
-          span {
+          .timestamp {
             text-align: center;
             padding-bottom: var(--pad-xs);
             font-size: .6rem;
@@ -152,12 +158,20 @@
           display: flex;
           position: relative;
 
-          span {
+          .timestamp {
             position: absolute;
             bottom: -5px;
             left: -35px;
             margin-left: 5px;
             font-size: .6rem;
+          }
+
+          @mixin phone {
+            margin-left: 20px;
+
+            .timestamp {
+              left: -20px;
+            }
           }
         }
       }
@@ -219,7 +233,7 @@
         max-height: calc(100% - 16px);
       }
 
-      .timestamp {
+      .duration {
         opacity: 0.8;
         white-space: nowrap;
         font-size: .6rem;

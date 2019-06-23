@@ -106,7 +106,18 @@ export default memo(() => {
       .catch(() => {});
   }, [editPlan]);
 
-  const _renderTime = hour => `${`0${hour}`.slice(-2)}:00`;
+  const _renderTime = (hour, mobileFriendly = false) => {
+    if (mobileFriendly) {
+      return (
+        <>
+          {`${`0${hour}`.slice(-2)}`}
+          <span className={styles.timestampEnd}>:00</span>
+        </>
+      );
+    }
+
+    return `${`0${hour}`.slice(-2)}:00`;
+  };
 
   const _renderPlan = (dayIndex, hour) => {
     const plan = plans[dayIndex] && plans[dayIndex][hour]
@@ -135,8 +146,10 @@ export default memo(() => {
             {plan.text}
           </div>
           {duration > 1 && (
-            <div className={styles.timestamp}>
-              {`${_renderTime(hour)} - ${_renderTime(hour + duration)}`}
+            <div className={styles.duration}>
+              {_renderTime(hour, true)}
+              {' - '}
+              {_renderTime(hour + duration, true)}
             </div>
           )}
         </div>
@@ -173,10 +186,13 @@ export default memo(() => {
           <div className={styles.weekView}>
             {days.map(day => (
               <div className={styles.day} key={day.id}>
-                <div className={styles.dayHeader}>{day.name}</div>
+                <div className={styles.dayHeader}>
+                  {day.name.slice(0, 3)}
+                  <span className={styles.dayEnd}>{day.name.slice(3)}</span>
+                </div>
                 {hours.map(hour => (
                   <div className={styles.hour} key={hour}>
-                    <span>{_renderTime(hour)}</span>
+                    <span className={styles.timestamp}>{_renderTime(hour, true)}</span>
                     {_renderPlan(day.id, hour - 1)}
                   </div>
                 ))}
@@ -194,12 +210,12 @@ export default memo(() => {
             <div className={styles.dayHeader}>{days.find(day => day.id === today).name}</div>
             <div className={styles.days}>
               <div className={styles.hour} key={0}>
-                <span>{_renderTime(0)}</span>
+                <span className={styles.timestamp}>{_renderTime(0, true)}</span>
                 {_renderPlan(today, 0)}
               </div>
               {hours.map(hour => (
                 <div className={styles.hour} key={hour}>
-                  <span>{_renderTime(hour)}</span>
+                  <span className={styles.timestamp}>{_renderTime(hour, true)}</span>
                   {_renderPlan(today, hour)}
                 </div>
               ))}
