@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.8.7",
+  "version": "0.9.0",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -22,7 +22,8 @@
     "ded-constants": "./src/ded-constants",
     "ded-context": "./src/ded-context",
     "ded-hooks": "./src/ded-hooks",
-    "ded-routes": "./src/ded-routes"
+    "ded-routes": "./src/ded-routes",
+    "ded-utils": "./src/ded-utils"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",

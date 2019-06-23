@@ -13,7 +13,8 @@
           ["ded-constants", "./src/ded-constants"],
           ["ded-context", "./src/ded-context"],
           ["ded-hooks", "./src/ded-hooks"],
-          ["ded-routes", "./src/ded-routes"]
+          ["ded-routes", "./src/ded-routes"],
+          ["ded-utils", "./src/ded-utils"]
         ],
         "extensions": [".js", ".jsx", ".png", ".jpg", ".json"]
       }

@@ -8,6 +8,7 @@ export const THEME = {
 export const STORAGE = {
   TOKEN: 'dedToken',
   THEME: 'dedTheme',
+  TIMER_LOGS: 'dedTimerLogs',
 };
 
 export const { API_URL } = config;

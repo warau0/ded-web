@@ -2,7 +2,7 @@ import React, { useContext, memo } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-import { ThemeContext } from 'ded-context/themeContext';
+import { ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 

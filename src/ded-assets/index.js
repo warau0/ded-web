@@ -6,6 +6,7 @@ import images from './images.png';
 import logo from './logo.png';
 import moon from './moon.png';
 import plus from './plus-circle.png';
+import stopwatch from './stopwatch.png';
 import success from './success.png';
 import sun from './sun.png';
 
@@ -18,6 +19,7 @@ export {
   logo,
   moon,
   plus,
+  stopwatch,
   success,
   sun,
 };

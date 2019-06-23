@@ -7,6 +7,8 @@ const Intro = lazy(() => import('ded-routes/intro'));
 const Dashboard = lazy(() => import('ded-routes/dashboard'));
 const Profile = lazy(() => import('ded-routes/profile'));
 
+const Timer = lazy(() => import('ded-components/timer'));
+
 export default () => {
   const [isLoggedIn] = useContext(LoginContext);
 
@@ -17,6 +19,8 @@ export default () => {
         : <Route path='/' exact component={Intro} />
       }
       <Route path='/profile' component={Profile} />
+
+      {isLoggedIn && <Timer />}
     </>
   );
 };
