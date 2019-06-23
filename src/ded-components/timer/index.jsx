@@ -139,6 +139,7 @@ export default memo(() => {
     setLoggedTime(0);
     setActiveTime(0);
     saveLogs([]);
+    setStartingTimes([0, 0]);
     logLabels = [];
   };
 
