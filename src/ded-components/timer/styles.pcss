@@ -105,8 +105,6 @@
     .log {
       flex: 1;
       overflow-y: auto;
-      border-bottom: 2px solid;
-      border-top: 2px solid;
 
       .info {
         padding: var(--pad);
@@ -135,7 +133,7 @@
           padding: 2px var(--pad-xs);
           width: 140px;
           border: 1px solid;
-          border-radius: var(--form-border-radius);
+          border-radius: var(--border-radius);
         }
       }
     }
@@ -153,7 +151,7 @@
 }
 
 .timer.light {
-  background-color: var(--light-element);
+  background-color: var(--light-bg);
   color: var(--light-text);
 
   .close {
@@ -161,7 +159,7 @@
   }
 
   .log {
-    border-color: var(--light-border);
+    background-color: var(--light-element);
 
     .line {
       border-color: var(--light-border);
@@ -176,7 +174,7 @@
 }
 
 .timer.dark {
-  background-color: var(--dark-element);
+  background-color: var(--dark-bg);
   color: var(--dark-text);
 
   .close {
@@ -184,7 +182,7 @@
   }
 
   .log {
-    border-color: var(--dark-border);
+    background-color: var(--dark-element);
 
     .line {
       border-color: var(--dark-border);

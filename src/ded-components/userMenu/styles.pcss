@@ -28,10 +28,6 @@
     min-width: var(--menu-width);
     z-index: var(--z-menu);
 
-    .borderTop {
-      border-top: 2px solid;
-    }
-
     .triangleContainer {
       overflow: hidden;
       height: 15px;
@@ -51,7 +47,7 @@
 
     .menuContent {
       overflow: hidden;
-      border-radius: 10px;
+      border-radius: var(--border-radius);
 
       .menuHeader {
         margin: 0;
@@ -64,8 +60,6 @@
         margin: 0;
 
         li {
-          border-top: 2px solid;
-
           p, a, button {
             width: 100%;
             text-align: left;
@@ -92,21 +86,21 @@
   color: var(--light-text);
   border-color: var(--light-border);
 
-  .borderTop {
-    border-color: var(--light-border);
-  }
-
   .triangleContainer .triangle {
     border-color: var(--light-border);
-    background: var(--light-element);
+    background: var(--light-bg);
   }
 
-  .menuContent .menuList li {
-    border-color: var(--light-border);
+  .menuContent {
+    .menuHeader {
+      background-color: var(--light-bg);
+    }
 
-    a, button {
-      &:hover, &:focus {
-        background-color: var(--light-hover);
+    .menuList li {
+      a, button {
+        &:hover, &:focus {
+          background-color: var(--light-hover);
+        }
       }
     }
   }
@@ -117,21 +111,21 @@
   color: var(--dark-text);
   border-color: var(--dark-border);
 
-  .borderTop {
-    border-color: var(--dark-border);
-  }
-
   .triangleContainer .triangle {
     border-color: var(--dark-border);
-    background: var(--dark-element);
+    background: var(--dark-header);
   }
 
-  .menuContent .menuList li {
-    border-color: var(--dark-border);
+  .menuContent {
+    .menuHeader {
+      background-color: var(--dark-header);
+    }
 
-    a, button {
-      &:hover, &:focus {
-        background-color: var(--dark-hover);
+    .menuList li {
+      a, button {
+        &:hover, &:focus {
+          background-color: var(--dark-hover);
+        }
       }
     }
   }

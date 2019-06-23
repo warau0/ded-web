@@ -89,7 +89,7 @@ export default memo(() => {
               {_renderNotifications()}
             </ul>
 
-            <h2 className={cn(styles.menuHeader, styles.borderTop)}>Account</h2>
+            <h2 className={styles.menuHeader}>Account</h2>
             <ul className={styles.menuList}>
               <li>
                 <Link to='profile'>Your profile</Link>
