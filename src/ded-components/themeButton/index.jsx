@@ -1,5 +1,6 @@
 import React, { useContext, memo } from 'react';
 
+import Button from 'ded-components/button';
 import { ThemeContext } from 'ded-context/themeContext';
 import { sun, moon } from 'ded-assets';
 import { THEME } from 'ded-constants';
@@ -14,12 +15,20 @@ export default memo(() => {
   };
 
   return (
-    <button type='button' onClick={toggleTheme} className={styles.ghost}>
-      <img
-        src={theme === THEME.LIGHT ? sun : moon}
-        alt={theme === THEME.LIGHT ? 'Light theme' : 'Dark theme'}
-        className={styles.icon}
-      />
-    </button>
+    <Button
+      onClick={toggleTheme}
+      plainFocus
+      plainText
+      brand='ghost'
+    >
+      <span className={styles.innerButton}>
+        <span>Theme</span>
+        <img
+          src={theme === THEME.LIGHT ? sun : moon}
+          alt={theme === THEME.LIGHT ? 'Light theme' : 'Dark theme'}
+          className={styles.icon}
+        />
+      </span>
+    </Button>
   );
 });

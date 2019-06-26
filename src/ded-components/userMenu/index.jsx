@@ -7,6 +7,7 @@ import React, {
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
+import ThemeButton from 'ded-components/themeButton';
 import Button from 'ded-components/button';
 import { LoginContext, ThemeContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
@@ -89,13 +90,17 @@ export default memo(() => {
               {_renderNotifications()}
             </ul>
 
+            <h2 className={styles.menuHeader}>Settings</h2>
+            <ul className={styles.menuList}>
+              <li>
+                <ThemeButton />
+              </li>
+            </ul>
+
             <h2 className={styles.menuHeader}>Account</h2>
             <ul className={styles.menuList}>
               <li>
                 <Link to='profile'>Your profile</Link>
-              </li>
-              <li>
-                <Link to='settings'>Settings</Link>
               </li>
               <li>
                 <Button

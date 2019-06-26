@@ -2,7 +2,6 @@ import React, { memo, useContext, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import ThemeButton from 'ded-components/themeButton';
 import UserMenu from 'ded-components/userMenu';
 import Layout from 'ded-components/layout';
 import { ThemeContext, LoginContext } from 'ded-context';
@@ -34,7 +33,6 @@ export default memo(() => {
               : <LoginModal />
             }
           </div>
-          <div className={styles.menuItem}><ThemeButton /></div>
           {isLoggedIn && <div className={styles.menuItem}><UserMenu /></div>}
         </div>
       </Layout>
