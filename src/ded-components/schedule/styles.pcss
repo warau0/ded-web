@@ -84,6 +84,7 @@
     overflow: hidden;
     width: 100%;
     border-radius: var(--border-radius);
+    overflow-x: auto;
 
     &.tall {
       height: calc(3px + (var(--hour-height) * 24) + var(--header-height));
@@ -95,6 +96,10 @@
 
     .timestampEnd, .dayEnd {
       @mixin phone {
+        display: none;
+      }
+
+      @mixin tablet {
         display: none;
       }
     }

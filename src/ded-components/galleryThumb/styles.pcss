@@ -1,0 +1,28 @@
+.thumb {
+  display: flex;
+  position: relative;
+  word-break: break-word;
+
+  img {
+    width: 100%;
+  }
+
+  .multi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: rgba(255, 255, 255, .8);
+    padding: var(--pad-xs);
+    filter: invert(75%);
+  }
+}
+
+.thumb.light {
+  color: var(--light-text);
+}
+
+.thumb.dark {
+  color: var(--dark-text);
+}

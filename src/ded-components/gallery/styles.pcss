@@ -1,0 +1,32 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+
+  > a, > div {
+    width: calc(100% / 3);
+
+    @media (min-width: 768px) {
+      width: calc(100% / 4);
+    }
+
+    @media (min-width: 1200px) {
+      width: calc(100% / 5);
+    }
+
+    @media (min-width: 1680px) {
+      width: calc(100% / 6);
+    }
+  }
+
+  &.mosaic {
+    > a, > div {
+      @mixin desktop {
+        width: calc(100% / 8);
+      }
+
+      @mixin wide {
+        width: calc(100% / 12);
+      }
+    }
+  }
+}
