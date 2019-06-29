@@ -14,6 +14,7 @@ import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Button from 'ded-components/button';
 import Modal from 'ded-components/modal';
+import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
@@ -41,7 +42,7 @@ export default memo(() => {
   const [editPlan, setEditPlan] = useState(null);
   const [expand, setExpand] = useState(false);
   const [plans, setPlans] = useState([]);
-  const [getPlans] = useApi(API.PLANS.GET);
+  const [getPlans, plansLoading] = useApi(API.PLANS.GET);
   const [putPlan, putLoading, putError, clearPutError] = useApi(API.PLANS.PUT);
   const [postPlan, postLoading, postError, clearPostError] = useApi(API.PLANS.POST);
   const [deletePlan, deleteLoading, deleteError, clearDeleteError] = useApi(API.PLANS.DELETE);
@@ -179,6 +180,12 @@ export default memo(() => {
   return (
     <div className={cn(styles.scheduleContainer, styles[theme])}>
       <div className={cn(styles.schedule, (expand ? styles.tall : styles.short))}>
+        {plansLoading && (
+          <div className={styles.loadingContainer}>
+            <Loader />
+          </div>
+        )}
+
         {expand ? (
           /**
            * Week view

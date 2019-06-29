@@ -5,16 +5,25 @@ import cn from 'classnames';
 import { useApi } from 'ded-hooks';
 import { API } from 'ded-constants';
 import GalleryThumb from 'ded-components/galleryThumb';
+import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
 const Gallery = memo(({ big }) => {
-  const [getSubmissions] = useApi(API.SUBMISSIONS.GET);
+  const [getSubmissions, submissionsLoading] = useApi(API.SUBMISSIONS.GET);
   const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
     getSubmissions().then(res => setSubmissions(res.submissions));
   }, []);
+
+  if (submissionsLoading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className={cn(styles.gallery, {
