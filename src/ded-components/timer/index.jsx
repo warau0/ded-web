@@ -5,6 +5,7 @@ import React, {
   useEffect,
 } from 'react';
 import cn from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
 import { ThemeContext, LoginContext } from 'ded-context';
 import Button from 'ded-components/button';
@@ -12,6 +13,7 @@ import { stopwatch } from 'ded-assets';
 import { STORAGE } from 'ded-constants';
 import secondsToTimestamp from 'ded-utils/secondsToTimestamp';
 import epochToTimestamp from 'ded-utils/epochToTimestamp';
+import diffTimes from 'ded-utils/diffTimes';
 
 import * as styles from './styles.pcss';
 
@@ -197,13 +199,19 @@ export default memo(() => {
                 className={styles.line}
                 key={log.start}
               >
-                <div className={styles.timestamp}>{`${log.startTimestamp} - ${log.endTimestamp || 'now'}`}</div>
+                <div
+                  {...log.end && { 'data-tip': diffTimes(log.start, log.end) }}
+                  className={styles.timestamp}
+                >
+                  {`${log.startTimestamp} - ${log.endTimestamp || 'now'}`}
+                </div>
                 <input
                   placeholder='...'
                   id={`log-label-${i}`}
                   onChange={e => onLabelChange(i, e.target.value)}
                   maxLength={50}
                 />
+                {log.end && <ReactTooltip />}
               </div>
             ))}
 
