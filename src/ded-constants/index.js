@@ -86,4 +86,10 @@ export const API = {
       URL: id => `${API_URL}/submissions/${id}`,
     },
   },
+  USERS: {
+    SUBMISSIONS: {
+      METHOD: 'GET',
+      URL: id => `${API_URL}/users/${id}/submissions`,
+    },
+  },
 };

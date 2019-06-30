@@ -18,7 +18,7 @@ export default () => {
         ? <Route path='/' exact component={Dashboard} />
         : <Route path='/' exact component={Intro} />
       }
-      <Route path='/profile' component={Profile} />
+      <Route path='/user/:id' component={Profile} />
 
       {isLoggedIn && <Timer />}
     </>

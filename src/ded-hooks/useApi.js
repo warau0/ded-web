@@ -8,7 +8,7 @@ export default (API) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [_, setIsLoggedIn] = useContext(LoginContext);
+  const [_, __, setIsLoggedIn] = useContext(LoginContext);
 
   const callApi = async (urlParam = null, data = null, isJson = true) => {
     try {

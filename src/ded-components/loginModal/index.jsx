@@ -31,7 +31,7 @@ const LoginModal = memo(() => {
   const [registerRecaptcha, setRegisterRecaptcha] = useState(null);
 
   const [theme] = useContext(ThemeContext);
-  const [_, setIsLoggedIn] = useContext(LoginContext);
+  const [_, __, setIsLoggedIn] = useContext(LoginContext);
 
   const [login, loginLoading, loginError, clearLoginError] = useApi(API.LOGIN);
   const [register, registerLoading, registerError, clearRegisterError] = useApi(API.REGISTER);

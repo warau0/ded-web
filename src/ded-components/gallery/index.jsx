@@ -1,23 +1,14 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { useApi } from 'ded-hooks';
-import { API } from 'ded-constants';
 import GalleryThumb from 'ded-components/galleryThumb';
 import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
-const Gallery = memo(({ big }) => {
-  const [getSubmissions, submissionsLoading] = useApi(API.SUBMISSIONS.GET);
-  const [submissions, setSubmissions] = useState([]);
-
-  useEffect(() => {
-    getSubmissions().then(res => setSubmissions(res.submissions));
-  }, []);
-
-  if (submissionsLoading) {
+const Gallery = memo(({ big, loading, submissions }) => {
+  if (loading) {
     return (
       <div className={styles.loadingContainer}>
         <Loader />
@@ -46,10 +37,23 @@ const Gallery = memo(({ big }) => {
 
 Gallery.defaultProps = {
   big: false,
+  loading: false,
+  submissions: [],
 };
 
 Gallery.propTypes = {
   big: PropTypes.bool,
+  loading: PropTypes.bool,
+  submissions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    user_id: PropTypes.number,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      thumbnail: PropTypes.shape({
+        name: PropTypes.string,
+        url: PropTypes.string,
+      }),
+    })),
+  })),
 };
 
 export default Gallery;

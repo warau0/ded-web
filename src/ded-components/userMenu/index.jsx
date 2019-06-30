@@ -24,7 +24,7 @@ export default memo(() => {
   const [notifications, setNotifications] = useState([]);
   const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS.GET);
 
-  const [_, setIsLoggedIn] = useContext(LoginContext);
+  const [_, user, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export default memo(() => {
             <h2 className={styles.menuHeader}>Account</h2>
             <ul className={styles.menuList}>
               <li>
-                <Link to='profile'>Your profile</Link>
+                <Link to={`/user/${user ? user.sub : null}`}>Your profile</Link>
               </li>
               <li>
                 <Button
