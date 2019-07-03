@@ -20,7 +20,7 @@ export default () => {
       }
       <Route path='/user/:id' component={Profile} />
 
-      {isLoggedIn && <Timer />}
+      <Timer />
     </>
   );
 };

@@ -7,7 +7,7 @@ import React, {
 import cn from 'classnames';
 import ReactTooltip from 'react-tooltip';
 
-import { ThemeContext, LoginContext } from 'ded-context';
+import { ThemeContext } from 'ded-context';
 import Button from 'ded-components/button';
 import { stopwatch } from 'ded-assets';
 import { STORAGE } from 'ded-constants';
@@ -22,10 +22,11 @@ let logLabels = [];
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
-  const [isLoggedIn] = useContext(LoginContext);
 
   const [logs, setLogs] = useState([]);
-  const [showTimer, setShowTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(
+    JSON.parse(window.localStorage.getItem(STORAGE.TIMER_SHOW) || false),
+  );
   const [active, setActive] = useState(false);
   const [loggedTime, setLoggedTime] = useState(0);
   const [activeTime, setActiveTime] = useState(0);
@@ -110,6 +111,11 @@ export default memo(() => {
     window.localStorage.setItem(STORAGE.TIMER_LOGS, JSON.stringify(newLogs));
   };
 
+  const saveShowTimer = (show) => {
+    setShowTimer(show);
+    window.localStorage.setItem(STORAGE.TIMER_SHOW, JSON.stringify(show));
+  };
+
   const start = () => {
     const newLogs = logs;
     const startTime = +new Date();
@@ -154,15 +160,13 @@ export default memo(() => {
     saveLogs(newLogs);
   };
 
-  if (!isLoggedIn) return null;
-
   return (
     <>
       <Button
         noPadding
         aria-label='Open timer'
         type='button'
-        onClick={() => setShowTimer(true)}
+        onClick={() => saveShowTimer(true)}
         className={cn(styles.timerButton, styles[theme], {
           [styles.active]: active,
           [styles.hide]: showTimer,
@@ -181,7 +185,7 @@ export default memo(() => {
         <div className={cn(styles.timer, styles[theme])}>
           <Button
             className={styles.close}
-            onClick={() => setShowTimer(false)}
+            onClick={() => saveShowTimer(false)}
             brand='mono'
             text='X'
             noPadding
