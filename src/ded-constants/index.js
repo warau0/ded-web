@@ -12,6 +12,10 @@ export const STORAGE = {
   TIMER_SHOW: 'dedTimerShow',
 };
 
+export const EVENT = {
+  UPDATE_GALLERY: 'UPDATE_GALLERY',
+};
+
 export const { API_URL } = config;
 
 export const API = {

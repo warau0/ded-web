@@ -13,8 +13,8 @@ import Button from 'ded-components/button';
 import Dropzone from 'ded-components/dropzone';
 import UploadPreview from 'ded-components/uploadPreview';
 import ErrorMessage from 'ded-components/errorMessage';
-import { ThemeContext } from 'ded-context';
-import { API } from 'ded-constants';
+import { ThemeContext, EventContext } from 'ded-context';
+import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
@@ -40,6 +40,7 @@ const UploadModal = memo(() => {
   const [tags, setTags] = useState([]);
 
   const [theme] = useContext(ThemeContext);
+  const [_, fireEvent] = useContext(EventContext);
 
   useEffect(() => {
     if (show && !fetchedTags) {
@@ -91,6 +92,7 @@ const UploadModal = memo(() => {
 
     postSubmission(null, uploadForm, false).then(() => {
       _closeModal();
+      fireEvent(EVENT.UPDATE_GALLERY);
     }).catch(() => {});
   };
 

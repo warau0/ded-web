@@ -1,13 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useApi } from 'ded-hooks';
-import { API } from 'ded-constants';
+import { API, EVENT } from 'ded-constants';
 import Gallery from 'ded-components/gallery';
+import { EventContext, LoginContext } from 'ded-context';
 
 const Profile = ({ match }) => {
   const [getSubmissions, submissionsLoading] = useApi(API.USERS.SUBMISSIONS);
   const [submissions, setSubmissions] = useState([]);
+
+  const [__, user] = useContext(LoginContext);
+  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+
+  useEffect(() => {
+    if (lastEvent === EVENT.UPDATE_GALLERY && user.sub === parseInt(match.params.id, 10)) {
+      consumeEvent();
+      getSubmissions(match.params.id).then(res => setSubmissions(res.submissions));
+    }
+  }, [lastEvent]);
 
   useEffect(() => {
     getSubmissions(match.params.id).then(res => setSubmissions(res.submissions));

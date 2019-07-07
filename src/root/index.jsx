@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './styles.pcss';
 
-import { ThemeProvider, LoginProvider } from 'ded-context';
+import { ThemeProvider, LoginProvider, EventProvider } from 'ded-context';
 
 import PageCrash from 'ded-components/pageCrash';
 import Header from 'ded-components/header';
@@ -15,23 +15,25 @@ import Routes from './routes';
 
 const App = () => (
   <BrowserRouter>
-    <LoginProvider>
-      <ThemeProvider>
-        <PageCrash>
-          <Authenticate>
-            <Suspense fallback={null}>
-              <Header />
-            </Suspense>
+    <EventProvider>
+      <LoginProvider>
+        <ThemeProvider>
+          <PageCrash>
+            <Authenticate>
+              <Suspense fallback={null}>
+                <Header />
+              </Suspense>
 
-            <Suspense fallback={<div>Loading...</div>}>
-              <Wrapper>
-                <Routes />
-              </Wrapper>
-            </Suspense>
-          </Authenticate>
-        </PageCrash>
-      </ThemeProvider>
-    </LoginProvider>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Wrapper>
+                  <Routes />
+                </Wrapper>
+              </Suspense>
+            </Authenticate>
+          </PageCrash>
+        </ThemeProvider>
+      </LoginProvider>
+    </EventProvider>
   </BrowserRouter>
 );
 
