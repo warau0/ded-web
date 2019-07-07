@@ -73,6 +73,11 @@ const UploadModal = memo(() => {
     setImages(newImages);
   };
 
+  const _removeImage = (image) => {
+    const newImages = images.filter(img => img.id !== image);
+    setImages(newImages);
+  };
+
   const _submit = () => {
     const uploadForm = new FormData();
     clearPostSubmissionError();
@@ -103,8 +108,18 @@ const UploadModal = memo(() => {
             onFilesAdded={_onFilesAdded}
             onError={console.warn}
             images={images}
+            maxLength={10}
           />
-          <UploadPreview images={images} />
+          <UploadPreview
+            images={images}
+            onDelete={_removeImage}
+          />
+
+          {images.length === 10 && (
+            <div className={styles.maxLengthLabel}>
+              Max images: 10
+            </div>
+          )}
 
           <ErrorMessage
             className={styles.error}

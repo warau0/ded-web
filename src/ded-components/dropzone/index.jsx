@@ -12,6 +12,7 @@ const Dropzone = ({
   onError,
   fileTypes,
   images,
+  maxLength,
 }) => {
   const [highlight, setHighlight] = useState(false);
 
@@ -32,7 +33,7 @@ const Dropzone = ({
         onError(`File type (${list[i].type}) is not allowed.`);
       }
     }
-    return array;
+    return array.slice(0, (maxLength - images.length) || 0);
   };
 
   const _onChange = (evt) => {
@@ -106,6 +107,7 @@ Dropzone.defaultProps = {
   onError: () => {},
   fileTypes: ['image/jpeg', 'image/png', 'image/gif'],
   images: [],
+  maxLength: 10,
 };
 
 Dropzone.propTypes = {
@@ -117,6 +119,7 @@ Dropzone.propTypes = {
     name: PropTypes.string,
     size: PropTypes.number,
   })),
+  maxLength: PropTypes.number,
 };
 
 export default Dropzone;

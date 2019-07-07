@@ -21,6 +21,12 @@ const Gallery = memo(({ big, loading, submissions }) => {
       [styles.mosaic]: !big,
     })}
     >
+      {submissions.length === 0 && (
+        <i className={styles.emptyLabel}>
+          {'There aren\'t any images here yet :('}
+        </i>
+      )}
+
       {submissions.map(submission => (
         <GalleryThumb
           key={submission.id}
