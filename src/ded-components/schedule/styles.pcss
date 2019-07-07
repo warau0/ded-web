@@ -1,6 +1,8 @@
 :root {
   --header-height: 35px;
   --hour-height: 25px;
+  --min-hour-width: 35px;
+  --min-day-width: 75px;
 }
 
 .tall .plan {
@@ -135,6 +137,7 @@
           padding: var(--pad-xs);
           cursor: pointer;
           position: relative;
+          min-width: var(--min-hour-width);
 
           &:last-child {
             border: none;
@@ -163,6 +166,7 @@
       .day {
         width: calc(100% / 7);
         border-right: 1px solid;
+        min-width: var(--min-day-width);
 
         &:last-child {
           border: none;
@@ -185,6 +189,14 @@
           }
 
           @mixin phone {
+            margin-left: 20px;
+
+            .timestamp {
+              left: -20px;
+            }
+          }
+
+          @mixin tablet {
             margin-left: 20px;
 
             .timestamp {
