@@ -30,7 +30,6 @@ export default memo(() => {
   const [active, setActive] = useState(false);
   const [loggedTime, setLoggedTime] = useState(0);
   const [activeTime, setActiveTime] = useState(0);
-  const [startingTimes, setStartingTimes] = useState([]);
 
   const startTimer = (initialTotal = 0, initialActive = 0) => {
     setActiveTime(initialActive);
@@ -73,6 +72,7 @@ export default memo(() => {
         });
         if (!existingLogs[0].end) {
           setActive(true);
+          startTimer(totalLoggedTime, activeLoggedTime);
         }
       } catch (e) { // Bad json in localStorage
         existingLogs = [];
@@ -81,7 +81,6 @@ export default memo(() => {
 
       setLoggedTime(totalLoggedTime);
       setLogs(existingLogs);
-      setStartingTimes([totalLoggedTime, activeLoggedTime]);
     }
   }, []);
 
@@ -95,16 +94,6 @@ export default memo(() => {
       inputEl.value = logLabels[i];
     });
   }, [logs]);
-
-  useEffect(() => {
-    if (startingTimes.length) { // Wait till localStorage times have loaded.
-      if (active) { // Loading from active state.
-        startTimer(...startingTimes);
-      } else if (timerInterval) {
-        stopTimer();
-      }
-    }
-  }, [active, startingTimes]);
 
   const saveLogs = (newLogs) => {
     setLogs(newLogs);
@@ -128,6 +117,7 @@ export default memo(() => {
 
     saveLogs(newLogs);
     setActive(true);
+    startTimer(loggedTime);
   };
 
   const stop = () => {
@@ -140,14 +130,13 @@ export default memo(() => {
 
     saveLogs(newLogs);
     setActive(false);
-    setStartingTimes([loggedTime, 0]);
+    stopTimer();
   };
 
   const reset = () => {
     setLoggedTime(0);
     setActiveTime(0);
     saveLogs([]);
-    setStartingTimes([0, 0]);
     logLabels = [];
   };
 
