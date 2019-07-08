@@ -10,7 +10,7 @@ import { EventContext } from 'ded-context';
 import * as styles from './styles.pcss';
 
 export default () => {
-  const [getSubmissions, submissionsLoading] = useApi(API.SUBMISSIONS.GET);
+  const [getSubmissions, submissionsLoading] = useApi(API.SUBMISSIONS.INDEX);
   const [submissions, setSubmissions] = useState([]);
 
   const [lastEvent, _, consumeEvent] = useContext(EventContext);

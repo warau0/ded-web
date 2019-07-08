@@ -1,7 +1,7 @@
 import React, { memo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { ThemeContext } from 'ded-context';
 import { imagesBW as imagesBWIcon } from 'ded-assets';
@@ -17,14 +17,14 @@ const GalleryThumb = memo(({
 }) => {
   const [theme] = useContext(ThemeContext);
 
-  return ( // TODO Change to Link when image view available.
-    <div to={`/image/${submissionId}`} className={cn(styles.thumb, styles[theme])}>
+  return (
+    <Link to={`/submission/${submissionId}`} className={cn(styles.thumb, styles[theme])}>
       {multi && <img className={styles.multi} draggable={false} src={imagesBWIcon} alt='multi' />}
       <img
         src={url.replace('{userID}', userId)}
         alt={name}
       />
-    </div>
+    </Link>
   );
 });
 

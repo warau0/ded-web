@@ -74,9 +74,13 @@ export const API = {
     },
   },
   SUBMISSIONS: {
-    GET: {
+    INDEX: {
       METHOD: 'GET',
       URL: () => `${API_URL}/submissions`,
+    },
+    SHOW: {
+      METHOD: 'GET',
+      URL: id => `${API_URL}/submissions/${id}`,
     },
     PUT: {
       METHOD: 'PUT',

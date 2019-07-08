@@ -6,6 +6,7 @@ import { LoginContext } from 'ded-context';
 const Intro = lazy(() => import('ded-routes/intro'));
 const Dashboard = lazy(() => import('ded-routes/dashboard'));
 const Profile = lazy(() => import('ded-routes/profile'));
+const Submission = lazy(() => import('ded-routes/submission'));
 
 const Timer = lazy(() => import('ded-components/timer'));
 
@@ -19,6 +20,7 @@ export default () => {
         : <Route path='/' exact component={Intro} />
       }
       <Route path='/user/:id' component={Profile} />
+      <Route path='/submission/:id' component={Submission} />
 
       <Timer />
     </>
