@@ -6,30 +6,32 @@ import { ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
-const SubmissionTags = memo(({ className, tags }) => {
+const SubmissionTags = memo(({ tags }) => {
   const [theme] = useContext(ThemeContext);
+
+  if (tags.length === 0) return null;
 
   return (
     <div
       className={cn(
         styles.tags,
         styles[theme],
-        { [className]: className },
       )}
     >
-      Tags:
-      {JSON.stringify(tags)}
+      {tags.map(tag => (
+        <div className={cn(styles.tag, styles[tag.color])}>
+          {tag.text}
+        </div>
+      ))}
     </div>
   );
 });
 
 SubmissionTags.defaultProps = {
-  className: null,
   tags: [],
 };
 
 SubmissionTags.propTypes = {
-  className: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string,
     color: PropTypes.string,

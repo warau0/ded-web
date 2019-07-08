@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import ReactTooltip from 'react-tooltip';
 
 import { useApi } from 'ded-hooks';
 import { API } from 'ded-constants';
 import { fullscreen as fullscreenIcon, cross as crossIcon, defaultAvatar } from 'ded-assets';
 import { ThemeContext } from 'ded-context';
 import Loader from 'ded-components/loader';
-// import SubmissionTags from 'ded-components/submissionTags';
+import SubmissionTags from 'ded-components/submissionTags';
 // import Comments from 'ded-components/comments';
 
 import * as styles from './styles.pcss';
@@ -21,7 +23,10 @@ const Submission = ({ match }) => {
   const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
-    getSubmission(match.params.id).then(res => setSubmission(res.submission));
+    getSubmission(match.params.id).then(res => setSubmission({
+      ...res.submission,
+      posted_at: moment(res.submission.created_at).fromNow(),
+    }));
   }, []);
 
   if (submissionLoading) {
@@ -71,17 +76,28 @@ const Submission = ({ match }) => {
           <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
           <div className={styles.username}>{submission.user.username}</div>
         </Link>
-        {submission.description && (
-          <div className={styles.description}>{submission.description}</div>
-        )}
 
-        Info box not implemented.
-        {/*
-        {submission.created_at}
+        <div className={styles.times}>
+          <p className={styles.timestamp} data-tip={submission.created_at}>
+            Posted
+            <b>{` ${submission.posted_at}`}</b>
+          </p>
+          <ReactTooltip />
+
+          {submission.hours > 0 && (
+            <p className={styles.timestamp}>
+              Spent
+              <b>{` ${submission.hours} hours`}</b>
+            </p>
+          )}
+        </div>
+
+        {submission.description && <p className={styles.description}>{submission.description}</p>}
 
         <SubmissionTags tags={submission.tags} />
 
-        <Comments comments={[]} />
+        {/*
+          <Comments comments={[]} />
         */}
       </div>
     </div>

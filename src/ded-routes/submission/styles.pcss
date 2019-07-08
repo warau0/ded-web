@@ -24,6 +24,23 @@
   height: calc(100vh - var(--header-height));
   margin: calc(var(--pad-lg) * -1) 0;
 
+  .times {
+    margin-bottom: var(--pad);
+    font-size: 0.8em;
+  }
+
+  .timestamp {
+    margin: 0;
+
+    > b {
+      font-weight: 500;
+    }
+  }
+
+  .description {
+    margin: 0 0 var(--pad) 0;
+  }
+
   .images {
     display: flex;
     flex-direction: column;
@@ -94,8 +111,14 @@
     .user {
       display: flex;
       align-items: center;
-      margin-bottom: var(--pad);
       text-decoration: none;
+      margin-bottom: var(--pad);
+
+      &:hover {
+        .username {
+          color: var(--link) !important;
+        }
+      }
 
       .avatar {
         border-radius: 25px;
@@ -106,16 +129,7 @@
       .username {
         font-size: 1.3em;
         transition: color .25s;
-
-        &:hover {
-          color: var(--link) !important;
-        }
       }
-    }
-
-
-    .description {
-
     }
   }
 

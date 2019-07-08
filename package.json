@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
@@ -38,6 +38,7 @@
     "autoprefixer": "^9.6.1",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.0.4",
+    "moment": "^2.24.0",
     "postcss-custom-properties": "^9.0.1",
     "postcss-mixins": "^6.2.1",
     "postcss-modules": "^1.4.1",
