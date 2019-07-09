@@ -93,6 +93,7 @@ const UploadModal = memo(() => {
     postSubmission(null, uploadForm, false).then(() => {
       _closeModal();
       fireEvent(EVENT.UPDATE_GALLERY);
+      fireEvent(EVENT.UPDATE_STREAK);
     }).catch(() => {});
   };
 
@@ -108,7 +109,7 @@ const UploadModal = memo(() => {
         <div className={cn(styles.innerContent, styles[theme])}>
           <Dropzone
             onFilesAdded={_onFilesAdded}
-            onError={console.warn}
+            onError={console.warn} // eslint-disable-line no-console
             images={images}
             maxLength={10}
           />

@@ -1,16 +1,30 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, {
+  memo,
+  useEffect,
+  useState,
+  useContext,
+} from 'react';
 import cn from 'classnames';
 
 import { fire as fireIcon } from 'ded-assets';
-import { API } from 'ded-constants';
+import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Loader from 'ded-components/loader';
+import { EventContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
 const Streak = memo(() => {
   const [streak, setStreak] = useState(null);
   const [getStreak, streakLoading] = useApi(API.STREAKS.CURRENT);
+  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+
+  useEffect(() => {
+    if (lastEvent === EVENT.UPDATE_STREAK) {
+      consumeEvent();
+      getStreak().then(res => setStreak(res.streak || null));
+    }
+  }, [lastEvent]);
 
   useEffect(() => {
     getStreak().then(res => setStreak(res.streak || null));

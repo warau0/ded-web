@@ -14,6 +14,7 @@ export const STORAGE = {
 
 export const EVENT = {
   UPDATE_GALLERY: 'UPDATE_GALLERY',
+  UPDATE_STREAK: 'UPDATE_STREAK',
 };
 
 export const { API_URL } = config;
