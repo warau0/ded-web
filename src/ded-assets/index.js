@@ -3,6 +3,7 @@ import cross from './cross.png';
 import defaultAvatar from './default-avatar.png';
 import error from './error.png';
 import failure from './failure.png';
+import fire from './fire.png';
 import fullscreen from './fullscreen.png';
 import images from './images.png';
 import imagesBW from './imagesBW.png';
@@ -19,6 +20,7 @@ export {
   defaultAvatar,
   error,
   failure,
+  fire,
   fullscreen,
   images,
   imagesBW,

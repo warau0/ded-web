@@ -19,7 +19,7 @@ const SubmissionTags = memo(({ tags }) => {
       )}
     >
       {tags.map(tag => (
-        <div className={cn(styles.tag, styles[tag.color])}>
+        <div key={tag.id} className={cn(styles.tag, styles[tag.color])}>
           {tag.text}
         </div>
       ))}

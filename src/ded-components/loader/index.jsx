@@ -29,7 +29,7 @@ Loader.defaultProps = {
 
 Loader.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
 };
 
 export default Loader;

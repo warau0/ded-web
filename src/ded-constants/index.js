@@ -101,4 +101,10 @@ export const API = {
       URL: id => `${API_URL}/users/${id}/submissions`,
     },
   },
+  STREAKS: {
+    CURRENT: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/streaks/current`,
+    },
+  },
 };

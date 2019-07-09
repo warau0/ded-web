@@ -1,0 +1,23 @@
+.streakContainer {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    height: var(--header-icon-size);
+    user-select: none;
+    margin-left: -5px;
+  }
+
+  .streak {
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+
+  &.inactive {
+    opacity: .5;
+
+    .icon {
+      filter: grayscale(1);
+    }
+  }
+}
