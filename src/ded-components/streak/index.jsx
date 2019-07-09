@@ -10,7 +10,7 @@ import { fire as fireIcon } from 'ded-assets';
 import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Loader from 'ded-components/loader';
-import { EventContext } from 'ded-context';
+import { EventContext, ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
@@ -18,6 +18,7 @@ const Streak = memo(() => {
   const [streak, setStreak] = useState(null);
   const [getStreak, streakLoading] = useApi(API.STREAKS.CURRENT);
   const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
     if (lastEvent === EVENT.UPDATE_STREAK) {
@@ -31,7 +32,11 @@ const Streak = memo(() => {
   }, []);
 
   return (
-    <div className={cn(styles.streakContainer, { [styles.inactive]: !streak && !streakLoading })}>
+    <div
+      className={cn(styles.streakContainer, styles[theme], {
+        [styles.inactive]: !streak && !streakLoading,
+      })}
+    >
       {streakLoading ? <Loader size='sm' /> : (
         <>
           <img
