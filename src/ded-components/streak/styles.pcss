@@ -1,6 +1,7 @@
 .streakContainer {
   display: flex;
   align-items: center;
+  position: relative;
 
   .icon {
     height: var(--header-icon-size);
@@ -18,6 +19,27 @@
 
     .icon {
       filter: grayscale(1);
+    }
+  }
+
+  .notification {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    user-select: none;
+    color: #FFFFFF;
+    font-weight: bold;
+    background-color: var(--error);
+
+    &.safe {
+      background-color: var(--success);
     }
   }
 }

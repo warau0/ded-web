@@ -5,6 +5,7 @@ import React, {
   useContext,
 } from 'react';
 import cn from 'classnames';
+import moment from 'moment';
 
 import { fire as fireIcon } from 'ded-assets';
 import { API, EVENT } from 'ded-constants';
@@ -16,6 +17,7 @@ import * as styles from './styles.pcss';
 
 const Streak = memo(() => {
   const [streak, setStreak] = useState(null);
+  const [isSafe, setIsSafe] = useState(false);
   const [getStreak, streakLoading] = useApi(API.STREAKS.CURRENT);
   const [lastEvent, _, consumeEvent] = useContext(EventContext);
   const [theme] = useContext(ThemeContext);
@@ -30,6 +32,16 @@ const Streak = memo(() => {
   useEffect(() => {
     getStreak().then(res => setStreak(res.streak || null));
   }, []);
+
+  useEffect(() => {
+    if (!streak) return;
+
+    const lastDayToPost = moment(streak.updated_at).add(streak.frequency, 'days').startOf('day');
+    const today = moment(new Date()).startOf('day');
+    const daysToPost = lastDayToPost.diff(today, 'days');
+
+    setIsSafe(daysToPost > 0);
+  }, [streak]);
 
   return (
     <div
@@ -48,6 +60,13 @@ const Streak = memo(() => {
           <span className={styles.streak}>
             {streak ? streak.count : 0}
           </span>
+
+          {!!streak && (
+            <div className={cn(styles.notification, {
+              [styles.safe]: isSafe,
+            })}
+            />
+          )}
         </>
       )}
     </div>
