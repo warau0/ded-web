@@ -12,6 +12,7 @@ import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Loader from 'ded-components/loader';
 import { EventContext, ThemeContext } from 'ded-context';
+import formatNumber from 'ded-utils/formatNumber';
 
 import * as styles from './styles.pcss';
 
@@ -58,7 +59,7 @@ const Streak = memo(() => {
             alt='Streak'
           />
           <span className={styles.streak}>
-            {streak ? streak.count : 0}
+            {streak ? formatNumber(streak.count) : 0}
           </span>
 
           {!!streak && (

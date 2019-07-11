@@ -23,7 +23,7 @@ export default memo(() => {
         <div className={styles.left}>
           <Link to='/' className={styles.logo} tabIndex={-1}>
             <img src={logo} alt='Logo' />
-            <span>Draw Every Day!</span>
+            <span className={styles.title}>Draw Every Day!</span>
           </Link>
         </div>
 

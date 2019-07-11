@@ -8,6 +8,17 @@
   transition: box-shadow .25s;
   cursor: pointer;
 
+  &[disabled] {
+    background-color: #CCCCCC !important;
+    color: #666666 !important;
+    opacity: .75;
+    cursor: default;
+
+    &:hover, &:focus {
+      box-shadow: none !important;
+    }
+  }
+
   &.hideOutline {
     &:hover, &:focus {
       outline: none;

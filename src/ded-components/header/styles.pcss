@@ -31,9 +31,13 @@
         height: 100%;
       }
 
-      span {
+      .title {
         margin-left: var(--pad-xs);
         font-size: 1.2rem;
+
+        @media (max-width: 485px) {
+          display: none;
+        }
       }
     }
   }

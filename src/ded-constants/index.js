@@ -15,6 +15,7 @@ export const STORAGE = {
 export const EVENT = {
   UPDATE_GALLERY: 'UPDATE_GALLERY',
   UPDATE_STREAK: 'UPDATE_STREAK',
+  UPDATE_LEADERBOARD: 'UPDATE_LEADERBOARD',
 };
 
 export const { API_URL } = config;
@@ -106,6 +107,12 @@ export const API = {
     CURRENT: {
       METHOD: 'GET',
       URL: () => `${API_URL}/streaks/current`,
+    },
+  },
+  LEADERBOARD: {
+    GET: {
+      METHOD: 'GET',
+      URL: offset => `${API_URL}/leaderboard?offset=${offset}`,
     },
   },
 };

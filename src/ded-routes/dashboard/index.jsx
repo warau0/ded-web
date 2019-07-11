@@ -4,6 +4,7 @@ import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
 import Layout from 'ded-components/layout';
 import Schedule from 'ded-components/schedule';
+import Leaderboard from 'ded-components/leaderboard';
 import Gallery from 'ded-components/gallery';
 import { EventContext } from 'ded-context';
 
@@ -30,6 +31,11 @@ export default () => {
     <>
       <Layout>
         <Schedule />
+
+        <div className={styles.row}>
+          <div className={styles.somePlaceholder}>WIP</div>
+          <Leaderboard className={styles.leaderboard} />
+        </div>
       </Layout>
 
       <div className={styles.galleryContainer}>

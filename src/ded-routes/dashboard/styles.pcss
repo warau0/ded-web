@@ -1,3 +1,31 @@
 .galleryContainer {
   margin-top: var(--pad-md);
 }
+
+.row {
+  display: flex;
+
+  @mixin phone {
+    flex-direction: column;
+  }
+}
+
+.leaderboard {
+  margin: var(--pad-md) 0 var(--pad-md) .75rem;
+
+  @mixin phone {
+    margin: .75rem 0 var(--pad-md) 0;
+  }
+}
+
+.somePlaceholder {
+  flex: 2;
+  background-color: white;
+  min-height: 100px;
+
+  margin: var(--pad-md) .75rem var(--pad-md) 0;
+
+  @mixin phone {
+    margin: var(--pad-md) 0 .75rem 0;
+  }
+}

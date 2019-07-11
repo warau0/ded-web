@@ -94,6 +94,7 @@ const UploadModal = memo(() => {
       _closeModal();
       fireEvent(EVENT.UPDATE_GALLERY);
       fireEvent(EVENT.UPDATE_STREAK);
+      fireEvent(EVENT.UPDATE_LEADERBOARD);
     }).catch(() => {});
   };
 
