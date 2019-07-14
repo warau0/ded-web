@@ -38,6 +38,8 @@
   .table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    overflow: hidden;
 
     tr {
       th, td {
@@ -71,12 +73,12 @@
 
   .table tr {
     &:nth-child(2n), th {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
     th:nth-child(2n), td:nth-child(2n) {
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      border-right: 1px solid rgba(0, 0, 0, 0.05);
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
     }
   }
 }

@@ -21,14 +21,23 @@ import * as styles from './styles.pcss';
 const Leaderboard = memo(({ className }) => {
   const [leaderboards, setLeaderboards] = useState([]);
   const [offset, setOffset] = useState(0);
+
   const [getLeaderboard, leaderboardLoading] = useApi(API.LEADERBOARD.GET);
+
   const [lastEvent, _, consumeEvent] = useContext(EventContext);
   const [theme] = useContext(ThemeContext);
 
   const fetchLeaderboards = () => {
     getLeaderboard(offset).then((res) => {
       const newLeaderboards = [...leaderboards];
-      newLeaderboards[offset] = res.leaderboard || [];
+      const scores = res.leaderboard || [];
+      newLeaderboards[offset] = {
+        scores,
+        personal: res.personal || null,
+        scoresIncludePersonal: res.personal
+          ? scores.findIndex(user => user.id === res.personal.id) !== -1
+          : false,
+      };
       setLeaderboards(newLeaderboards);
     });
   };
@@ -39,10 +48,6 @@ const Leaderboard = memo(({ className }) => {
       fetchLeaderboards();
     }
   }, [lastEvent]);
-
-  useEffect(() => {
-    fetchLeaderboards();
-  }, []);
 
   useEffect(() => {
     if (!leaderboards[offset]) {
@@ -56,7 +61,7 @@ const Leaderboard = memo(({ className }) => {
     return date.format(`MMM${includeDot ? '.' : ''} YYYY`);
   }, [offset]);
 
-  const offsetHasData = leaderboards[offset] && leaderboards[offset].length > 0;
+  const offsetHasData = leaderboards[offset] && leaderboards[offset].scores.length > 0;
 
   return (
     <div
@@ -110,13 +115,20 @@ const Leaderboard = memo(({ className }) => {
             </tr>
           </thead>
           <tbody>
-            {leaderboards[offset].map((user, i) => (
+            {leaderboards[offset].scores.map((user, i) => (
               <tr key={user.id}>
                 <td>{i + 1}</td>
                 <td>{user.username}</td>
                 <td>{formatNumber(user.total_hours)}</td>
               </tr>
             ))}
+            {!leaderboards[offset].scoresIncludePersonal && leaderboards[offset].personal && (
+              <tr>
+                <td>You</td>
+                <td>{leaderboards[offset].personal.username}</td>
+                <td>{formatNumber(leaderboards[offset].personal.total_hours)}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       )}
