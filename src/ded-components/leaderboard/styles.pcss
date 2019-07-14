@@ -59,8 +59,10 @@
         word-break: break-word;
         padding: var(--pad-xs) var(--pad-sm);
 
-        &:first-child {
+        a {
+          text-decoration: none;
           font-weight: 500;
+          transition: color .2s ease-in-out;
         }
       }
     }
@@ -79,6 +81,14 @@
     th:nth-child(2n), td:nth-child(2n) {
       border-right: 1px solid rgba(0, 0, 0, 0.05);
       border-left: 1px solid rgba(0, 0, 0, 0.05);
+
+      a {
+        color: var(--light-text);
+
+        &:hover {
+          color: var(--link);
+        }
+      }
     }
   }
 }
@@ -95,6 +105,14 @@
     th:nth-child(2n), td:nth-child(2n) {
       border-right: 1px solid rgba(255, 255, 255, 0.1);
       border-left: 1px solid rgba(255, 255, 255, 0.1);
+
+      a {
+        color: var(--dark-text);
+
+        &:hover {
+          color: var(--link);
+        }
+      }
     }
   }
 }

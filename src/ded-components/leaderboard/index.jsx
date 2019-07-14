@@ -8,6 +8,7 @@ import React, {
 import cn from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
@@ -118,15 +119,20 @@ const Leaderboard = memo(({ className }) => {
             {leaderboards[offset].scores.map((user, i) => (
               <tr key={user.id}>
                 <td>{i + 1}</td>
-                <td>{user.username}</td>
-                <td>{formatNumber(user.total_hours)}</td>
+                <td><Link to={`/user/${user.id}`}>{user.username}</Link></td>
+                <td>{formatNumber(user.total_hours < 1000 ? user.total_hours : '999+')}</td>
               </tr>
             ))}
             {!leaderboards[offset].scoresIncludePersonal && leaderboards[offset].personal && (
               <tr>
                 <td>You</td>
-                <td>{leaderboards[offset].personal.username}</td>
-                <td>{formatNumber(leaderboards[offset].personal.total_hours)}</td>
+                <td><Link to={`/user/${leaderboards[offset].personal.id}`}>{leaderboards[offset].personal.username}</Link></td>
+                <td>
+                  {formatNumber(leaderboards[offset].personal.total_hours < 1000
+                    ? leaderboards[offset].personal.total_hours
+                    : '999+')
+                  }
+                </td>
               </tr>
             )}
           </tbody>
