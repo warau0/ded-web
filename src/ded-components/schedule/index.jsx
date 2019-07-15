@@ -193,9 +193,11 @@ export default memo(() => {
           <div className={styles.weekView}>
             {days.map(day => (
               <div className={styles.day} key={day.id}>
-                <div className={styles.dayHeader}>
-                  {day.name.slice(0, 3)}
-                  <span className={styles.dayEnd}>{day.name.slice(3)}</span>
+                <div className={cn(styles.dayHeader)}>
+                  <span className={cn({ [styles.active]: today === day.id })}>
+                    {day.name.slice(0, 3)}
+                    <span className={styles.dayEnd}>{day.name.slice(3)}</span>
+                  </span>
                 </div>
                 {hours.map(hour => (
                   <div className={styles.hour} key={hour}>
