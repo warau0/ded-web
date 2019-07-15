@@ -1,6 +1,10 @@
 import zeroPad from 'ded-utils/zeroPad';
 
 export default (totalSecondsIn) => {
+  if (totalSecondsIn <= 0) {
+    return '00:00:00';
+  }
+
   const hours = Math.floor(totalSecondsIn / 3600);
   const totalSeconds = totalSecondsIn % 3600;
   const minutes = Math.floor(totalSeconds / 60);
