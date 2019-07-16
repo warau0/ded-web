@@ -23,7 +23,7 @@ const Gallery = memo(({ big, loading, submissions }) => {
     >
       {submissions.length === 0 && (
         <i className={styles.emptyLabel}>
-          {'There aren\'t any images here yet :('}
+          No submissions yet :(
         </i>
       )}
 

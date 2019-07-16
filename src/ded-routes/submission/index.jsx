@@ -11,7 +11,7 @@ import { fullscreen as fullscreenIcon, cross as crossIcon, defaultAvatar } from 
 import { ThemeContext } from 'ded-context';
 import Loader from 'ded-components/loader';
 import SubmissionTags from 'ded-components/submissionTags';
-// import Comments from 'ded-components/comments';
+import Comments from 'ded-components/comments';
 
 import * as styles from './styles.pcss';
 
@@ -96,9 +96,8 @@ const Submission = ({ match }) => {
 
         <SubmissionTags tags={submission.tags} />
 
-        {/*
-          <Comments comments={[]} />
-        */}
+        <h4 className={styles.commentsTitle}>Comments</h4>
+        <Comments comments={submission.comments} />
       </div>
     </div>
   );

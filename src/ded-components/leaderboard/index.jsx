@@ -102,7 +102,7 @@ const Leaderboard = memo(({ className }) => {
 
       {!leaderboardLoading && !offsetHasData && (
         <i className={styles.emptyLabel}>
-          There are no submissions here :(
+          No submissions.
         </i>
       )}
 

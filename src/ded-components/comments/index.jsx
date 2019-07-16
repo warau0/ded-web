@@ -1,13 +1,23 @@
-import React, { memo, useContext } from 'react';
+import React, {
+  memo,
+  useContext,
+  Fragment,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 import { ThemeContext } from 'ded-context';
+import { defaultAvatar } from 'ded-assets';
 
 import * as styles from './styles.pcss';
 
-const Comments = memo(({ className, comments }) => {
+const indentDepth = 3;
+
+const Comments = memo(({ className, comments, level }) => {
   const [theme] = useContext(ThemeContext);
+  const levels = useMemo(() => Array.from(Array(level), (_, i) => i + 1), [level]);
 
   return (
     <div
@@ -17,22 +27,67 @@ const Comments = memo(({ className, comments }) => {
         { [className]: className },
       )}
     >
-      Comments:
-      {JSON.stringify(comments)}
+      {comments.map(comment => (
+        <Fragment key={comment.id}>
+          <div className={styles.comment}>
+            <div className={styles.header}>
+              {level > indentDepth && (
+                <div className={styles.levelContainer}>
+                  {levels.map(i => <span key={i} className={styles.level}>•</span>)}
+                </div>
+              )}
+              {comment.user ? (
+                <Link to={`/user/${comment.user.id}`} className={styles.username}>
+                  <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+                  {comment.user.username}
+                </Link>
+              ) : (
+                <div className={styles.username}>
+                  <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+                  Anonymous
+                </div>
+              )}
+            </div>
+            <p className={styles.content}>{comment.text}</p>
+          </div>
+
+          {comment.comments.length > 0 && <Replies comments={comment.comments} level={level + 1} />}
+        </Fragment>
+      ))}
+      {comments.length === 0 && (
+        <i className={styles.emptyLabel}>
+          No comments yet :(
+        </i>
+      )}
     </div>
   );
 });
 
-Comments.defaultProps = {
-  className: null,
-  comments: [],
+const Replies = ({ level, ...restProps }) => {
+  return (
+    <div className={cn({ [styles.replyPad]: level <= indentDepth })}>
+      <Comments {...restProps} level={level} />
+    </div>
+  );
 };
 
-Comments.propTypes = {
+const defaultProps = {
+  className: null,
+  comments: [],
+  level: 0,
+};
+
+const propTypes = {
   className: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string,
   })),
+  level: PropTypes.number,
 };
+
+Replies.defaultProps = defaultProps;
+Replies.propTypes = propTypes;
+Comments.defaultProps = defaultProps;
+Comments.propTypes = propTypes;
 
 export default Comments;
