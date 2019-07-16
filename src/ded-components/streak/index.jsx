@@ -90,17 +90,19 @@ const Streak = memo(() => {
             })}
             />
           )}
-          <ReactTooltip
-            id='streak-tooltip'
-            place='bottom'
-            afterShow={_startStreakTimer}
-            afterHide={_stopStreakTimer}
-          >
-            {isSafe
-              ? 'Rest easy, your streak is safe for today!'
-              : `Your streak is ending in ${timeToMidnight}.`
-            }
-          </ReactTooltip>
+          {streak && (
+            <ReactTooltip
+              id='streak-tooltip'
+              place='bottom'
+              afterShow={_startStreakTimer}
+              afterHide={_stopStreakTimer}
+            >
+              {isSafe
+                ? 'Rest easy, your streak is safe for today!'
+                : `Your streak is ending in ${timeToMidnight}.`
+              }
+            </ReactTooltip>
+          )}
         </div>
       )}
     </div>
