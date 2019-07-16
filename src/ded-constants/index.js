@@ -16,6 +16,7 @@ export const EVENT = {
   UPDATE_GALLERY: 'UPDATE_GALLERY',
   UPDATE_STREAK: 'UPDATE_STREAK',
   UPDATE_LEADERBOARD: 'UPDATE_LEADERBOARD',
+  UPDATE_COMMENTS: 'UPDATE_COMMENTS',
 };
 
 export const { API_URL } = config;
@@ -95,6 +96,14 @@ export const API = {
     DELETE: {
       METHOD: 'DELETE',
       URL: id => `${API_URL}/submissions/${id}`,
+    },
+    COMMENTS: {
+      METHOD: 'GET',
+      URL: id => `${API_URL}/submissions/${id}/comments`,
+    },
+    POST_COMMENT: {
+      METHOD: 'POST',
+      URL: id => `${API_URL}/submissions/${id}/comments`,
     },
   },
   USERS: {

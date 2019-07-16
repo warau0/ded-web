@@ -125,10 +125,7 @@ const UploadModal = memo(() => {
             </div>
           )}
 
-          <ErrorMessage
-            className={styles.error}
-            error={postSubmissionError}
-          />
+          <ErrorMessage error={postSubmissionError} />
 
           <div className={styles.inputContainer}>
             <div className={styles.inputRow}>

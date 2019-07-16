@@ -1,0 +1,49 @@
+.reply {
+  margin-bottom: var(--pad);
+
+  .textarea {
+    min-width: 100%;
+    max-width: 100%;
+    border: none;
+    padding: var(--pad-sm);
+    min-height: 50px;
+    transition: min-height 0.3s ease-out;
+    border-radius: var(--border-radius);
+
+    &:focus, &.expanded {
+      min-height: 150px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .submit {
+      margin-top: var(--pad-sm);
+      margin-left: var(--pad);
+      align-self: flex-end;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.reply.light {
+  .textarea {
+    background-color: var(--light-header);
+    color: var(--light-text);
+  }
+}
+
+.reply.dark {
+  .textarea {
+    background-color: var(--dark-header);
+    color: var(--dark-text);
+  }
+}

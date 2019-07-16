@@ -6,12 +6,13 @@ import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 
 import { useApi } from 'ded-hooks';
-import { API } from 'ded-constants';
+import { API, EVENT } from 'ded-constants';
 import { fullscreen as fullscreenIcon, cross as crossIcon, defaultAvatar } from 'ded-assets';
-import { ThemeContext } from 'ded-context';
+import { ThemeContext, EventContext } from 'ded-context';
 import Loader from 'ded-components/loader';
 import SubmissionTags from 'ded-components/submissionTags';
 import Comments from 'ded-components/comments';
+import CommentForm from 'ded-components/commentForm';
 
 import * as styles from './styles.pcss';
 
@@ -19,8 +20,10 @@ import * as styles from './styles.pcss';
 
 const Submission = ({ match }) => {
   const [getSubmission, submissionLoading] = useApi(API.SUBMISSIONS.SHOW);
+  const [getComments, commentsLoading] = useApi(API.SUBMISSIONS.COMMENTS);
   const [submission, setSubmission] = useState(null);
   const [theme] = useContext(ThemeContext);
+  const [lastEvent, _, consumeEvent] = useContext(EventContext);
 
   useEffect(() => {
     getSubmission(match.params.id).then(res => setSubmission({
@@ -28,6 +31,16 @@ const Submission = ({ match }) => {
       posted_at: moment(res.submission.created_at).fromNow(),
     }));
   }, []);
+
+  useEffect(() => {
+    if (lastEvent === EVENT.UPDATE_COMMENTS) {
+      consumeEvent();
+      getComments(match.params.id).then(res => setSubmission({
+        ...submission,
+        comments: res.comments,
+      }));
+    }
+  }, [lastEvent]);
 
   if (submissionLoading) {
     return (
@@ -87,7 +100,7 @@ const Submission = ({ match }) => {
           {submission.hours > 0 && (
             <p className={styles.timestamp}>
               Spent
-              <b>{` ${submission.hours} hours`}</b>
+              <b>{` ${submission.hours} hour${submission.hours !== 1 ? 's' : ''}`}</b>
             </p>
           )}
         </div>
@@ -97,7 +110,18 @@ const Submission = ({ match }) => {
         <SubmissionTags tags={submission.tags} />
 
         <h4 className={styles.commentsTitle}>Comments</h4>
-        <Comments comments={submission.comments} />
+        <CommentForm
+          replyCount={submission.comments.length}
+          postUrl={API.SUBMISSIONS.POST_COMMENT}
+          urlTargetId={submission.id}
+        />
+        {commentsLoading
+          ? (
+            <div className={styles.loadingContainer}>
+              <Loader />
+            </div>
+          )
+          : <Comments comments={submission.comments} />}
       </div>
     </div>
   );
