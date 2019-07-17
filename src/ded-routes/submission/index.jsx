@@ -31,7 +31,7 @@ const Submission = ({ match }) => {
       ...res.submission,
       posted_at: moment(res.submission.created_at).fromNow(),
     }));
-  }, []);
+  }, [match.params.id]);
 
   useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.UPDATE_COMMENTS) {

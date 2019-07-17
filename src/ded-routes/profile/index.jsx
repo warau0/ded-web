@@ -24,7 +24,7 @@ const Profile = ({ match }) => {
 
   useEffect(() => {
     getSubmissions(match.params.id).then(res => setSubmissions(res.submissions));
-  }, []);
+  }, [match.params.id]);
 
   return (
     <Gallery
