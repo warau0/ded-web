@@ -3,22 +3,35 @@ import React, {
   useContext,
   Fragment,
   useMemo,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-// import Reply from '@material-ui/icons/Reply';
+import Reply from '@material-ui/icons/Reply';
 
+import { API } from 'ded-constants';
 import { ThemeContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
+import Button from 'ded-components/button';
+import CommentForm from 'ded-components/commentForm';
 
 import * as styles from './styles.pcss';
 
 const indentDepth = 3;
 
 const Comments = memo(({ className, comments, level }) => {
+  const [replyingId, setReplyingId] = useState(null);
   const [theme] = useContext(ThemeContext);
   const levels = useMemo(() => Array.from(Array(level), (_, i) => i + 1), [level]);
+
+  const _startReply = (id) => {
+    if (id === replyingId) {
+      setReplyingId(null);
+    } else {
+      setReplyingId(id);
+    }
+  };
 
   return (
     <div
@@ -32,25 +45,38 @@ const Comments = memo(({ className, comments, level }) => {
         <Fragment key={comment.id}>
           <div className={styles.comment}>
             <div className={styles.header}>
-              {level > indentDepth && (
-                <div className={styles.levelContainer}>
-                  {levels.map(i => <span key={i} className={styles.level}>•</span>)}
-                </div>
-              )}
-              {comment.user ? (
-                <Link to={`/user/${comment.user.id}`} className={styles.username}>
-                  <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
-                  {comment.user.username}
-                </Link>
-              ) : (
-                <div className={styles.username}>
-                  <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
-                  Anonymous
-                </div>
-              )}
+              <div className={styles.usernameContainer}>
+                {level > indentDepth && (
+                  <div className={styles.levelContainer}>
+                    {levels.map(i => <span key={i} className={styles.level}>•</span>)}
+                  </div>
+                )}
+                {comment.user ? (
+                  <Link to={`/user/${comment.user.id}`} className={styles.username}>
+                    <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+                    {comment.user.username}
+                  </Link>
+                ) : (
+                  <div className={styles.username}>
+                    <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+                    Anonymous
+                  </div>
+                )}
+              </div>
+              <Button onClick={() => _startReply(comment.id)} brand='ghost' noPadding plainFocus>
+                <Reply className={styles.replyButton} />
+              </Button>
             </div>
             <p className={styles.content}>{comment.text}</p>
           </div>
+
+          {replyingId === comment.id && (
+            <CommentForm
+              isReplying
+              postUrl={API.COMMENTS.POST}
+              urlTargetId={comment.id}
+            />
+          )}
 
           {comment.comments.length > 0 && <Replies comments={comment.comments} level={level + 1} />}
         </Fragment>

@@ -8,9 +8,12 @@
     .header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: var(--pad-xs) 0;
 
       .levelContainer {
+        display: flex;
+        align-items: center;
         margin-right: var(--pad-xs);
         white-space: nowrap;
 
@@ -30,15 +33,27 @@
         user-select: none;
       }
 
-      .username {
-        font-weight: 500;
-        white-space: nowrap;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-        transition: color .2s ease-in-out;
-        text-decoration: none;
+      .usernameContainer {
         display: flex;
-        align-items: center;
+
+        .username {
+          font-weight: 500;
+          transition: color .2s ease-in-out;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+
+      .replyButton {
+        align-self: flex-end;
+        opacity: 0.2;
+        transition: opacity .2s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
@@ -64,12 +79,16 @@
   .comment {
     border-color: rgba(0, 0, 0, 0.1);
 
-    .header .username {
+    .header .usernameContainer .username {
       color: var(--light-color);
     }
 
     a.username:hover {
       color: var(--link);
+    }
+
+    .replyButton {
+      color: var(--light-text);
     }
   }
 
@@ -82,12 +101,16 @@
   .comment {
     border-color: rgba(255, 255, 255, 0.2);
 
-    .header .username {
+    .header .usernameContainer .username {
       color: var(--dark-color);
     }
 
     a.username:hover {
         color: var(--link);
+    }
+
+    .replyButton {
+      color: var(--dark-text);
     }
   }
 

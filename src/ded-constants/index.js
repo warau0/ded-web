@@ -124,4 +124,10 @@ export const API = {
       URL: offset => `${API_URL}/leaderboard?offset=${offset}`,
     },
   },
+  COMMENTS: {
+    POST: {
+      METHOD: 'POST',
+      URL: id => `${API_URL}/comments/${id}`,
+    },
+  },
 };

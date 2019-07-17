@@ -14,7 +14,12 @@ import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
-const CommentForm = memo(({ replyCount, postUrl, urlTargetId }) => {
+const CommentForm = memo(({
+  replyCount,
+  postUrl,
+  urlTargetId,
+  isReplying,
+}) => {
   const [text, setText] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
@@ -42,9 +47,11 @@ const CommentForm = memo(({ replyCount, postUrl, urlTargetId }) => {
         className={cn(styles.textarea, {
           [styles.expanded]: text.length > 0,
         })}
-        placeholder={replyCount === 0
-          ? 'Be the first to reply'
-          : 'Join the conversation'
+        placeholder={isReplying
+          ? 'Reply'
+          : replyCount === 0
+            ? 'Be the first to reply'
+            : 'Join the conversation'
         }
         value={text}
         onChange={e => setText(e.target.value)}
@@ -80,6 +87,7 @@ CommentForm.defaultProps = {
   replyCount: 0,
   postUrl: null,
   urlTargetId: null,
+  isReplying: false,
 };
 
 CommentForm.propTypes = {
@@ -89,6 +97,7 @@ CommentForm.propTypes = {
     URL: PropTypes.func,
   }),
   urlTargetId: PropTypes.number,
+  isReplying: PropTypes.bool,
 };
 
 export default CommentForm;
