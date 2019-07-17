@@ -71,11 +71,13 @@ const Comments = memo(({ className, comments, level }) => {
           </div>
 
           {replyingId === comment.id && (
-            <CommentForm
-              isReplying
-              postUrl={API.COMMENTS.POST}
-              urlTargetId={comment.id}
-            />
+            <div className={cn({ [styles.replyPad]: level <= indentDepth })}>
+              <CommentForm
+                isReplying
+                postUrl={API.COMMENTS.POST}
+                urlTargetId={comment.id}
+              />
+            </div>
           )}
 
           {comment.comments.length > 0 && <Replies comments={comment.comments} level={level + 1} />}

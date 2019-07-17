@@ -39,6 +39,10 @@ export const API = {
       METHOD: 'GET',
       URL: () => `${API_URL}/notifications`,
     },
+    SEEN: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/notifications/seen`,
+    },
   },
   PLANS: {
     GET: {

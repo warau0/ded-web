@@ -20,20 +20,32 @@ let hideTimeout = null;
 
 export default memo(() => {
   const [show, setShow] = useState(false);
+  const [hasUnseen, setHasUnseen] = useState(false);
 
   const [notifications, setNotifications] = useState([]);
   const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS.GET);
+  const [postSeenNotifications] = useApi(API.NOTIFICATIONS.SEEN);
 
   const [_, user, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
-    getNotifications().then(res => setNotifications(res.notifications));
+    getNotifications().then((res) => {
+      setNotifications(res.notifications);
+      setHasUnseen(res.notifications.findIndex(n => !n.seen) !== -1);
+    });
   }, []);
 
   const _showMenu = () => {
     clearTimeout(hideTimeout);
     setShow(true);
+    if (hasUnseen) {
+      setTimeout(() => {
+        postSeenNotifications().then(() => {
+          setHasUnseen(false);
+        });
+      }, 1000);
+    }
   };
 
   const _hideMenu = () => {
@@ -57,7 +69,12 @@ export default memo(() => {
     }
 
     return notifications.map(msg => (
-      <li key={msg.id}><p>{msg.text}</p></li>
+      <li className={styles.notification} key={msg.id}>
+        <Link to={`/submission/${msg.notification_parent_id}`}>
+          {hasUnseen && !msg.seen && <span className={styles.dot} />}
+          {msg.text}
+        </Link>
+      </li>
     ));
   };
 
@@ -75,6 +92,7 @@ export default memo(() => {
         onBlur={_hideMenu}
         onKeyUp={(e) => { if (e.key === 'Escape') _hideMenu(); }}
       >
+        {hasUnseen && <span className={styles.dot} />}
         <img src={defaultAvatar} alt='Menu' className={styles.avatar} />
       </Button>
 
@@ -85,19 +103,19 @@ export default memo(() => {
           </div>
 
           <div className={styles.menuContent}>
-            <h2 className={styles.menuHeader}>Notifications</h2>
-            <ul className={styles.menuList}>
+            <h3 className={styles.menuHeader}>Notifications</h3>
+            <ul className={cn(styles.menuList, styles.notifications)}>
               {_renderNotifications()}
             </ul>
 
-            <h2 className={styles.menuHeader}>Settings</h2>
+            <h3 className={styles.menuHeader}>Settings</h3>
             <ul className={styles.menuList}>
               <li>
                 <ThemeButton />
               </li>
             </ul>
 
-            <h2 className={styles.menuHeader}>Account</h2>
+            <h3 className={styles.menuHeader}>Account</h3>
             <ul className={styles.menuList}>
               <li>
                 <Link to={`/user/${user ? user.sub : null}`}>Your profile</Link>

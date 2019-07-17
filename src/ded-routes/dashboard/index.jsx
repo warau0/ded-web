@@ -14,11 +14,10 @@ export default () => {
   const [getSubmissions, submissionsLoading] = useApi(API.SUBMISSIONS.INDEX);
   const [submissions, setSubmissions] = useState([]);
 
-  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [lastEvent] = useContext(EventContext);
 
   useEffect(() => {
-    if (lastEvent === EVENT.UPDATE_GALLERY) {
-      consumeEvent();
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_GALLERY) {
       getSubmissions().then(res => setSubmissions(res.submissions));
     }
   }, [lastEvent]);

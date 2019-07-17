@@ -27,7 +27,7 @@ const Leaderboard = memo(({ className }) => {
 
   const [getLeaderboard, leaderboardLoading] = useApi(API.LEADERBOARD.GET);
 
-  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [lastEvent] = useContext(EventContext);
   const [theme] = useContext(ThemeContext);
 
   const fetchLeaderboards = () => {
@@ -46,8 +46,7 @@ const Leaderboard = memo(({ className }) => {
   };
 
   useEffect(() => {
-    if (lastEvent === EVENT.UPDATE_LEADERBOARD) {
-      consumeEvent();
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_LEADERBOARD) {
       fetchLeaderboards();
     }
   }, [lastEvent]);

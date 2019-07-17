@@ -11,11 +11,13 @@ const Profile = ({ match }) => {
   const [submissions, setSubmissions] = useState([]);
 
   const [__, user] = useContext(LoginContext);
-  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [lastEvent] = useContext(EventContext);
 
   useEffect(() => {
-    if (lastEvent === EVENT.UPDATE_GALLERY && user.sub === parseInt(match.params.id, 10)) {
-      consumeEvent();
+    if (lastEvent
+      && lastEvent.event === EVENT.UPDATE_GALLERY
+      && user.sub === parseInt(match.params.id, 10)
+    ) {
       getSubmissions(match.params.id).then(res => setSubmissions(res.submissions));
     }
   }, [lastEvent]);

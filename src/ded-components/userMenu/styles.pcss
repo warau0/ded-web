@@ -18,6 +18,13 @@
       height: 100%;
       user-select: none;
     }
+
+    .dot {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 30px;
+    }
   }
 
   .menu {
@@ -78,7 +85,30 @@
           }
         }
       }
+
+      .notifications {
+        max-height: 125px;
+        overflow-x: auto;
+
+        .notification {
+          border-bottom: 1px solid;
+
+          a {
+            font-size: 1em;
+          }
+        }
+      }
     }
+  }
+
+  .dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    user-select: none;
+    display: inline-block;
+    background-color: var(--notification);
+    margin-right: var(--pad-sm);
   }
 }
 
@@ -104,6 +134,10 @@
         }
       }
     }
+
+    .notifications .notification {
+      border-color: var(--light-border);
+    }
   }
 }
 
@@ -128,6 +162,10 @@
           background-color: var(--dark-hover);
         }
       }
+    }
+
+    .notifications .notification {
+      border-color: var(--dark-border);
     }
   }
 }

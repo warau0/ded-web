@@ -33,12 +33,11 @@ const Streak = memo(() => {
   const [timeToMidnight, setTimeToMidnight] = useState(null);
 
   const [getStreak, streakLoading] = useApi(API.STREAKS.CURRENT);
-  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [lastEvent] = useContext(EventContext);
   const [theme] = useContext(ThemeContext);
 
   useEffect(() => {
-    if (lastEvent === EVENT.UPDATE_STREAK) {
-      consumeEvent();
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_STREAK) {
       getStreak().then(res => setStreak(res.streak || null));
     }
   }, [lastEvent]);

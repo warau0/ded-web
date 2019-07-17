@@ -50,7 +50,7 @@ const CommentForm = memo(({
         placeholder={isReplying
           ? 'Reply'
           : replyCount === 0
-            ? 'Be the first to reply'
+            ? 'Be the first to comment'
             : 'Join the conversation'
         }
         value={text}

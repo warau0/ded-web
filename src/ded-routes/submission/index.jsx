@@ -24,7 +24,7 @@ const Submission = ({ match }) => {
   const [getComments, commentsLoading] = useApi(API.SUBMISSIONS.COMMENTS);
   const [submission, setSubmission] = useState(null);
   const [theme] = useContext(ThemeContext);
-  const [lastEvent, _, consumeEvent] = useContext(EventContext);
+  const [lastEvent] = useContext(EventContext);
 
   useEffect(() => {
     getSubmission(match.params.id).then(res => setSubmission({
@@ -34,8 +34,7 @@ const Submission = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    if (lastEvent === EVENT.UPDATE_COMMENTS) {
-      consumeEvent();
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_COMMENTS) {
       getComments(match.params.id).then(res => setSubmission({
         ...submission,
         comments: res.comments,
