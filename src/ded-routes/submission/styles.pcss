@@ -60,7 +60,6 @@
       justify-content: center;
       margin-bottom: var(--pad-lg);
       position: relative;
-      min-height: 100px;
 
       > img {
         max-width: 100%;
@@ -78,18 +77,17 @@
 
         .action {
           display: flex;
-          padding: var(--pad-sm);
+          padding: var(--pad-xs);
           color: white;
           text-decoration: none;
 
-          > img {
-            height: 1rem;
+          > svg {
             opacity: 0.75;
             transition: opacity .25s;
           }
 
           &:hover {
-            > img {
+            > svg {
               opacity: 1;
             }
           }

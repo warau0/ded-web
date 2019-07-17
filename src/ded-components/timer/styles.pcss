@@ -9,7 +9,7 @@
   height: 36px;
   width: 36px;
   opacity: 1;
-  transition: opacity .6s ease-in-out;
+  transition: box-shadow 0.25s ease-out, opacity .6s ease-in-out;
   z-index: var(--z-timer-button);
 
   &.active {
@@ -19,12 +19,6 @@
 
   &.hide {
     opacity: 0;
-  }
-
-  > img {
-    filter: invert(100%);
-    width: 18px;
-    user-select: none;
   }
 
   .floatingTime {

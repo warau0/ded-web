@@ -6,10 +6,12 @@ import React, {
   useCallback,
 } from 'react';
 import cn from 'classnames';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext } from 'ded-context';
-import { arrow, plus } from 'ded-assets';
 import { API } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Button from 'ded-components/button';
@@ -170,7 +172,7 @@ export default memo(() => {
           setShowEditModal(true);
         }}
       >
-        <img src={plus} alt='+' />
+        <AddCircleOutline />
       </div>
     );
     /* eslint-enable jsx-a11y/click-events-have-key-events */
@@ -241,7 +243,7 @@ export default memo(() => {
         round
         noPadding
       >
-        <img src={arrow} className={cn({ [styles.flip]: expand })} alt='^' />
+        {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
       </Button>
 
       <Modal

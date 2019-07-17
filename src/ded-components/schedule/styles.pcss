@@ -237,10 +237,9 @@
         opacity: 1;
       }
 
-      img {
-        height: 12px;
-        width: 12px;
-        user-select: none;
+      svg {
+        font-size: 1em;
+        padding: 1px;
       }
     }
 
@@ -285,17 +284,10 @@
     border: 2px solid;
     height: 30px;
     width: 30px;
-    padding: .4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: var(--z-schedule-expand);
-
-    img {
-      height: 100%;
-      user-select: none;
-
-      &.flip {
-        transform: rotate(180deg);
-      }
-    }
   }
 }
 
@@ -413,15 +405,7 @@
 
     .emptyPlan {
       background-color: var(--dark-hover);
-
-      img {
-        filter: invert(100%);
-      }
     }
-  }
-
-  .expandButton img {
-    filter: invert(100%);
   }
 }
 

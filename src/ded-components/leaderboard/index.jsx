@@ -9,6 +9,8 @@ import cn from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import { API, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
@@ -78,7 +80,7 @@ const Leaderboard = memo(({ className }) => {
           className={styles.navArrow}
           disabled={leaderboardLoading}
         >
-          {'<'}
+          <KeyboardArrowLeft />
         </Button>
 
         <h1 className={styles.title}>{`${month} leaderboard`}</h1>
@@ -90,7 +92,7 @@ const Leaderboard = memo(({ className }) => {
           className={styles.navArrow}
           disabled={offset <= 0 || leaderboardLoading}
         >
-          {'>'}
+          <KeyboardArrowRight />
         </Button>
       </div>
 

@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
-
-import { error as errorIcon } from 'ded-assets';
+import ErrorOutline from '@material-ui/icons/ErrorOutline';
 
 import * as styles from './styles.pcss';
 
@@ -17,7 +16,7 @@ const ErrorMessage = memo(({
       [className]: className,
     })}
     >
-      <img className={styles.icon} src={errorIcon} alt='Error' />
+      <ErrorOutline />
       <div>
         {Array.isArray(error) ? (error.map(o => <p key={o}>{o}</p>)) : <p>{error}</p>}
       </div>

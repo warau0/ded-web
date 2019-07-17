@@ -4,10 +4,11 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
+import Fullscreen from '@material-ui/icons/Fullscreen';
 
 import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
-import { fullscreen as fullscreenIcon, cross as crossIcon, defaultAvatar } from 'ded-assets';
+import { cross as crossIcon, defaultAvatar } from 'ded-assets';
 import { ThemeContext, EventContext } from 'ded-context';
 import Loader from 'ded-components/loader';
 import SubmissionTags from 'ded-components/submissionTags';
@@ -76,7 +77,7 @@ const Submission = ({ match }) => {
                   href={url}
                   className={styles.action}
                 >
-                  <img src={fullscreenIcon} alt='open' />
+                  <Fullscreen />
                 </a>
               </div>
             </div>

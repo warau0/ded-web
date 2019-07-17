@@ -6,10 +6,10 @@ import React, {
 } from 'react';
 import cn from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import Alarm from '@material-ui/icons/Alarm';
 
 import { ThemeContext } from 'ded-context';
 import Button from 'ded-components/button';
-import { stopwatch } from 'ded-assets';
 import { STORAGE } from 'ded-constants';
 import secondsToTimestamp from 'ded-utils/secondsToTimestamp';
 import epochToTimestamp from 'ded-utils/epochToTimestamp';
@@ -164,7 +164,7 @@ export default memo(() => {
         {active && (
           <span className={styles.floatingTime}>{secondsToTimestamp(activeTime)}</span>
         )}
-        <img src={stopwatch} alt='timer' />
+        <Alarm />
       </Button>
 
       <div className={cn(styles.container, {
