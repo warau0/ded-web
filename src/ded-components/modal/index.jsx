@@ -2,6 +2,8 @@ import React, { memo, useState, useContext } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import Close from '@material-ui/icons/Close';
+
 import { ThemeContext } from 'ded-context';
 import Button from 'ded-components/button';
 
@@ -40,10 +42,11 @@ const ModalComponent = memo(({
         className={styles.close}
         onClick={onClose}
         brand='mono'
-        text='X'
         noPadding
         aria-label='close'
-      />
+      >
+        <Close />
+      </Button>
       {children}
     </Modal>
   );

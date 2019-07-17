@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import Close from '@material-ui/icons/Close';
 
 import Loader from 'ded-components/loader';
 import Button from 'ded-components/button';
@@ -69,8 +70,9 @@ const UploadPreview = ({ images, onDelete }) => {
                     noPadding
                     className={styles.deleteButton}
                     onClick={() => deleteImage(preview.id)}
-                    text='X'
-                  />
+                  >
+                    <Close />
+                  </Button>
                 </div>
               </>
             ) : (

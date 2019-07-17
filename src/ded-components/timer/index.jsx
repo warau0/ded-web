@@ -7,6 +7,7 @@ import React, {
 import cn from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import Alarm from '@material-ui/icons/Alarm';
+import Close from '@material-ui/icons/Close';
 
 import { ThemeContext } from 'ded-context';
 import Button from 'ded-components/button';
@@ -176,10 +177,11 @@ export default memo(() => {
             className={styles.close}
             onClick={() => saveShowTimer(false)}
             brand='mono'
-            text='X'
             noPadding
             aria-label='close'
-          />
+          >
+            <Close />
+          </Button>
 
           <div className={styles.timeContainer}>
             <div className={styles.currentTime}>{secondsToTimestamp(activeTime)}</div>
