@@ -7,7 +7,12 @@ import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
-const Gallery = memo(({ big, loading, submissions }) => {
+const Gallery = memo(({
+  big,
+  small,
+  loading,
+  submissions,
+}) => {
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
@@ -18,7 +23,8 @@ const Gallery = memo(({ big, loading, submissions }) => {
 
   return (
     <div className={cn(styles.gallery, {
-      [styles.mosaic]: !big,
+      [styles.mosaic]: !big && !small,
+      [styles.triples]: small,
     })}
     >
       {submissions.length === 0 && (
@@ -43,12 +49,14 @@ const Gallery = memo(({ big, loading, submissions }) => {
 
 Gallery.defaultProps = {
   big: false,
+  small: false,
   loading: false,
   submissions: [],
 };
 
 Gallery.propTypes = {
   big: PropTypes.bool,
+  small: PropTypes.bool,
   loading: PropTypes.bool,
   submissions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,

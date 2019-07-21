@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Fullscreen from '@material-ui/icons/Fullscreen';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Close from '@material-ui/icons/Close';
 
 import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
@@ -14,23 +17,33 @@ import Loader from 'ded-components/loader';
 import SubmissionTags from 'ded-components/submissionTags';
 import Comments from 'ded-components/comments';
 import CommentForm from 'ded-components/commentForm';
+import Gallery from 'ded-components/gallery';
 
 import * as styles from './styles.pcss';
-
-// TODO Close/navigate back and scroll to previous position
 
 const Submission = ({ match }) => {
   const [getSubmission, submissionLoading] = useApi(API.SUBMISSIONS.SHOW);
   const [getComments, commentsLoading] = useApi(API.SUBMISSIONS.COMMENTS);
   const [submission, setSubmission] = useState(null);
+  const [metaInfo, setMetaInfo] = useState(null);
   const [theme] = useContext(ThemeContext);
   const [lastEvent] = useContext(EventContext);
 
   useEffect(() => {
-    getSubmission(match.params.id).then(res => setSubmission({
-      ...res.submission,
-      posted_at: moment(res.submission.created_at).fromNow(),
-    }));
+    getSubmission(match.params.id).then((response) => {
+      setSubmission({
+        ...response.submission,
+        posted_at: moment(response.submission.created_at).fromNow(),
+      });
+
+      setMetaInfo({
+        user_submissions: response.user_submissions,
+        next_submission_id: response.next_submission_id,
+        next_user_submission_id: response.next_user_submission_id,
+        previous_submission_id: response.previous_submission_id,
+        previous_user_submission_id: response.previous_user_submission_id,
+      });
+    });
   }, [match.params.id]);
 
   useEffect(() => {
@@ -85,6 +98,8 @@ const Submission = ({ match }) => {
       </div>
 
       <div className={styles.infoContainer}>
+        <Link to='/' className={styles.close}><Close /></Link>
+
         <Link className={styles.user} to={`/user/${submission.user.id}`}>
           <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
           <div className={styles.username}>{submission.user.username}</div>
@@ -109,7 +124,48 @@ const Submission = ({ match }) => {
 
         <SubmissionTags tags={submission.tags} />
 
-        <h4 className={styles.commentsTitle}>Comments</h4>
+        {metaInfo && metaInfo.user_submissions && metaInfo.user_submissions.length > 0 && (
+          <>
+            <h4 className={styles.sectionTitle}>{`More from ${submission.user.username}`}</h4>
+            <div className={styles.moreContainer}>
+              <Gallery small submissions={metaInfo.user_submissions} />
+            </div>
+          </>
+        )}
+
+        <div className={styles.navigationContainer}>
+          <div>
+            {metaInfo && metaInfo.previous_submission_id ? (
+              <Link to={`/submission/${metaInfo.previous_submission_id}`} data-tip='Previous submission'>
+                <KeyboardArrowLeft className={cn(styles.navigationArrow, styles.active)} />
+                <ReactTooltip />
+              </Link>
+            ) : <KeyboardArrowLeft className={styles.navigationArrow} />}
+            {metaInfo && metaInfo.next_submission_id ? (
+              <Link to={`/submission/${metaInfo.next_submission_id}`} data-tip='Next submission'>
+                <KeyboardArrowRight className={cn(styles.navigationArrow, styles.active)} />
+                <ReactTooltip />
+              </Link>
+            ) : <KeyboardArrowRight className={styles.navigationArrow} />}
+          </div>
+
+          <div>
+            {metaInfo && metaInfo.previous_user_submission_id ? (
+              <Link to={`/submission/${metaInfo.previous_user_submission_id}`} data-tip={`${submission.user.username}'s previous submission`}>
+                <KeyboardArrowLeft className={cn(styles.navigationArrow, styles.active)} />
+                <ReactTooltip />
+              </Link>
+            ) : <KeyboardArrowLeft className={styles.navigationArrow} />}
+            {metaInfo && metaInfo.next_user_submission_id ? (
+              <Link to={`/submission/${metaInfo.next_user_submission_id}`} data-tip={`${submission.user.username}'s next submission`}>
+                <KeyboardArrowRight className={cn(styles.navigationArrow, styles.active)} />
+                <ReactTooltip />
+              </Link>
+            ) : <KeyboardArrowRight className={styles.navigationArrow} />}
+          </div>
+        </div>
+
+        <h4 className={styles.sectionTitle}>Comments</h4>
         <CommentForm
           replyCount={submission.comments.length}
           postUrl={API.SUBMISSIONS.POST_COMMENT}

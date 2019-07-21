@@ -106,6 +106,20 @@
     width: 365px;
     overflow-y: auto;
     padding: var(--pad);
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: var(--pad-xs);
+      right: var(--pad-xs);
+      padding: var(--pad-xs);
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
 
     .user {
       display: flex;
@@ -131,9 +145,32 @@
       }
     }
 
-    .commentsTitle {
+    .sectionTitle {
       margin-top: 0;
       margin-bottom: var(--pad);
+      display: flex;
+    }
+
+    .moreContainer {
+      margin-bottom: var(--pad);
+    }
+
+    .navigationContainer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .navigationArrow {
+      opacity: 0.2;
+      transition: opacity 0.2s ease-in-out;
+
+      &.active {
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -157,6 +194,10 @@
 }
 
 .submissionContainer.light {
+  .navigationArrow, .close {
+    color: var(--light-text);
+  }
+
   .infoContainer {
     background-color: var(--light-element);
 
@@ -167,7 +208,11 @@
 }
 
 .submissionContainer.dark {
-.infoContainer {
+  .navigationArrow, .close {
+    color: var(--dark-text);
+  }
+
+  .infoContainer {
     background-color: var(--dark-element);
 
     .user .username {
