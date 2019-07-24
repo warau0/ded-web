@@ -25,6 +25,7 @@ const Submission = ({ match }) => {
   const [getSubmission, submissionLoading] = useApi(API.SUBMISSIONS.SHOW);
   const [getComments, commentsLoading] = useApi(API.SUBMISSIONS.COMMENTS);
   const [submission, setSubmission] = useState(null);
+  const [comments, setComments] = useState([]);
   const [metaInfo, setMetaInfo] = useState(null);
   const [theme] = useContext(ThemeContext);
   const [lastEvent] = useContext(EventContext);
@@ -43,15 +44,14 @@ const Submission = ({ match }) => {
         previous_submission_id: response.previous_submission_id,
         previous_user_submission_id: response.previous_user_submission_id,
       });
+
+      setComments(response.submission.comments);
     });
   }, [match.params.id]);
 
   useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.UPDATE_COMMENTS) {
-      getComments(match.params.id).then(res => setSubmission({
-        ...submission,
-        comments: res.comments,
-      }));
+      getComments(match.params.id).then(res => setComments(res.comments));
     }
   }, [lastEvent]);
 
@@ -167,7 +167,7 @@ const Submission = ({ match }) => {
 
         <h4 className={styles.sectionTitle}>Comments</h4>
         <CommentForm
-          replyCount={submission.comments.length}
+          replyCount={comments.length}
           postUrl={API.SUBMISSIONS.POST_COMMENT}
           urlTargetId={submission.id}
         />
@@ -177,7 +177,7 @@ const Submission = ({ match }) => {
               <Loader />
             </div>
           )
-          : <Comments comments={submission.comments} />}
+          : <Comments comments={comments} />}
       </div>
     </div>
   );
