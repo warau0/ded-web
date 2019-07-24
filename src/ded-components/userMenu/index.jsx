@@ -9,9 +9,9 @@ import cn from 'classnames';
 
 import ThemeButton from 'ded-components/themeButton';
 import Button from 'ded-components/button';
-import { LoginContext, ThemeContext } from 'ded-context';
+import { LoginContext, ThemeContext, EventContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
-import { API, STORAGE } from 'ded-constants';
+import { API, STORAGE, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
@@ -30,6 +30,7 @@ export default memo(() => {
 
   const [_, user, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
+  const [lastEvent] = useContext(EventContext);
 
   useEffect(() => {
     getNotifications().then((res) => {
@@ -48,6 +49,12 @@ export default memo(() => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_AVATAR) {
+      setAvatar(window.localStorage.getItem(STORAGE.AVATAR) || null);
+    }
+  }, [lastEvent]);
 
   const _showMenu = () => {
     clearTimeout(hideTimeout);

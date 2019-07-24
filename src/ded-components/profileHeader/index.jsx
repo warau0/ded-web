@@ -1,11 +1,11 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
 
-import { ThemeContext, LoginContext } from 'ded-context';
+import { ThemeContext, LoginContext, EventContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
-import { API } from 'ded-constants';
+import { API, STORAGE, EVENT } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 import Loader from 'ded-components/loader';
 
@@ -15,8 +15,10 @@ const ProfileHeader = memo(({
   user,
 }) => {
   const [updateAvatar, updateAvatarLoading] = useApi(API.AVATAR.POST);
+  const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url.replace('{userID}', user.id) : null);
   const [theme] = useContext(ThemeContext);
   const [_, loggedInUser] = useContext(LoginContext);
+  const [__, fireEvent] = useContext(EventContext);
 
   const _onAvatarSelect = (event) => {
     const file = event.target.files[0];
@@ -27,7 +29,10 @@ const ProfileHeader = memo(({
       uploadForm.append('avatar', file);
 
       updateAvatar(null, uploadForm, false).then((res) => {
-        console.log('updated avatar', res); // TODO Update localStorage with url from response
+        const url = res.avatar.url.replace('{userID}', user.id);
+        window.localStorage.setItem(STORAGE.AVATAR, url);
+        setAvatar(url);
+        fireEvent(EVENT.UPDATE_AVATAR);
       }).catch(() => {});
     }
   };
@@ -44,7 +49,7 @@ const ProfileHeader = memo(({
                 <Edit />
               )}
             </div>
-            <img src={user.avatar ? user.avatar.url.replace('{userID}', user.id) : defaultAvatar} alt='avatar' className={styles.avatar} />
+            <img src={avatar || defaultAvatar} alt='avatar' className={styles.avatar} />
             <input
               type='file'
               name='avatar'
