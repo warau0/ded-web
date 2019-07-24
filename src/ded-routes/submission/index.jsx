@@ -101,7 +101,7 @@ const Submission = ({ match }) => {
         <Link to='/' className={styles.close}><Close /></Link>
 
         <Link className={styles.user} to={`/user/${submission.user.id}`}>
-          <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+          <img src={submission.user.avatar ? submission.user.avatar.url.replace('{userID}', submission.user.id) : defaultAvatar} alt='avatar' className={styles.avatar} />
           <div className={styles.username}>{submission.user.username}</div>
         </Link>
 

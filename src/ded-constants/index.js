@@ -10,6 +10,7 @@ export const STORAGE = {
   THEME: 'dedTheme',
   TIMER_LOGS: 'dedTimerLogs',
   TIMER_SHOW: 'dedTimerShow',
+  AVATAR: 'dedAvatar',
 };
 
 export const EVENT = {
@@ -111,6 +112,10 @@ export const API = {
     },
   },
   USERS: {
+    SHOW: {
+      METHOD: 'GET',
+      URL: id => `${API_URL}/users/${id}`,
+    },
     SUBMISSIONS: {
       METHOD: 'GET',
       URL: id => `${API_URL}/users/${id}/submissions`,
@@ -132,6 +137,16 @@ export const API = {
     POST: {
       METHOD: 'POST',
       URL: id => `${API_URL}/comments/${id}`,
+    },
+  },
+  AVATAR: {
+    GET: {
+      METHOD: 'GET',
+      URL: () => `${API_URL}/avatar`,
+    },
+    POST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/avatar`,
     },
   },
 };

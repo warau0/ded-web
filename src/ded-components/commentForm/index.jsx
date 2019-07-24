@@ -35,8 +35,6 @@ const CommentForm = memo(({
     postComment(urlTargetId, { anonymous, text })
       .then(() => {
         fireEvent(EVENT.UPDATE_COMMENTS);
-        setText('');
-        setAnonymous(false);
       });
   };
 

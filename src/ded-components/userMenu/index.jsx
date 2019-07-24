@@ -11,7 +11,7 @@ import ThemeButton from 'ded-components/themeButton';
 import Button from 'ded-components/button';
 import { LoginContext, ThemeContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
-import { API } from 'ded-constants';
+import { API, STORAGE } from 'ded-constants';
 import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
@@ -21,10 +21,12 @@ let hideTimeout = null;
 export default memo(() => {
   const [show, setShow] = useState(false);
   const [hasUnseen, setHasUnseen] = useState(false);
-
+  const [avatar, setAvatar] = useState(window.localStorage.getItem(STORAGE.AVATAR) || null);
   const [notifications, setNotifications] = useState([]);
+
   const [getNotifications, notificationsLoading] = useApi(API.NOTIFICATIONS.GET);
   const [postSeenNotifications] = useApi(API.NOTIFICATIONS.SEEN);
+  const [getAvatar] = useApi(API.AVATAR.GET);
 
   const [_, user, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
@@ -34,6 +36,17 @@ export default memo(() => {
       setNotifications(res.notifications);
       setHasUnseen(res.notifications.findIndex(n => !n.seen) !== -1);
     });
+  }, []);
+
+  useEffect(() => {
+    if (user && !avatar && avatar !== 'null') {
+      getAvatar().then((res) => {
+        window.localStorage.setItem(STORAGE.AVATAR, res && res.avatar
+          ? res.avatar.url.replace('{userID}', user.sub)
+          : 'null');
+        setAvatar(res.avatar.url);
+      });
+    }
   }, []);
 
   const _showMenu = () => {
@@ -91,9 +104,14 @@ export default memo(() => {
         onFocus={_showMenu}
         onBlur={_hideMenu}
         onKeyUp={(e) => { if (e.key === 'Escape') _hideMenu(); }}
+        plainText
       >
         {hasUnseen && <span className={styles.dot} />}
-        <img src={defaultAvatar} alt='Menu' className={styles.avatar} />
+        <img
+          src={avatar && avatar !== 'null' ? avatar : defaultAvatar}
+          alt='Menu'
+          className={styles.avatar}
+        />
       </Button>
 
       {show && (

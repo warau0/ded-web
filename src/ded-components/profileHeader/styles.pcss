@@ -1,0 +1,73 @@
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  .avatarInput {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+
+    .tint {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+
+      > svg {
+        color: var(--dark-text);
+      }
+
+      &.show {
+        opacity: 1;
+      }
+    }
+
+    &:hover .tint {
+      opacity: 1;
+    }
+  }
+
+  .avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+  }
+
+  .username {
+    margin: var(--pad) 0;
+  }
+
+  .hiddenInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+.userCard.light {
+  .username {
+    color: var(--light-text);
+  }
+}
+
+.userCard.dark {
+  .username {
+    color: var(--dark-text);
+  }
+}

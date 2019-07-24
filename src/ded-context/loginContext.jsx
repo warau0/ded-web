@@ -17,6 +17,7 @@ const LoginProvider = ({ children }) => {
       setUser(parseJWT(token));
     } else {
       localStorage.removeItem(STORAGE.TOKEN);
+      localStorage.removeItem(STORAGE.AVATAR);
       setUser(null);
     }
     setIsLoggedIn(!!token);

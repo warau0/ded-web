@@ -53,7 +53,14 @@ const Comments = memo(({ className, comments, level }) => {
                 )}
                 {comment.user ? (
                   <Link to={`/user/${comment.user.id}`} className={styles.username}>
-                    <img src={defaultAvatar} className={styles.avatar} alt='avatar' />
+                    <img
+                      src={comment.user.avatar
+                        ? comment.user.avatar.url.replace('{userID}', comment.user.id)
+                        : defaultAvatar
+                      }
+                      className={styles.avatar}
+                      alt='avatar'
+                    />
                     {comment.user.username}
                   </Link>
                 ) : (
