@@ -135,6 +135,10 @@ export const API = {
     },
   },
   COMMENTS: {
+    PUT: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/comments/${id}`,
+    },
     POST: {
       METHOD: 'POST',
       URL: id => `${API_URL}/comments/${id}`,

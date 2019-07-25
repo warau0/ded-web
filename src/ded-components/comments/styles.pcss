@@ -46,8 +46,7 @@
       }
 
 
-      .replyButton {
-        align-self: flex-end;
+      .replyButton, .editButton {
         opacity: 0.2;
         transition: opacity .2s ease-in-out;
 
@@ -55,10 +54,37 @@
           opacity: 1;
         }
       }
+
+      .editButton {
+        margin-right: var(--pad-xs);
+      }
     }
 
     .content {
       margin-top: 0;
+      margin-bottom: var(--pad-sm);
+      word-break: break-word;
+
+      .editNote {
+        font-size: .75em;
+        opacity: .5;
+      }
+    }
+
+    .textarea {
+      min-width: 100%;
+      max-width: 100%;
+      border: 1px solid;
+      padding: var(--pad-sm);
+      min-height: 50px;
+      transition: min-height 0.3s ease-out;
+      border-radius: var(--border-radius);
+      margin: var(--pad-sm) 0;
+    }
+
+    .submitContainer {
+      display: flex;
+      justify-content: flex-end;
       margin-bottom: var(--pad-sm);
     }
   }
@@ -88,8 +114,12 @@
       color: var(--link);
     }
 
-    .replyButton {
+    .replyButton, .editButton {
       color: var(--light-text);
+    }
+
+    .textarea {
+      border-color: var(--light-border);
     }
   }
 
@@ -110,8 +140,12 @@
         color: var(--link);
     }
 
-    .replyButton {
+    .replyButton, .editButton {
       color: var(--dark-text);
+    }
+
+    .textarea {
+      border-color: var(--dark-border);
     }
   }
 

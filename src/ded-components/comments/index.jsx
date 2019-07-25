@@ -9,12 +9,15 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import Reply from '@material-ui/icons/Reply';
+import Edit from '@material-ui/icons/Edit';
 
-import { API } from 'ded-constants';
-import { ThemeContext } from 'ded-context';
+import { API, EVENT } from 'ded-constants';
+import { ThemeContext, EventContext, LoginContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
 import Button from 'ded-components/button';
 import CommentForm from 'ded-components/commentForm';
+import ErrorMessage from 'ded-components/errorMessage';
+import { useApi } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
 
@@ -22,15 +25,41 @@ const indentDepth = 3;
 
 const Comments = memo(({ className, comments, level }) => {
   const [replyingId, setReplyingId] = useState(null);
+  const [editingComment, setEditingComment] = useState(null);
   const [theme] = useContext(ThemeContext);
-  const levels = useMemo(() => Array.from(Array(level), (_, i) => i + 1), [level]);
+  const [_, fireEvent] = useContext(EventContext);
+  const [__, loggedInUser] = useContext(LoginContext);
+  const [
+    putComment, putCommentLoading,
+    putCommentError, clearPutCommentError,
+  ] = useApi(API.COMMENTS.PUT);
+
+  const levels = useMemo(() => Array.from(Array(level), (___, i) => i + 1), [level]);
 
   const _startReply = (id) => {
     if (id === replyingId) {
       setReplyingId(null);
     } else {
       setReplyingId(id);
+      setEditingComment(null);
     }
+  };
+
+  const _startEdit = (comment) => {
+    if (editingComment && comment.id === editingComment.id) {
+      setEditingComment(null);
+    } else {
+      setEditingComment(comment);
+      setReplyingId(null);
+    }
+  };
+
+  const _putComment = () => {
+    clearPutCommentError();
+    putComment(editingComment.id, { text: editingComment.text })
+      .then(() => {
+        fireEvent(EVENT.UPDATE_COMMENTS);
+      });
   };
 
   return (
@@ -70,11 +99,46 @@ const Comments = memo(({ className, comments, level }) => {
                   </div>
                 )}
               </div>
-              <Button onClick={() => _startReply(comment.id)} brand='ghost' noPadding plainFocus>
-                <Reply className={styles.replyButton} />
-              </Button>
+              <div>
+                {loggedInUser && loggedInUser.sub === comment.user_id && (
+                  <Button onClick={() => _startEdit(comment)} brand='ghost' noPadding plainFocus>
+                    <Edit className={styles.editButton} />
+                  </Button>
+                )}
+                <Button onClick={() => _startReply(comment.id)} brand='ghost' noPadding plainFocus>
+                  <Reply className={styles.replyButton} />
+                </Button>
+              </div>
             </div>
-            <p className={styles.content}>{comment.text}</p>
+            {editingComment && editingComment.id === comment.id ? (
+              <>
+                <textarea
+                  value={editingComment.text}
+                  maxLength={5000}
+                  className={styles.textarea}
+                  placeholder='...'
+                  onChange={e => setEditingComment({ ...editingComment, text: e.target.value })}
+                />
+                <div className={styles.submitContainer}>
+                  <Button
+                    onClick={_putComment}
+                    text='Submit'
+                    square
+                    brand='success'
+                    loading={putCommentLoading}
+                    disabled={editingComment.text.length === 0}
+                  />
+                </div>
+                <ErrorMessage error={putCommentError} />
+              </>
+            ) : (
+              <p className={styles.content}>
+                {comment.text}
+                {comment.created_at !== comment.updated_at && (
+                  <span className={styles.editNote}>&nbsp;(edited)</span>
+                )}
+              </p>
+            )}
           </div>
 
           {replyingId === comment.id && (
