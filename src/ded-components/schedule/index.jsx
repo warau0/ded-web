@@ -9,6 +9,8 @@ import cn from 'classnames';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import chroma from 'chroma-js';
+import Select from 'react-select';
 
 import ErrorMessage from 'ded-components/errorMessage';
 import { ThemeContext } from 'ded-context';
@@ -32,10 +34,41 @@ const days = [
 ];
 const today = new Date().getDay();
 const colors = [
-  'Tomato', 'Flamingo', 'Tangerine', 'Banana',
-  'Sage', 'Basil', 'Peacock', 'Blueberry',
-  'Lavender', 'Grape', 'Graphite', 'Sky',
+  { color: '#D50001', label: 'Tomato', value: 'tomato' },
+  { color: '#E67B73', label: 'Flamingo', value: 'flamingo' },
+  { color: '#F4511E', label: 'Tangerine', value: 'tangerine' },
+  { color: '#F6BF26', label: 'Banana', value: 'banana' },
+  { color: '#33B579', label: 'Sage', value: 'sage' },
+  { color: '#0B8043', label: 'Basil', value: 'basil' },
+  { color: '#039BE5', label: 'Peacock', value: 'peacock' },
+  { color: '#3F51B5', label: 'Blueberry', value: 'blueberry' },
+  { color: '#7986CB', label: 'Lavender', value: 'lavender' },
+  { color: '#8E24AA', label: 'Grape', value: 'grape' },
+  { color: '#616161', label: 'Graphite', value: 'graphite' },
+  { color: '#4285F4', label: 'Sky', value: 'sky' },
 ];
+
+const colourStyles = {
+  option: (s, {
+    data, isFocused, isSelected,
+  }) => {
+    const color = chroma(data.color);
+    return {
+      ...s,
+      backgroundColor: isSelected
+        ? data.color
+        : isFocused ? color.alpha(0.1).css() : null,
+      color: isSelected
+        ? chroma.contrast(color, 'white') > 2 ? 'white' : 'black'
+        : data.color,
+      ':active': {
+        ...s[':active'],
+        backgroundColor: isSelected ? data.color : color.alpha(0.3).css(),
+      },
+    };
+  },
+  singleValue: (s, { data }) => ({ ...s, ':before': { backgroundColor: data.color } }),
+};
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
@@ -85,11 +118,16 @@ export default memo(() => {
       _closeEditModal();
     };
 
+    const payload = {
+      ...editPlan,
+      color: editPlan.color.value,
+    };
+
     clearErrors();
     if (editPlan.id) {
-      putPlan(editPlan.id, editPlan).then(insertPlan).catch(() => {});
+      putPlan(editPlan.id, payload).then(insertPlan).catch(() => {});
     } else {
-      postPlan(null, editPlan).then(insertPlan).catch(() => {});
+      postPlan(null, payload).then(insertPlan).catch(() => {});
     }
   }, [editPlan]);
 
@@ -141,7 +179,11 @@ export default memo(() => {
             { [styles.sm]: duration === 1 },
           )}
           onClick={() => {
-            setEditPlan({ ...plan, day: dayIndex });
+            setEditPlan({
+              ...plan,
+              day: dayIndex,
+              color: colors.find(c => c.value === plan.color),
+            });
             setShowEditModal(true);
           }}
         >
@@ -167,7 +209,7 @@ export default memo(() => {
             day: dayIndex,
             start: hour,
             duration: 1,
-            color: 'sky',
+            color: colors[11],
           });
           setShowEditModal(true);
         }}
@@ -267,43 +309,23 @@ export default memo(() => {
             />
 
             <div className={styles.inputContainer}>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor='color'>
                 Color
-                <select
-                  id='color'
+                <Select
+                  inputId='color'
+                  aria-label='color'
                   name='color'
+                  classNamePrefix='color'
+                  options={colors}
+                  styles={colourStyles}
                   value={editPlan.color}
-                  onChange={e => setEditPlan({ ...editPlan, color: e.target.value })}
-                  className={styles[editPlan.color.toLowerCase()]}
-                >
-                  {colors.map(color => (
-                    <option
-                      className={styles[color.toLowerCase()]}
-                      key={color}
-                      value={color.toLowerCase()}
-                    >
-                      {color}
-                    </option>
-                  ))}
-                </select>
+                  onChange={e => setEditPlan({ ...editPlan, color: e })}
+                  isSearchable={false}
+                />
               </label>
 
-              <label className={styles.dayInput} htmlFor='day'>
-                Day
-                <select
-                  id='day'
-                  name='day'
-                  value={editPlan.day}
-                  onChange={e => setEditPlan({ ...editPlan, day: e.target.value })}
-                  className={styles.select}
-                >
-                  {days.map(day => (
-                    <option key={day.id} value={day.id}>{day.name}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label className={styles.startInput} htmlFor='start'>
+              <label htmlFor='start'>
                 Start
                 <select
                   id='start'
@@ -318,8 +340,25 @@ export default memo(() => {
                   ))}
                 </select>
               </label>
+            </div>
 
-              <label htmlFor='hours' className={styles.hourInput}>
+            <div className={styles.inputContainer}>
+              <label htmlFor='day'>
+                Day
+                <select
+                  id='day'
+                  name='day'
+                  value={editPlan.day}
+                  onChange={e => setEditPlan({ ...editPlan, day: e.target.value })}
+                  className={styles.select}
+                >
+                  {days.map(day => (
+                    <option key={day.id} value={day.id}>{day.name}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label htmlFor='hours'>
                 Hours
                 <input
                   id='hours'
