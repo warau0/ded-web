@@ -42,10 +42,12 @@ export default memo(() => {
   useEffect(() => {
     if (user && !avatar && avatar !== 'null') {
       getAvatar().then((res) => {
-        window.localStorage.setItem(STORAGE.AVATAR, res && res.avatar
+        const url = res && res.avatar
           ? res.avatar.url.replace('{userID}', user.sub)
-          : 'null');
-        setAvatar(res.avatar.url);
+          : 'null';
+
+        window.localStorage.setItem(STORAGE.AVATAR, url);
+        setAvatar(url);
       });
     }
   }, []);
