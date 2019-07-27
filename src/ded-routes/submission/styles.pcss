@@ -145,6 +145,17 @@
       }
     }
 
+    .privateInfo {
+      padding: var(--pad-sm);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--pad);
+      display: flex;
+
+      > svg {
+        margin-right: var(--pad-xs);
+      }
+    }
+
     .sectionTitle {
       margin-top: 0;
       margin-bottom: var(--pad);
@@ -204,6 +215,10 @@
     .user .username {
       color: var(--light-text);
     }
+
+    .privateInfo {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 }
 
@@ -217,6 +232,10 @@
 
     .user .username {
       color: var(--dark-text);
+    }
+
+    .privateInfo {
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 }

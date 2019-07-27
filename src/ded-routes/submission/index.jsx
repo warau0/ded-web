@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip';
 import Fullscreen from '@material-ui/icons/Fullscreen';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Info from '@material-ui/icons/Info';
 import Close from '@material-ui/icons/Close';
 
 import { useApi } from 'ded-hooks';
@@ -119,6 +120,13 @@ const Submission = ({ match }) => {
             </p>
           )}
         </div>
+
+        {!!submission.private && (
+          <div className={styles.privateInfo}>
+            <Info />
+            This submission is private, only you can view it.
+          </div>
+        )}
 
         {submission.description && <p className={styles.description}>{submission.description}</p>}
 
