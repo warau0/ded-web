@@ -1,0 +1,36 @@
+.resetPassword {
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad) var(--pad-md);
+  max-width: 600px;
+
+  .input {
+    border: none;
+    height: var(--form-height);
+    margin: var(--pad-sm) 0;
+    padding: var(--pad-sm);
+  }
+
+  .confirmButton {
+    height: var(--form-height);
+    margin: var(--pad-sm) 0;
+  }
+}
+
+.error {
+  margin: var(--pad-sm) 0;
+}
+
+.resetPassword.light {
+  .input {
+    background-color: var(--light-header);
+    color: var(--light-text);
+  }
+}
+
+.resetPassword.dark {
+  .input {
+    background-color: var(--dark-header);
+    color: var(--dark-text);
+  }
+}

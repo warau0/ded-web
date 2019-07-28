@@ -32,6 +32,16 @@ export const API = {
     METHOD: 'POST',
     URL: () => `${API_URL}/register`,
   },
+  RESET_PASSWORD: {
+    REQUEST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/reset_password`,
+    },
+    SET: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/reset_password/set`,
+    },
+  },
   VERIFY_TOKEN: {
     METHOD: 'GET',
     URL: () => `${API_URL}/verify_token`,

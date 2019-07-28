@@ -21,7 +21,10 @@ import * as styles from './styles.pcss';
 
 const LoginModal = memo(() => {
   const [show, setShow] = useState(false);
+  const [showForgottenPassword, setShowForgottenPassword] = useState(false);
+  const [forgottenPasswordSuccess, setForgottenPasswordSuccess] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
+  const [forgottenPasswordUsername, setForgottenPasswordUsername] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
@@ -35,6 +38,10 @@ const LoginModal = memo(() => {
 
   const [login, loginLoading, loginError, clearLoginError] = useApi(API.LOGIN);
   const [register, registerLoading, registerError, clearRegisterError] = useApi(API.REGISTER);
+  const [
+    resetPassword, resetPasswordLoading,
+    resetPasswordError, clearResetPasswordError,
+  ] = useApi(API.RESET_PASSWORD.REQUEST);
 
   const recaptchaRef = useRef(null);
   const loginUsernameRef = useRef(null);
@@ -42,6 +49,7 @@ const LoginModal = memo(() => {
   const _openModal = useCallback(() => {
     clearRegisterError();
     clearLoginError();
+    clearResetPasswordError();
     setTabIndex(0);
     setShow(true);
   }, []);
@@ -58,20 +66,30 @@ const LoginModal = memo(() => {
     clearLoginError();
     setTabIndex(1);
   }, []);
-  const _login = useCallback(() => login(null, {
-    username: loginUsername,
-    password: loginPassword,
-  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {}),
+  const _toggleForgottenPassword = useCallback(() => {
+    setShowForgottenPassword(!showForgottenPassword);
+    setForgottenPasswordSuccess(false);
+  });
+  const _login = useCallback(() => {
+    clearLoginError();
+    login(null, {
+      username: loginUsername,
+      password: loginPassword,
+    }).then(({ token }) => setIsLoggedIn(token)).catch(() => {});
+  },
   [loginUsername, loginPassword]);
-  const _register = useCallback(() => register(null, {
-    username: registerUsername,
-    email: registerEmail,
-    password: registerPassword,
-    password_confirmation: registerPasswordConfirm,
-    recaptcha: registerRecaptcha,
-  }).then(({ token }) => setIsLoggedIn(token)).catch(() => {
-    recaptchaRef.current.reset();
-  }),
+  const _register = useCallback(() => {
+    clearRegisterError();
+    register(null, {
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+      password_confirmation: registerPasswordConfirm,
+      recaptcha: registerRecaptcha,
+    }).then(({ token }) => setIsLoggedIn(token)).catch(() => {
+      recaptchaRef.current.reset();
+    });
+  },
   [
     registerUsername,
     registerEmail,
@@ -79,6 +97,18 @@ const LoginModal = memo(() => {
     registerPasswordConfirm,
     registerRecaptcha,
   ]);
+  const _resetPassword = useCallback(() => {
+    clearResetPasswordError();
+    setForgottenPasswordSuccess(false);
+    resetPassword(null, {
+      username: forgottenPasswordUsername,
+    }).then(() => {
+      setForgottenPasswordSuccess(true);
+      setShowForgottenPassword(false);
+      setForgottenPasswordUsername('');
+    }).catch(() => {});
+  },
+  [forgottenPasswordUsername]);
 
   useEffect(() => {
     if (show) {
@@ -118,6 +148,41 @@ const LoginModal = memo(() => {
         loading={loginLoading}
         text='Login'
       />
+      <Button
+        square
+        brand='ghost'
+        plainText
+        plainFocus
+        className={styles.alternateAction}
+        onClick={_toggleForgottenPassword}
+        text='Forgotten your password?'
+      />
+      {showForgottenPassword && (
+        <>
+          <input
+            type='text'
+            name='username'
+            className={styles.input}
+            placeholder='Username'
+            aria-label='username'
+            value={forgottenPasswordUsername}
+            onChange={e => setForgottenPasswordUsername(e.target.value)}
+            onKeyUp={(e) => { if (e.key === 'Enter') _resetPassword(); }}
+          />
+          <ErrorMessage className={styles.error} error={resetPasswordError} />
+          <Button
+            square
+            brand='success'
+            className={styles.confirmButton}
+            onClick={_resetPassword}
+            loading={resetPasswordLoading}
+            text='Reset password'
+          />
+        </>
+      )}
+      {forgottenPasswordSuccess && (
+        <p>Password reset email sent, please remember to check your spam folder!</p>
+      )}
       <Button
         square
         brand='ghost'
