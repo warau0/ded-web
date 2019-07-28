@@ -10,7 +10,8 @@ npm install -g parcel-bundler
 Create config file in root:
 config.json: {
   "API_URL": "YOUR_API",
-  "RECAPTCHA_KEY": "YOUR_RECAPTCHA_CLIENT_KEY"
+  "RECAPTCHA_KEY": "YOUR_RECAPTCHA_CLIENT_KEY",
+  "GA_ID": "YOUR_GOOGLE_ANALYTICS_ID"
 }
 
 To run in hot module reloading mode:

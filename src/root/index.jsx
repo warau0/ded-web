@@ -11,6 +11,7 @@ import PageCrash from 'ded-components/pageCrash';
 import Header from 'ded-components/header';
 import Wrapper from 'ded-components/wrapper';
 import Authenticate from 'ded-components/authenticate';
+import Tracker from 'ded-components/tracker';
 import Routes from './routes';
 
 const App = () => (
@@ -34,6 +35,7 @@ const App = () => (
         </ThemeProvider>
       </LoginProvider>
     </EventProvider>
+    <Tracker />
   </BrowserRouter>
 );
 
