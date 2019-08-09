@@ -3,6 +3,7 @@ import React, {
   useState,
   useContext,
   useEffect,
+  useRef,
 } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
@@ -12,11 +13,9 @@ import Button from 'ded-components/button';
 import { LoginContext, ThemeContext, EventContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
 import { API, STORAGE, EVENT } from 'ded-constants';
-import { useApi } from 'ded-hooks';
+import { useApi, useClickOutside } from 'ded-hooks';
 
 import * as styles from './styles.pcss';
-
-let hideTimeout = null;
 
 export default memo(() => {
   const [show, setShow] = useState(false);
@@ -31,6 +30,15 @@ export default memo(() => {
   const [_, user, setIsLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
   const [lastEvent] = useContext(EventContext);
+
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+
+  const _hideMenu = () => {
+    setShow(false);
+  };
+
+  useClickOutside(menuRef, menuButtonRef, _hideMenu);
 
   useEffect(() => {
     getNotifications().then((res) => {
@@ -59,7 +67,6 @@ export default memo(() => {
   }, [lastEvent]);
 
   const _showMenu = () => {
-    clearTimeout(hideTimeout);
     setShow(true);
     if (hasUnseen) {
       setTimeout(() => {
@@ -68,14 +75,6 @@ export default memo(() => {
         });
       }, 1000);
     }
-  };
-
-  const _hideMenu = () => {
-    setShow(false);
-  };
-
-  const _delayHideMenu = () => {
-    hideTimeout = setTimeout(() => _hideMenu(), 250);
   };
 
   const _logout = () => {
@@ -92,7 +91,7 @@ export default memo(() => {
 
     return notifications.map(msg => (
       <li className={styles.notification} key={msg.id}>
-        <Link to={`/submission/${msg.notification_parent_id}`}>
+        <Link onClick={_hideMenu} to={`/submission/${msg.notification_parent_id}`}>
           {hasUnseen && !msg.seen && <span className={styles.dot} />}
           {msg.text}
         </Link>
@@ -101,19 +100,14 @@ export default memo(() => {
   };
 
   return (
-    <div
-      className={cn(styles.menuAnchor, styles[theme])}
-      onMouseEnter={_showMenu}
-      onMouseLeave={_delayHideMenu}
-    >
+    <div className={cn(styles.menuAnchor, styles[theme])}>
       <Button
         brand='ghost'
         className={styles.menuButton}
         onClick={show ? _hideMenu : _showMenu}
-        onFocus={_showMenu}
-        onBlur={_hideMenu}
         onKeyUp={(e) => { if (e.key === 'Escape') _hideMenu(); }}
         plainText
+        ref={menuButtonRef}
       >
         {hasUnseen && <span className={styles.dot} />}
         <img
@@ -124,7 +118,7 @@ export default memo(() => {
       </Button>
 
       {show && (
-        <div className={styles.menu}>
+        <div className={styles.menu} ref={menuRef}>
           <div className={styles.triangleContainer}>
             <div className={styles.triangle} />
           </div>
@@ -145,7 +139,7 @@ export default memo(() => {
             <h3 className={styles.menuHeader}>Account</h3>
             <ul className={styles.menuList}>
               <li>
-                <Link to={`/user/${user ? user.sub : null}`}>Your profile</Link>
+                <Link onClick={_hideMenu} to={`/user/${user ? user.sub : null}`}>Your profile</Link>
               </li>
               <li>
                 <Button

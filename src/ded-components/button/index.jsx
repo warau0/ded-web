@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, forwardRef } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -6,7 +6,7 @@ import { ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
-const Button = memo(({
+const Button = forwardRef(({
   children,
   brand,
   className,
@@ -19,7 +19,7 @@ const Button = memo(({
   type,
   noPadding,
   ...restProps
-}) => {
+}, ref) => {
   const [theme] = useContext(ThemeContext);
 
   return (
@@ -38,6 +38,7 @@ const Button = memo(({
       type={type}
       disabled={loading}
       {...restProps}
+      ref={ref}
     >
       {loading ? 'Please wait ...' : (text || children)}
     </button>
@@ -75,4 +76,4 @@ Button.propTypes = {
   noPadding: PropTypes.bool,
 };
 
-export default Button;
+export default memo(Button);
