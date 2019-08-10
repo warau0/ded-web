@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import fetch from 'cross-fetch';
+import { toast } from 'react-toastify';
 
 import { STORAGE } from 'ded-constants';
 import { LoginContext } from 'ded-context';
@@ -30,6 +31,7 @@ export default (API) => {
       if (result.status >= 400) {
         if (result.status === 401) { // Unauthorized.
           setIsLoggedIn(false);
+          toast.info(`You've been logged out.`);
         }
 
         throw json

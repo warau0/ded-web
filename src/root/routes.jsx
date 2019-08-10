@@ -9,8 +9,6 @@ const Profile = lazy(() => import('ded-routes/profile'));
 const Submission = lazy(() => import('ded-routes/submission'));
 const ResetPassword = lazy(() => import('ded-routes/resetPassword'));
 
-const Timer = lazy(() => import('ded-components/timer'));
-
 export default () => {
   const [isLoggedIn] = useContext(LoginContext);
 
@@ -23,8 +21,6 @@ export default () => {
       <Route path='/reset_password' component={ResetPassword} />
       <Route path='/user/:id' component={Profile} />
       <Route path='/submission/:id' component={Submission} />
-
-      <Timer />
     </>
   );
 };

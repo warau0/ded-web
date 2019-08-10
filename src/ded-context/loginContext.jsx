@@ -6,15 +6,23 @@ import parseJWT from 'ded-utils/parseJWT';
 
 const LoginContext = createContext([false, () => {}]);
 
+const getUserFromToken = (token) => {
+  try {
+    return parseJWT(token);
+  } catch (e) {
+    return null; // Bad token.
+  }
+};
+
 const LoginProvider = ({ children }) => {
   const localToken = localStorage.getItem(STORAGE.TOKEN);
   const [isLoggedIn, setIsLoggedIn] = useState(localToken || false);
-  const [user, setUser] = useState(localToken ? parseJWT(localToken) : null);
+  const [user, setUser] = useState(localToken ? getUserFromToken(localToken) : null);
 
   const saveIsLoggedIn = (token) => {
     if (token) {
       localStorage.setItem(STORAGE.TOKEN, token);
-      setUser(parseJWT(token));
+      setUser(getUserFromToken(token));
     } else {
       localStorage.removeItem(STORAGE.TOKEN);
       localStorage.removeItem(STORAGE.AVATAR);
