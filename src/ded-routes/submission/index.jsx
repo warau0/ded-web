@@ -78,31 +78,32 @@ const Submission = ({ match }) => {
   return (
     <div className={cn(styles.submissionContainer, styles[theme])}>
       <div className={cn(styles.images, { [styles.single]: submission.images.length === 1 })}>
-        {submission.images.map((image) => {
-          const url = image.url.replace('{userID}', submission.user.id);
-          return (
-            <div className={styles.art} key={image.id}>
-              <img src={url} draggable='false' alt={image.name} />
-              <div className={styles.actions}>
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href={url}
-                  className={styles.action}
-                >
-                  <Fullscreen />
-                </a>
-              </div>
+        {submission.images.map((image) => (
+          <div className={styles.art} key={image.id}>
+            <img src={image.url} draggable='false' alt={image.file} />
+            <div className={styles.actions}>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href={image.url}
+                className={styles.action}
+              >
+                <Fullscreen />
+              </a>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
       <div className={styles.infoContainer}>
         <Link to='/' className={styles.close}><Close /></Link>
 
         <Link className={styles.user} to={`/user/${submission.user.id}`}>
-          <img src={submission.user.avatar ? submission.user.avatar.url.replace('{userID}', submission.user.id) : defaultAvatar} alt='avatar' className={styles.avatar} />
+          <img
+            src={submission.user.avatar ? submission.user.avatar.url : defaultAvatar}
+            alt='avatar'
+            className={styles.avatar}
+          />
           <div className={styles.username}>{submission.user.username}</div>
         </Link>
 

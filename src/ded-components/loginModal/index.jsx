@@ -202,7 +202,7 @@ const LoginModal = memo(() => {
         type='text'
         name='username'
         className={styles.input}
-        placeholder='Username'
+        placeholder='Username *'
         aria-label='Username'
         value={registerUsername}
         onChange={e => setRegisterUsername(e.target.value)}
@@ -222,7 +222,7 @@ const LoginModal = memo(() => {
         type='password'
         name='password'
         className={styles.input}
-        placeholder='Password'
+        placeholder='Password *'
         aria-label='Password'
         value={registerPassword}
         onChange={e => setRegisterPassword(e.target.value)}
@@ -232,7 +232,7 @@ const LoginModal = memo(() => {
         type='password'
         name='password_confirm'
         className={styles.input}
-        placeholder='Confirm password'
+        placeholder='Confirm password *'
         aria-label='Confirm password'
         value={registerPasswordConfirm}
         onChange={e => setRegisterPasswordConfirm(e.target.value)}

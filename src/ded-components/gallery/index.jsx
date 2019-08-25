@@ -37,9 +37,8 @@ const Gallery = memo(({
         <GalleryThumb
           key={submission.id}
           submissionId={submission.id}
-          name={submission.images[0].thumbnail.name}
+          name={submission.images[0].thumbnail.file}
           url={submission.images[0].thumbnail.url}
-          userId={submission.user_id}
           multi={submission.images.length > 1}
         />
       ))}

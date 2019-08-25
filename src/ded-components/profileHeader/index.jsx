@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useContext, useState, useRef } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
@@ -15,10 +15,11 @@ const ProfileHeader = memo(({
   user,
 }) => {
   const [updateAvatar, updateAvatarLoading] = useApi(API.AVATAR.POST);
-  const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url.replace('{userID}', user.id) : null);
+  const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : null);
   const [theme] = useContext(ThemeContext);
   const [_, loggedInUser] = useContext(LoginContext);
   const [__, fireEvent] = useContext(EventContext);
+  const avatarInput = useRef(null);
 
   const _onAvatarSelect = (event) => {
     const file = event.target.files[0];
@@ -29,11 +30,13 @@ const ProfileHeader = memo(({
       uploadForm.append('avatar', file);
 
       updateAvatar(null, uploadForm, false).then((res) => {
-        const url = res.avatar.url.replace('{userID}', user.id);
-        window.localStorage.setItem(STORAGE.AVATAR, url);
-        setAvatar(url);
+        window.localStorage.setItem(STORAGE.AVATAR, res.avatar.url);
+        setAvatar(res.avatar.url);
         fireEvent(EVENT.UPDATE_AVATAR);
-      }).catch(() => {});
+        avatarInput.current.value = null;
+      }).catch(() => {
+        avatarInput.current.value = null;
+      });
     }
   };
 
@@ -51,6 +54,7 @@ const ProfileHeader = memo(({
             </div>
             <img src={avatar || defaultAvatar} alt='avatar' className={styles.avatar} />
             <input
+              ref={avatarInput}
               type='file'
               name='avatar'
               id='avatar'
@@ -63,7 +67,7 @@ const ProfileHeader = memo(({
     }
 
     return (
-      <img src={defaultAvatar} alt='avatar' className={styles.avatar} />
+      <img src={avatar || defaultAvatar} alt='avatar' className={styles.avatar} />
     );
   };
 

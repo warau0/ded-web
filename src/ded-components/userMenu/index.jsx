@@ -50,9 +50,7 @@ export default memo(() => {
   useEffect(() => {
     if (user && !avatar && avatar !== 'null') {
       getAvatar().then((res) => {
-        const url = res && res.avatar
-          ? res.avatar.url.replace('{userID}', user.sub)
-          : 'null';
+        const url = (res && res.avatar) ? res.avatar.url : 'null';
 
         window.localStorage.setItem(STORAGE.AVATAR, url);
         setAvatar(url);

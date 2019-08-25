@@ -13,7 +13,6 @@ const GalleryThumb = memo(({
   name,
   url,
   multi,
-  userId,
 }) => {
   const [theme] = useContext(ThemeContext);
 
@@ -21,7 +20,7 @@ const GalleryThumb = memo(({
     <Link to={`/submission/${submissionId}`} className={cn(styles.thumb, styles[theme])}>
       {multi && <Filter className={styles.multi} />}
       <img
-        src={url.replace('{userID}', userId)}
+        src={url}
         alt={name}
       />
     </Link>
@@ -33,7 +32,6 @@ GalleryThumb.defaultProps = {
   name: null,
   url: null,
   multi: false,
-  userId: null,
 };
 
 GalleryThumb.propTypes = {
@@ -41,7 +39,6 @@ GalleryThumb.propTypes = {
   name: PropTypes.string,
   url: PropTypes.string,
   multi: PropTypes.bool,
-  userId: PropTypes.number,
 };
 
 export default GalleryThumb;
