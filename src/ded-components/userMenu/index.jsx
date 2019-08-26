@@ -87,14 +87,32 @@ export default memo(() => {
       return <li><p>You don&apos;t have any notifications.</p></li>;
     }
 
-    return notifications.map(msg => (
-      <li className={styles.notification} key={msg.id}>
-        <Link onClick={_hideMenu} to={`/submission/${msg.notification_parent_id}`}>
+    return notifications.map(msg => {
+      const content = (
+        <>
           {hasUnseen && !msg.seen && <span className={styles.dot} />}
           {msg.text}
-        </Link>
-      </li>
-    ));
+        </>
+      );
+
+      return (
+        <li className={styles.notification} key={msg.id}>
+          {msg.notification_parent_type ? (
+            <Link
+              className={styles.notificationLine}
+              onClick={_hideMenu}
+              to={`/submission/${msg.notification_parent_id}`}
+            >
+              {content}
+            </Link>
+          ) : (
+            <div className={styles.notificationLine}>
+              {content}
+            </div>
+          )}
+        </li>
+      );
+    });
   };
 
   return (
