@@ -155,7 +155,7 @@ export default memo(() => {
             <h3 className={styles.menuHeader}>Account</h3>
             <ul className={styles.menuList}>
               <li>
-                <Link onClick={_hideMenu} to={`/user/${user ? user.sub : null}`}>Your profile</Link>
+                <Link onClick={_hideMenu} to={`/user/${user ? user.username : null}`}>Your profile</Link>
               </li>
               <li>
                 <Button

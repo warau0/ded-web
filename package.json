@@ -1,6 +1,6 @@
 {
   "name": "ded-web",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "private": true,
   "description": "Draw Every Day",
   "main": "src/root/index.js",
