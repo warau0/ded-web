@@ -83,6 +83,7 @@ const UploadModal = memo(() => {
     const uploadForm = new FormData();
     clearPostSubmissionError();
 
+    uploadForm.append('has_data', 1); // Track if backend receives data.
     uploadForm.append('description', description || '');
     uploadForm.append('hours', hours || 0);
     uploadForm.append('nsfw', nsfw ? 1 : 0);

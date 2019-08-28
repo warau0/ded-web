@@ -27,6 +27,7 @@ const ProfileHeader = memo(({
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (fileTypes.indexOf(file.type) !== -1) {
       const uploadForm = new FormData();
+      uploadForm.append('has_data', 1); // Track if backend receives data.
       uploadForm.append('avatar', file);
 
       updateAvatar(null, uploadForm, false).then((res) => {
