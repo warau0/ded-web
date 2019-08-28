@@ -66,7 +66,7 @@ export default () => {
         <div>
           <div className={styles.iframeContainer}>
             <iframe width='560' height='315' src='https://www.youtube.com/embed/DN43sCyEanA'
-              frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+              frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           </div>
           <img className={styles.career} src="https://cdn.justdraw.lol/intro/career.jpg" />
         </div>
@@ -76,7 +76,7 @@ export default () => {
       </div>
 
       <iframe width='560' height='315' src='https://www.youtube.com/embed/KxGRhd_iWuE'
-        frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+        frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
 
       <h3>Alright, now get back to drawing.</h3>
     </Layout>
