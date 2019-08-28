@@ -1,0 +1,111 @@
+.row {
+  display: flex;
+  flex-direction: row;
+
+  @mixin phone {
+    flex-direction: column;
+  }
+}
+
+.textBlockLeft {
+  margin-right: var(--pad);
+
+  @mixin phone {
+    margin: 0;
+  }
+}
+
+.textBlockRight {
+  margin-left: var(--pad);
+
+  @mixin phone {
+    margin: 0;
+  }
+}
+
+.iframeContainer {
+  margin: var(--pad) 0;
+}
+
+.beginnerGuide {
+  font-weight: 600;
+}
+
+iframe {
+  max-width: 95%;
+}
+
+img.youCanDoIt {
+  max-width: 95%;
+}
+
+img.career, img.noRules {
+  max-width: 95%;
+}
+
+img.everyDay {
+  max-width: 300px;
+
+  @mixin phone {
+    width: 95%;
+    max-width: 400px;
+  }
+}
+
+img.weCanAllSee {
+  max-width: 400px;
+
+  @mixin phone {
+    width: 95%;
+  }
+}
+
+img.gettingStarted {
+  max-width: 300px;
+  margin-right: var(--pad);
+
+  @mixin phone {
+    width: 95%;
+    max-width: 450px;
+    margin-bottom: var(--pad);
+    margin-right: 0;
+  }
+}
+
+img.thatDamnedSmile, img.mangamania {
+  max-width: 600px;
+
+  @media (max-width: 1000px) {
+    max-width: 400px;
+  }
+
+  @mixin phone {
+    width: 95%;
+    max-width: 450px;
+  }
+}
+
+img.mangamania {
+  margin-top: var(--pad);
+}
+
+.dark {
+  a {
+    color: var(--dark-color);
+  }
+}
+
+.light {
+  a {
+    color: var(--light-color);
+  }
+}
+
+.hiddenLink {
+  text-decoration: none;
+  cursor: default;
+
+  &:focus {
+    outline: none;
+  }
+}

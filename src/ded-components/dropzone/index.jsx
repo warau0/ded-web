@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { images as imagesIcon } from 'ded-assets';
+import { ThemeContext } from 'ded-context';
 
 import styles from './styles.pcss';
 
@@ -15,6 +16,7 @@ const Dropzone = ({
   maxLength,
 }) => {
   const [highlight, setHighlight] = useState(false);
+  const [theme] = useContext(ThemeContext);
 
   const fileInputRef = useRef(null);
 
@@ -68,7 +70,7 @@ const Dropzone = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, styles[theme])}>
       <div
         role='presentation'
         className={cn(styles.dropzone, {

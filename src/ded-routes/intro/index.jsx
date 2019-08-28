@@ -1,52 +1,85 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Layout from 'ded-components/layout';
+import { ThemeContext } from 'ded-context';
 
-export default () => (
-  <Layout>
-    Work in progress
-    {/*
-    <h2>What is this, and why should I care?</h2>
-    <p>If you want to get better. Not for gathering a following.</p>
-    <p>Whether you're pursing a career in art or you're a passionate hobbyist.</p>
-    <p>Group of peers</p>
+import * as styles from './styles.pcss';
 
-    <h3>I need some motivation, is just drawing enough?</h3>
-    <p>While mileage is important, eternal aimless doodling won't help you improve.</p>
-    <p>Don't burn yourself out, draw what you want to draw and supplement with studies when you feel stuck.</p>
+export default () => {
+  const [theme] = useContext(ThemeContext);
 
-    FZD Just draw episode
+  return (
+    <Layout className={styles[theme]}>
+      <div className={styles.row}>
+      <div className={styles.textBlockLeft}>
+          <h2><a tabIndex={-1} className={styles.hiddenLink} target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=7mBqm8uO4Cg'>OwO</a> — What's this?</h2>
+          <p>Are you looking to hone your craftsmanship? If so, you've come to the right place.</p>
+          <p>What we do here is simple. We post work. Every day.</p>
+          <p>This is not a place to gather a following, there is no audience here. Instead you'll find yourself in a group of peers - others who are working on improving themselves.</p>
+          <p>Social media is not a great place for your studies and failures, nor a place you'll receive much critique. These are the training grounds, a place for your failures and trial runs. A place to hone your skills before unleashing them upon the world.</p>
+        </div>
 
-    <p>Define long and short term goals and meassure your progress. How are you working towards achieving your goals?</p>
-    <p>A goal can be as simple and concrete as drawing a walk cycle, completing a master study or hitting 100 followers on a platform.</p>
-    <p>You want a goal, but you don't want the distance between you and the goal to crush you.</p>
-    <p>Break down your overarching goals into smaller pieces so you have a fairly high likelyhood of achieving them.</p>
-    <p>Or as loose as eclipsing your art nemesis. Be wary of goals you can't meassure or are too ambitious.</p>
+        <div>
+          <img className={styles.everyDay} src="https://cdn.justdraw.lol/intro/16_hours.jpg" />
+        </div>
+      </div>
 
-    Video on setting goals
+      <h2>But I could literally just do that in isolation on my own</h2>
+      <div className={styles.row}>
+        <div>
+          <img className={styles.weCanAllSee} src="https://cdn.justdraw.lol/intro/we_can_all_see.png" />
+        </div>
 
-    <p>Don't compare yourself to others too much. There's always going to other people who are better than you, and those who are worse.</p>
-    <p>Everyone is at a different point in their art journey relative to you. You don't know the details of other peoples lives.</p>
-    <p>Compare yourself to your past self. Small incremental improvements.</p>
-    <p>It's pointless to anguish yourself with the thought of 12 year old prodigies in China who are years ahead of where you are at 25.</p>
-    <p>It's good to have artists you look up to and aim towards, but be careful not be wallow in hopelessness and become resentfull.</p>
+        <div className={styles.textBlockRight}>
+          <p>You could, but what about:</p>
+          <ul>
+            <li><b>Feedback.</b> You'll be responsible for spotting all of your own mistakes, and even if you spot something, how do you fix it?</li>
+            <li><b>Motivation.</b> Seeing others work hard can really light a fire under your ass.</li>
+            <li><b>Inspiration.</b> Seeing someone's unfinished pieces and study routine can help you understand how they've gotten to where they are.</li>
+            <li><b>Ass pats.</b> Showing off your hard work feels nice, someone might even drop you a <i>'nice'</i>.</li>
+          </ul>
+          <p>This site is small. Extremely small. Microscopic. You'll get to know the faces. Every drawing is on display every day - it's different posting here than dumping something into a 0 follower Twitter void.</p>
+        </div>
+      </div>
 
-    Jake the dog video
+      <h2>Alright, I'm in. Where and how do I start?</h2>
+      <p>Are you an absolute beginner? If so, here's a decent article to get you started on the important bits: <a className={styles.link} target='_blank' rel='noopener noreferrer' className={styles.beginnerGuide} href="https://hubpages.com/art/how-to-draw-learn">Beginner guide</a></p>
+      <p>As for the site, simply create an account and start posting what you produce every day.</p>
+      <div className={styles.row}>
+        <div>
+          <img className={styles.gettingStarted} src="https://cdn.justdraw.lol/intro/getting_started.jpg" />
+        </div>
 
-    <h3>Alright, I'm in, what do I do?</h3>
-    <p>Make an account and start uploading your art every day. You should spend at least 30 minutes on what you upload.</p>
-    <p>If you want to get fancy with it start recording how long you spend on art.</p>
+        <div>
+          <img className={styles.thatDamnedSmile} src="https://cdn.justdraw.lol/intro/that_damned_smile.jpg" />
 
-    <h3>I'm kind of a busy guy, can I post less frequently than every day?</h3>
-    <p>No. I don't care if you're the CEO of a multi million dollar corporation. You can carve out 30 minutes of your day to draw something if you want to.</p>
-    <p>If you don't find any time to draw at least that little, it's because you don't want to or don't give yourself the chance to.</p>
-    <p>Maybe you're on your phone on the bus, maybe you aimlessly click around on YouTube or Facebook for an hour after dinner.</p>
-    <p>Start bringing your sketchbook around with you. If you have it, you have an alternative to wasting time on your phone when you have some dead time.</p>
+          <img className={styles.mangamania} src="https://cdn.justdraw.lol/intro/mangamania.jpg" />
 
-    <p>Don't burn yourself out.</p>
-    <p>As long as you're drawing, you're doing good, champ.</p>
+          <p>Don't fall into the trap of eternal mindless doodling. It's key that you study and apply the knowledge if you want to improve. Mileage is important, but be smart about how you spend all that time.</p>
+          <p>Be careful not to burn yourself out, though. Draw what you want to draw and then supplement with studies when you feel stuck.</p>
 
-    Japanese crabber video
-    */}
-  </Layout>
-);
+          <img className={styles.youCanDoIt} src="https://cdn.justdraw.lol/intro/you_can_do_it.png" />
+        </div>
+      </div>
+
+      <div className={styles.row}>
+        <div>
+          <div className={styles.iframeContainer}>
+            <iframe width='560' height='315' src='https://www.youtube.com/embed/DN43sCyEanA'
+              frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+          </div>
+          <img className={styles.career} src="https://cdn.justdraw.lol/intro/career.jpg" />
+        </div>
+        <div>
+          <img className={styles.noRules} src="https://cdn.justdraw.lol/intro/no_rules_just_tools.jpg" />
+        </div>
+      </div>
+
+      <iframe width='560' height='315' src='https://www.youtube.com/embed/KxGRhd_iWuE'
+        frameBorder='0' allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+
+      <h3>Alright, now get back to drawing.</h3>
+    </Layout>
+  );
+};
+

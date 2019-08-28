@@ -1,9 +1,6 @@
 .container {
-  background-color: #581F8D;
-
   .dropzone {
     height: 225px;
-    background: radial-gradient(755px at 80% -80%, #581F8D 0, #FFCA41);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,5 +35,21 @@
     .fileInput {
       display: none;
     }
+  }
+}
+
+.container.light {
+  background-color: #F79280;
+
+  .dropzone {
+    background: radial-gradient(755px at 80% -80%, #F79280 0, #A799C4);
+  }
+}
+
+.container.dark {
+  background-color: #581F8D;
+
+  .dropzone { 
+    background: radial-gradient(755px at 80% -80%, #581F8D 0, #FFCA41);
   }
 }
