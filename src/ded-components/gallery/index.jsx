@@ -12,22 +12,14 @@ const Gallery = memo(({
   small,
   loading,
   submissions,
-}) => {
-  if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <Loader />
-      </div>
-    );
-  }
-
-  return (
+}) => (
+  <>
     <div className={cn(styles.gallery, {
       [styles.mosaic]: !big && !small,
       [styles.triples]: small,
     })}
     >
-      {submissions.length === 0 && (
+      {!loading && submissions.length === 0 && (
         <i className={styles.emptyLabel}>
           No submissions yet :(
         </i>
@@ -43,8 +35,14 @@ const Gallery = memo(({
         />
       ))}
     </div>
-  );
-});
+
+    {loading && (
+      <div className={styles.loadingContainer}>
+        <Loader />
+      </div>
+    )}
+  </>
+));
 
 Gallery.defaultProps = {
   big: false,

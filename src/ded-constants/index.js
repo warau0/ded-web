@@ -95,7 +95,7 @@ export const API = {
   SUBMISSIONS: {
     INDEX: {
       METHOD: 'GET',
-      URL: () => `${API_URL}/submissions`,
+      URL: page => `${API_URL}/submissions?page=${page}`,
     },
     SHOW: {
       METHOD: 'GET',
@@ -129,7 +129,7 @@ export const API = {
     },
     SUBMISSIONS: {
       METHOD: 'GET',
-      URL: id => `${API_URL}/users/${id}/submissions`,
+      URL: ({ id, page = 1 }) => `${API_URL}/users/${id}/submissions?page=${page}`,
     },
   },
   STREAKS: {
