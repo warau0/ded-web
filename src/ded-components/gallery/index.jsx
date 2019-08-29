@@ -33,7 +33,7 @@ const Gallery = memo(({
         </i>
       )}
 
-      {submissions.map(submission => (
+      {submissions.filter(s => s.images[0] && s.images[0].thumbnail).map(submission => (
         <GalleryThumb
           key={submission.id}
           submissionId={submission.id}

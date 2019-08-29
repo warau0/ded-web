@@ -32,7 +32,7 @@ const Dropzone = ({
           onError(`${list[i].name} has already been added.`);
         }
       } else {
-        onError(`File type (${list[i].type}) is not allowed.`);
+        onError(`${list[i].name} is not an image (jpg, png, gif).`);
       }
     }
     return array.slice(0, (maxLength - images.length) || 0);

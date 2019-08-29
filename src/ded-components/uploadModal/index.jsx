@@ -4,9 +4,11 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
 } from 'react';
 import cn from 'classnames';
 import CreatableSelect from 'react-select/creatable';
+import { toast } from 'react-toastify';
 
 import Modal from 'ded-components/modal';
 import Button from 'ded-components/button';
@@ -42,6 +44,8 @@ const UploadModal = memo(() => {
   const [theme] = useContext(ThemeContext);
   const [_, fireEvent] = useContext(EventContext);
 
+  const bigImages = useMemo(() => images.filter(i => (i.size / 1024 / 1024) > 2), [images]);
+
   useEffect(() => {
     if (show && !fetchedTags) {
       getTags().then(res => setTagOptions(res.tags.map(tag => ({
@@ -70,7 +74,16 @@ const UploadModal = memo(() => {
   }, []);
 
   const _onFilesAdded = (files) => {
-    const newImages = images.concat(files);
+    const newImages = [...images];
+    
+    files.forEach((file) => {
+      const mb = parseFloat(file.size / 1024 / 1024).toFixed(2);
+      if (mb > 3) {
+        toast.error(`${file.name} is too big: ${mb} MB, max: 3 MB.`);
+      } else {
+        newImages.push(file);
+      }
+    });
     setImages(newImages);
   };
 
@@ -111,7 +124,7 @@ const UploadModal = memo(() => {
         <div className={cn(styles.innerContent, styles[theme])}>
           <Dropzone
             onFilesAdded={_onFilesAdded}
-            onError={console.warn} // eslint-disable-line no-console
+            onError={toast.error}
             images={images}
             maxLength={10}
           />
@@ -122,7 +135,16 @@ const UploadModal = memo(() => {
 
           {images.length === 10 && (
             <div className={styles.maxLengthLabel}>
-              Max images: 10
+              Max images per submission: 10
+            </div>
+          )}
+
+          {bigImages.length > 0 && (
+            <div className={styles.bigSizeLabel}>
+              {bigImages.length === 1
+                ? `You're about to upload a pretty big image - please consider resizing before uploading.`
+                : `You're about to upload several big images - please consider resizing before uploading.`
+              }
             </div>
           )}
 

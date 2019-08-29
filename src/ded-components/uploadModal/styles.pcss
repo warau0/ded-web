@@ -2,11 +2,21 @@
   display: flex;
   flex-direction: column;
 
-  .maxLengthLabel {
-    padding: var(--pad-xs);
+  .maxLengthLabel, .bigSizeLabel {
+    padding: var(--pad-sm);
     text-align: center;
     font-size: .8rem;
     font-weight: 500;
+  }
+
+  .maxLengthLabel {
+    background-color: var(--primary);
+    color: var(--dark-text);
+  }
+
+  .bigSizeLabel {
+    background-color: var(--warning);
+    color: var(--light-text);
   }
 
   .inputContainer {
@@ -93,10 +103,6 @@
 }
 
 .innerContent.light {
-  .maxLengthLabel {
-    background-color: rgba(0, 0, 0, 0.15);
-  }
-
   .inputContainer .inputRow {
     input, textarea, .tags > div {
       background-color: var(--light-header);
@@ -107,10 +113,6 @@
 }
 
 .innerContent.dark {
-  .maxLengthLabel {
-    background-color: rgba(255, 255, 255, 0.15);
-  }
-
   .inputContainer .inputRow {
     input, textarea, .tags > div {
       background-color: var(--dark-header);
