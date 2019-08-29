@@ -1,4 +1,6 @@
 import React, { useContext, memo } from 'react';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import Button from 'ded-components/button';
 import { ThemeContext } from 'ded-context/themeContext';
@@ -7,7 +9,7 @@ import { THEME } from 'ded-constants';
 
 import * as styles from './styles.pcss';
 
-export default memo(() => {
+const ThemeButton = memo(({ showLabel, smallerPadding }) => {
   const [theme, setTheme] = useContext(ThemeContext);
 
   const toggleTheme = () => {
@@ -20,9 +22,10 @@ export default memo(() => {
       plainFocus
       plainText
       brand='ghost'
+      className={cn({ [styles.smallerPadding]: smallerPadding })}
     >
       <span className={styles.innerButton}>
-        <span>Theme</span>
+        {showLabel && <span>Theme</span>}
         <img
           src={theme === THEME.LIGHT ? sun : moon}
           alt={theme === THEME.LIGHT ? 'Light theme' : 'Dark theme'}
@@ -32,3 +35,14 @@ export default memo(() => {
     </Button>
   );
 });
+
+ThemeButton.defaultProps = {
+  showLabel: true,
+};
+
+ThemeButton.propTypes = {
+  showLabel: PropTypes.bool,
+  showLabel: PropTypes.bool,
+};
+
+export default ThemeButton;

@@ -5,6 +5,7 @@ import cn from 'classnames';
 import UserMenu from 'ded-components/userMenu';
 import Streak from 'ded-components/streak';
 import Layout from 'ded-components/layout';
+import ThemeButton from 'ded-components/themeButton';
 import { ThemeContext, LoginContext } from 'ded-context';
 import { logo } from 'ded-assets';
 
@@ -34,6 +35,10 @@ export default memo(() => {
               : <LoginModal />
             }
           </div>
+          {!isLoggedIn && <div className={cn(styles.menuItem, styles.smMargin)}>
+            <ThemeButton showLabel={false} smallerPadding />
+          </div>}
+
           {isLoggedIn && <div className={styles.menuItem}><Streak /></div>}
           {isLoggedIn && <div className={styles.menuItem}><UserMenu /></div>}
         </div>
