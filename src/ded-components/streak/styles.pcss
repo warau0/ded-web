@@ -3,6 +3,11 @@
   align-items: center;
   position: relative;
 
+  .streakInner {
+    display: flex;
+    align-items: center;
+  }
+
   .icon {
     height: var(--header-icon-size);
     user-select: none;
@@ -13,6 +18,7 @@
     font-weight: bold;
     font-size: 1.5em;
     white-space: nowrap;
+    margin-left: var(--pad-xs);
   }
 
   &.inactive {

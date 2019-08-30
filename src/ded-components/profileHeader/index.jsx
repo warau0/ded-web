@@ -2,6 +2,7 @@ import React, { memo, useContext, useState, useRef } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
+import { toast } from 'react-toastify';
 
 import { ThemeContext, LoginContext, EventContext } from 'ded-context';
 import { defaultAvatar } from 'ded-assets';
@@ -24,20 +25,30 @@ const ProfileHeader = memo(({
   const _onAvatarSelect = (event) => {
     const file = event.target.files[0];
 
-    const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (fileTypes.indexOf(file.type) !== -1) {
-      const uploadForm = new FormData();
-      uploadForm.append('has_data', 1); // Track if backend receives data.
-      uploadForm.append('avatar', file);
-
-      updateAvatar(null, uploadForm, false).then((res) => {
-        window.localStorage.setItem(STORAGE.AVATAR, res.avatar.url);
-        setAvatar(res.avatar.url);
-        fireEvent(EVENT.UPDATE_AVATAR);
+    const mb = parseFloat(file.size / 1024 / 1024).toFixed(2);
+    if (mb > 3) {
+      toast.error(`${file.name} is too big: ${mb} MB, max: 3 MB.`);
+      avatarInput.current.value = null;
+    } else {
+      const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (fileTypes.indexOf(file.type) !== -1) {
+        const uploadForm = new FormData();
+        uploadForm.append('has_data', 1); // Track if backend receives data.
+        uploadForm.append('avatar', file);
+  
+        updateAvatar(null, uploadForm, false).then((res) => {
+          window.localStorage.setItem(STORAGE.AVATAR, res.avatar.url);
+          setAvatar(res.avatar.url);
+          fireEvent(EVENT.UPDATE_AVATAR);
+          avatarInput.current.value = null;
+        }).catch((e) => {
+          toast.error(e.message);
+          avatarInput.current.value = null;
+        });
+      } else {
+        toast.error(`${file.name} is not an image (jpg, png, gif).`);
         avatarInput.current.value = null;
-      }).catch(() => {
-        avatarInput.current.value = null;
-      });
+      }
     }
   };
 

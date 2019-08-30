@@ -72,7 +72,7 @@ const Streak = memo(() => {
       })}
     >
       {streakLoading ? <Loader size='sm' /> : (
-        <div data-tip data-for='streak-tooltip'>
+        <div className={styles.streakInner} data-tip data-for='streak-tooltip'>
           <img
             draggable='false'
             className={styles.icon}
