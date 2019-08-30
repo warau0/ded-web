@@ -12,6 +12,7 @@ const Gallery = memo(({
   small,
   loading,
   submissions,
+  padEmptyLabel,
 }) => (
   <>
     <div className={cn(styles.gallery, {
@@ -20,7 +21,7 @@ const Gallery = memo(({
     })}
     >
       {!loading && submissions.length === 0 && (
-        <i className={styles.emptyLabel}>
+        <i className={cn(styles.emptyLabel, {[styles.pad]: padEmptyLabel })}>
           No submissions yet :(
         </i>
       )}
@@ -49,6 +50,7 @@ Gallery.defaultProps = {
   small: false,
   loading: false,
   submissions: [],
+  padEmptyLabel: false,
 };
 
 Gallery.propTypes = {
@@ -65,6 +67,7 @@ Gallery.propTypes = {
       }),
     })),
   })),
+  padEmptyLabel: PropTypes.bool,
 };
 
 export default Gallery;

@@ -65,14 +65,13 @@ const Profile = ({ match }) => {
 
   return (
     <>
-      <Layout>
-        {user && <ProfileHeader user={user} />}
-      </Layout>
+      {user && <ProfileHeader user={user} />}
 
       <Gallery
         big
         loading={submissionsLoading}
         submissions={submissions}
+        padEmptyLabel
       />
 
       {paginator && paginator.next_page_url && !submissionsLoading && (

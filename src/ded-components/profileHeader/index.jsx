@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState, useRef } from 'react';
+import React, { memo, useContext, useState, useRef, useEffect } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
@@ -12,15 +12,35 @@ import Loader from 'ded-components/loader';
 
 import * as styles from './styles.pcss';
 
+const patterns = [
+  'pattern_1',
+  'pattern_2',
+  'pattern_3',
+  'pattern_4',
+  'pattern_5',
+  'pattern_6',
+  'pattern_7',
+];
+
 const ProfileHeader = memo(({
   user,
 }) => {
   const [updateAvatar, updateAvatarLoading] = useApi(API.AVATAR.POST);
   const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : null);
+  const [randomPattern, setRandomPattern] = useState(patterns[Math.floor(Math.random() * patterns.length)]);
   const [theme] = useContext(ThemeContext);
   const [_, loggedInUser] = useContext(LoginContext);
   const [__, fireEvent] = useContext(EventContext);
   const avatarInput = useRef(null);
+
+  useEffect(() => {
+    let unusedPatterns = patterns.filter(p => p !== randomPattern);
+    if (!unusedPatterns) {
+      unusedPatterns = patterns;
+    }
+
+    setRandomPattern(unusedPatterns[Math.floor(Math.random() * unusedPatterns.length)]);
+  }, [user.id]);
 
   const _onAvatarSelect = (event) => {
     const file = event.target.files[0];
@@ -84,8 +104,8 @@ const ProfileHeader = memo(({
   };
 
   return (
-    <div className={cn(styles.userCard, styles[theme])}>
-      <div>{_renderAvatar()}</div>
+    <div className={cn(styles.header, styles[theme], styles[randomPattern])}>
+      {_renderAvatar()}
       <h1 className={styles.username}>{user.username}</h1>
     </div>
   );
