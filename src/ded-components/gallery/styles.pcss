@@ -49,6 +49,10 @@
   &.triples {
     > a, > div {
       width: calc(100% / 3);
+
+      @media (max-width: 320px) {
+        width: calc(100% / 2);
+      }
     }
   }
 }
