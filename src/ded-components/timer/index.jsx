@@ -9,9 +9,9 @@ import ReactTooltip from 'react-tooltip';
 import Alarm from '@material-ui/icons/Alarm';
 import Close from '@material-ui/icons/Close';
 
-import { ThemeContext } from 'ded-context';
+import { ThemeContext, EventContext, LoginContext } from 'ded-context';
 import Button from 'ded-components/button';
-import { STORAGE } from 'ded-constants';
+import { STORAGE, EVENT } from 'ded-constants';
 import secondsToTimestamp from 'ded-utils/secondsToTimestamp';
 import epochToTimestamp from 'ded-utils/epochToTimestamp';
 import diffTimes from 'ded-utils/diffTimes';
@@ -23,10 +23,15 @@ let logLabels = [];
 
 export default memo(() => {
   const [theme] = useContext(ThemeContext);
+  const [lastEvent] = useContext(EventContext);
+  const [isLoggedIn] = useContext(LoginContext);
 
   const [logs, setLogs] = useState([]);
   const [showTimer, setShowTimer] = useState(
     JSON.parse(window.localStorage.getItem(STORAGE.TIMER_SHOW) || false),
+  );
+  const [hideButton, setHideButton] = useState(
+    JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_HIDE_TIMER) || false),
   );
   const [active, setActive] = useState(false);
   const [loggedTime, setLoggedTime] = useState(0);
@@ -45,6 +50,14 @@ export default memo(() => {
   const stopTimer = () => {
     clearInterval(timerInterval);
   };
+
+  useEffect(() => {
+    if (lastEvent && lastEvent.event === EVENT.SETTINGS_CHANGED_HIDE_TIMER) {
+      setHideButton(
+        JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_HIDE_TIMER) || false),
+      );
+    }
+  }, [lastEvent]);
 
   // Load existing logs from localStorage.
   useEffect(() => {
@@ -149,6 +162,10 @@ export default memo(() => {
     newLogs[index] = log;
     saveLogs(newLogs);
   };
+
+  if (hideButton || !isLoggedIn) {
+    return null;
+  }
 
   return (
     <>

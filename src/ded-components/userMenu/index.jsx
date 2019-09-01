@@ -158,6 +158,9 @@ export default memo(() => {
                 <Link onClick={_hideMenu} to={`/user/${user ? user.username : null}`}>Your profile</Link>
               </li>
               <li>
+                <Link onClick={_hideMenu} to='/settings'>Settings</Link>
+              </li>
+              <li>
                 <Button
                   onClick={_logout}
                   plainFocus

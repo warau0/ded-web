@@ -75,7 +75,7 @@ const UploadModal = memo(() => {
 
   const _onFilesAdded = (files) => {
     const newImages = [...images];
-    
+
     files.forEach((file) => {
       const mb = parseFloat(file.size / 1024 / 1024).toFixed(2);
       if (mb > 3) {
@@ -154,22 +154,22 @@ const UploadModal = memo(() => {
             <div className={styles.inputRow}>
               <div className={styles.checkboxes}>
                 <div className={styles.checkbox}>
-                  <label htmlFor='nsfw'>
+                  <label htmlFor='nsfw-submission'>
                     <input
                       type='checkbox'
-                      id='nsfw'
-                      value={nsfw}
+                      id='nsfw-submission'
+                      checked={nsfw}
                       onChange={() => setNsfw(!nsfw)}
                     />
-                    Nsfw
+                    NSFW
                   </label>
                 </div>
                 <div className={styles.checkbox}>
-                  <label htmlFor='private'>
+                  <label htmlFor='private-submission'>
                     <input
                       type='checkbox'
-                      id='private'
-                      value={priv}
+                      id='private-submission'
+                      checked={priv}
                       onChange={() => setPriv(!priv)}
                     />
                     Private

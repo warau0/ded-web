@@ -11,6 +11,7 @@ export const STORAGE = {
   TIMER_LOGS: 'dedTimerLogs',
   TIMER_SHOW: 'dedTimerShow',
   AVATAR: 'dedAvatar',
+  SETTINGS_HIDE_TIMER: 'dedSettingsHideTimer',
 };
 
 export const EVENT = {
@@ -19,6 +20,7 @@ export const EVENT = {
   UPDATE_LEADERBOARD: 'UPDATE_LEADERBOARD',
   UPDATE_COMMENTS: 'UPDATE_COMMENTS',
   UPDATE_AVATAR: 'UPDATE_AVATAR',
+  SETTINGS_CHANGED_HIDE_TIMER: 'SETTINGS_CHANGED_HIDE_TIMER',
 };
 
 export const { API_URL } = config;

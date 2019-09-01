@@ -38,11 +38,12 @@ const ThemeButton = memo(({ showLabel, smallerPadding }) => {
 
 ThemeButton.defaultProps = {
   showLabel: true,
+  smallerPadding: false,
 };
 
 ThemeButton.propTypes = {
   showLabel: PropTypes.bool,
-  showLabel: PropTypes.bool,
+  smallerPadding: PropTypes.bool,
 };
 
 export default ThemeButton;
