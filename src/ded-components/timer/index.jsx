@@ -53,9 +53,8 @@ export default memo(() => {
 
   useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.SETTINGS_CHANGED_HIDE_TIMER) {
-      setHideButton(
-        JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_HIDE_TIMER) || false),
-      );
+      const hide = JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_HIDE_TIMER) || false);
+      setHideButton(hide);
     }
   }, [lastEvent]);
 
@@ -103,11 +102,15 @@ export default memo(() => {
   }, []);
 
   useEffect(() => {
-    logs.forEach((_, i) => {
-      const inputEl = document.getElementById(`log-label-${i}`);
-      inputEl.value = logLabels[i];
-    });
-  }, [logs]);
+    if (!hideButton && isLoggedIn) {
+      logs.forEach((_, i) => {
+        const inputEl = document.getElementById(`log-label-${i}`);
+        if (inputEl) {
+          inputEl.value = logLabels[i];
+        }
+      });
+    }
+  }, [logs, hideButton, isLoggedIn]);
 
   const saveLogs = (newLogs) => {
     setLogs(newLogs);
