@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import Filter from '@material-ui/icons/Filter';
 
+import { nsfw } from 'ded-assets';
 import { ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
@@ -13,6 +14,7 @@ const GalleryThumb = memo(({
   name,
   url,
   multi,
+  hidden,
 }) => {
   const [theme] = useContext(ThemeContext);
 
@@ -20,7 +22,7 @@ const GalleryThumb = memo(({
     <Link to={`/submission/${submissionId}`} className={cn(styles.thumb, styles[theme])}>
       {multi && <Filter className={styles.multi} />}
       <img
-        src={url}
+        src={hidden ? nsfw : url}
         alt={name}
       />
     </Link>
@@ -32,6 +34,7 @@ GalleryThumb.defaultProps = {
   name: null,
   url: null,
   multi: false,
+  hidden: false,
 };
 
 GalleryThumb.propTypes = {
@@ -39,6 +42,7 @@ GalleryThumb.propTypes = {
   name: PropTypes.string,
   url: PropTypes.string,
   multi: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 export default GalleryThumb;

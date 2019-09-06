@@ -4,6 +4,7 @@ import fire from './fire.png';
 import images from './images.png';
 import logo from './logo.png';
 import moon from './moon.png';
+import nsfw from './nsfw.png';
 import sun from './sun.png';
 
 export {
@@ -13,5 +14,6 @@ export {
   images,
   logo,
   moon,
+  nsfw,
   sun,
 };

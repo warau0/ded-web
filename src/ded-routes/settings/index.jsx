@@ -14,16 +14,17 @@ const Settings = () => {
   const [theme, setTheme] = useContext(ThemeContext);
   const [_, fireEvent] = useContext(EventContext);
 
-  const [nsfwSetting, setNsfwSetting] = useState(false);
+  const [showNsfw, setShowNsfw] = useState(
+    JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_SHOW_NSFW) || false),
+  );
   const [timerSetting, setTimerSetting] = useState(
     JSON.parse(window.localStorage.getItem(STORAGE.SETTINGS_HIDE_TIMER) || false),
   );
 
-  const _setNsfwSetting = () => {
-    const newSetting = !nsfwSetting;
-    setNsfwSetting(newSetting);
-
-    // TODO API call to save setting
+  const _setShowNsfw = () => {
+    const newSetting = !showNsfw;
+    setShowNsfw(newSetting);
+    window.localStorage.setItem(STORAGE.SETTINGS_SHOW_NSFW, JSON.stringify(newSetting));
 
     if (newSetting) {
       toast.success('NSFW posts are now visible.');
@@ -59,44 +60,47 @@ const Settings = () => {
         <div className={styles.settingsList}>
           <div className={styles.checkbox}>
             <label htmlFor='dark-theme-setting'>
+              Enable dark theme
               <input
                 type='checkbox'
                 id='dark-theme-setting'
                 checked={theme !== THEME.LIGHT}
                 onChange={_setDarkThemeSetting}
               />
-              Enable dark theme
+              <span className={styles.checkmark} />
             </label>
           </div>
 
           <div className={styles.checkbox}>
             <label htmlFor='timer-setting'>
+              Hide timer
               <input
                 type='checkbox'
                 id='timer-setting'
                 checked={timerSetting}
                 onChange={_setTimerSetting}
               />
-              Hide timer
+              <span className={styles.checkmark} />
             </label>
           </div>
         </div>
 
-        {/* <h2>Gallery</h2>
+        <h2>Gallery</h2>
 
         <div className={styles.settingsList}>
           <div className={styles.checkbox}>
             <label htmlFor='nsfw-setting'>
+              Show posts tagged as NSFW
               <input
                 type='checkbox'
                 id='nsfw-setting'
-                checked={nsfwSetting}
-                onChange={_setNsfwSetting}
+                checked={showNsfw}
+                onChange={_setShowNsfw}
               />
-              Show posts tagged as NSFW
+              <span className={styles.checkmark} />
             </label>
           </div>
-        </div> */}
+        </div>
       </div>
     </Layout>
   );

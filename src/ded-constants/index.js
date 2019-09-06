@@ -12,6 +12,7 @@ export const STORAGE = {
   TIMER_SHOW: 'dedTimerShow',
   AVATAR: 'dedAvatar',
   SETTINGS_HIDE_TIMER: 'dedSettingsHideTimer',
+  SETTINGS_SHOW_NSFW: 'dedSettingsShowNsfw',
 };
 
 export const EVENT = {
