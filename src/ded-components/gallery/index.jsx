@@ -27,7 +27,7 @@ const Gallery = memo(({
       })}
       >
         {!loading && submissions.length === 0 && (
-          <i className={cn(styles.emptyLabel, {[styles.pad]: padEmptyLabel })}>
+          <i className={cn(styles.emptyLabel, { [styles.pad]: padEmptyLabel })}>
             No submissions yet :(
           </i>
         )}

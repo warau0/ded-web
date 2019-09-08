@@ -87,7 +87,7 @@ export default memo(() => {
       return <li><p>You don&apos;t have any notifications.</p></li>;
     }
 
-    return notifications.map(msg => {
+    return notifications.map((msg) => {
       const content = (
         <>
           {hasUnseen && !msg.seen && <span className={styles.dot} />}

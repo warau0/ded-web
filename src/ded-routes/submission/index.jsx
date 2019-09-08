@@ -78,7 +78,7 @@ const Submission = ({ match }) => {
   return (
     <div className={cn(styles.submissionContainer, styles[theme])}>
       <div className={cn(styles.images, { [styles.single]: submission.images.length === 1 })}>
-        {submission.images.map((image) => (
+        {submission.images.map(image => (
           <div className={styles.art} key={image.id}>
             <img src={image.url} draggable='false' alt={image.file} />
             <div className={styles.actions}>

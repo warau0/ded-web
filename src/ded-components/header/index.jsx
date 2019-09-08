@@ -24,20 +24,22 @@ export default memo(() => {
         <div className={styles.left}>
           <Link to='/' className={styles.logo} tabIndex={-1}>
             <img src={logo} alt='Logo' />
-            <span className={styles.title}>Draw Every Day!</span>
+            <span className={styles.title}>Just Draw!</span>
           </Link>
         </div>
 
         <div className={styles.right}>
+          {!isLoggedIn && (
+            <div className={cn(styles.menuItem, styles.smMargin)}>
+              <ThemeButton showLabel={false} smallerPadding />
+            </div>
+          )}
           <div className={styles.menuItem}>
             {isLoggedIn
               ? <UploadModal />
               : <LoginModal />
             }
           </div>
-          {!isLoggedIn && <div className={cn(styles.menuItem, styles.smMargin)}>
-            <ThemeButton showLabel={false} smallerPadding />
-          </div>}
 
           {isLoggedIn && <div className={styles.menuItem}><Streak /></div>}
           {isLoggedIn && <div className={styles.menuItem}><UserMenu /></div>}

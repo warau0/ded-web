@@ -7,7 +7,6 @@ import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
 import { EventContext, LoginContext, ThemeContext } from 'ded-context';
 import Gallery from 'ded-components/gallery';
-import Layout from 'ded-components/layout';
 import ProfileHeader from 'ded-components/profileHeader';
 import Button from 'ded-components/button';
 import { cross as crossIcon } from 'ded-assets';
@@ -30,7 +29,7 @@ const Profile = ({ match }) => {
       && lastEvent.event === EVENT.UPDATE_GALLERY
       && loggedInUser.sub === parseInt(match.params.id, 10)
     ) {
-      getSubmissions({ id: match.params.id }).then(res => {
+      getSubmissions({ id: match.params.id }).then((res) => {
         setPaginator(res.submissions);
         setSubmissions(res.submissions.data);
       });
@@ -38,7 +37,7 @@ const Profile = ({ match }) => {
   }, [lastEvent]);
 
   useEffect(() => {
-    getSubmissions({ id: match.params.id }).then(res => {
+    getSubmissions({ id: match.params.id }).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(res.submissions.data);
     });
@@ -46,7 +45,7 @@ const Profile = ({ match }) => {
   }, [match.params.id]);
 
   const _loadMore = () => {
-    getSubmissions({ id: match.params.id, page: paginator.current_page + 1 }).then(res => {
+    getSubmissions({ id: match.params.id, page: paginator.current_page + 1 }).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(submissions.concat(res.submissions.data));
     });

@@ -1,4 +1,10 @@
-import React, { memo, useContext, useState, useRef, useEffect } from 'react';
+import React, {
+  memo,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
@@ -27,7 +33,9 @@ const ProfileHeader = memo(({
 }) => {
   const [updateAvatar, updateAvatarLoading] = useApi(API.AVATAR.POST);
   const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : null);
-  const [randomPattern, setRandomPattern] = useState(patterns[Math.floor(Math.random() * patterns.length)]);
+  const [randomPattern, setRandomPattern] = useState(
+    patterns[Math.floor(Math.random() * patterns.length)],
+  );
   const [theme] = useContext(ThemeContext);
   const [_, loggedInUser] = useContext(LoginContext);
   const [__, fireEvent] = useContext(EventContext);
@@ -55,7 +63,7 @@ const ProfileHeader = memo(({
         const uploadForm = new FormData();
         uploadForm.append('has_data', 1); // Track if backend receives data.
         uploadForm.append('avatar', file);
-  
+
         updateAvatar(null, uploadForm, false).then((res) => {
           window.localStorage.setItem(STORAGE.AVATAR, res.avatar.url);
           setAvatar(res.avatar.url);

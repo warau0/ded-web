@@ -21,7 +21,7 @@ export default () => {
 
   useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.UPDATE_GALLERY) {
-      getSubmissions(1).then(res => {
+      getSubmissions(1).then((res) => {
         setPaginator(res.submissions);
         setSubmissions(res.submissions.data);
       });
@@ -29,14 +29,14 @@ export default () => {
   }, [lastEvent]);
 
   useEffect(() => {
-    getSubmissions(1).then(res => {
+    getSubmissions(1).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(res.submissions.data);
     });
   }, []);
 
   const _loadMore = () => {
-    getSubmissions(paginator.current_page + 1).then(res => {
+    getSubmissions(paginator.current_page + 1).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(submissions.concat(res.submissions.data));
     });

@@ -1,4 +1,4 @@
-## Draw Every Day
+## Just Draw!
 
 First install dependencies:
 
