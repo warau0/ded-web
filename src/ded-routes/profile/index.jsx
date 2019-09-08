@@ -51,7 +51,7 @@ const Profile = ({ match }) => {
     });
   };
 
-  if (!user && !userLoading && !submissions) {
+  if (!user && !userLoading && (!submissions || (submissions && !submissions.length))) {
     return (
       <div className={cn(styles.errorContainer, styles[theme])}>
         <div>
