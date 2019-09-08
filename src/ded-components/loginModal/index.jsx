@@ -24,14 +24,18 @@ const LoginModal = memo(() => {
   const [showForgottenPassword, setShowForgottenPassword] = useState(false);
   const [forgottenPasswordSuccess, setForgottenPasswordSuccess] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
+
   const [forgottenPasswordUsername, setForgottenPasswordUsername] = useState('');
+
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
   const [registerRecaptcha, setRegisterRecaptcha] = useState(null);
+  const [registerUsernameValid, setRegisterUsernameValid] = useState(false);
 
   const [theme] = useContext(ThemeContext);
   const [_, __, setIsLoggedIn] = useContext(LoginContext);
@@ -116,6 +120,20 @@ const LoginModal = memo(() => {
     }
   }, [show]);
 
+  useEffect(() => {
+    let valid = true;
+
+    if (registerUsername.length === 0) {
+      valid = false;
+    } else {
+      // Matches string if list of special characters not present.
+      const match = registerUsername.match('^[^<>%$&+,/:;=?@]*$');
+      valid = !!match;
+    }
+
+    setRegisterUsernameValid(valid);
+  }, [registerUsername, setRegisterUsernameValid]);
+
   const _renderLogin = () => (
     <>
       <ErrorMessage className={styles.error} error={loginError} />
@@ -129,6 +147,7 @@ const LoginModal = memo(() => {
         onChange={e => setLoginUsername(e.target.value)}
         onKeyUp={(e) => { if (e.key === 'Enter') _login(); }}
         ref={loginUsernameRef}
+        maxLength={50}
       />
       <input
         type='password'
@@ -147,6 +166,7 @@ const LoginModal = memo(() => {
         onClick={_login}
         loading={loginLoading}
         text='Login'
+        disabled={!loginUsername.length || !loginPassword.length}
       />
       <Button
         square
@@ -207,6 +227,7 @@ const LoginModal = memo(() => {
         value={registerUsername}
         onChange={e => setRegisterUsername(e.target.value)}
         onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
+        maxLength={50}
       />
       <input
         type='email'
@@ -217,6 +238,7 @@ const LoginModal = memo(() => {
         value={registerEmail}
         onChange={e => setRegisterEmail(e.target.value)}
         onKeyUp={(e) => { if (e.key === 'Enter') _register(); }}
+        maxLength={255}
       />
       <input
         type='password'
@@ -253,6 +275,12 @@ const LoginModal = memo(() => {
         onClick={_register}
         loading={registerLoading}
         text='Register'
+        disabled={
+          !registerUsernameValid
+          || !registerPassword.length
+          || !registerPasswordConfirm.length
+          || !registerRecaptcha
+        }
       />
       <Button
         square
