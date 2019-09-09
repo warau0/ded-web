@@ -19,7 +19,12 @@ const GalleryThumb = memo(({
   const [theme] = useContext(ThemeContext);
 
   return (
-    <Link to={`/submission/${submissionId}`} className={cn(styles.thumb, styles[theme])}>
+    <Link
+      to={`/submission/${submissionId}`}
+      className={cn(styles.thumb, styles[theme], {
+        [styles.hidden]: hidden,
+      })}
+    >
       {multi && <Filter className={styles.multi} />}
       <img
         src={hidden ? nsfw : url}
