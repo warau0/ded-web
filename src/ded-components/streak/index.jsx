@@ -29,7 +29,7 @@ const calcTimeToMidnight = () => {
 
 const Streak = memo(() => {
   const [streak, setStreak] = useState(null);
-  const [isSafe, setIsSafe] = useState(false);
+  const [safeForDays, setSafeForDays] = useState(false);
   const [timeToMidnight, setTimeToMidnight] = useState(null);
 
   const [getStreak, streakLoading] = useApi(API.STREAKS.CURRENT);
@@ -49,11 +49,11 @@ const Streak = memo(() => {
   useEffect(() => {
     if (!streak) return;
 
-    const lastDayToPost = moment(streak.updated_at).add(streak.frequency, 'days').startOf('day');
+    const lastDayToPost = moment(streak.updated_at).add(7, 'days').startOf('day');
     const today = moment().startOf('day');
     const daysToPost = lastDayToPost.diff(today, 'days');
 
-    setIsSafe(daysToPost > 0);
+    setSafeForDays(daysToPost);
   }, [streak]);
 
   const _startStreakTimer = () => {
@@ -64,6 +64,24 @@ const Streak = memo(() => {
   const _stopStreakTimer = () => {
     clearTimeout(midnightTimeout);
   };
+
+  const _streakTooltip = () => {
+    switch (safeForDays) {
+      case 7:
+        return `Rest easy, your streak is safe for another ${safeForDays} days! If you post more today your streak won't change.`;
+      case 6:
+      case 5:
+      case 4:
+      case 3:
+      case 2:
+        return `Your streak is safe for another ${safeForDays} days, but if you post today your streak will increase!`
+      case 1:
+        return `Your streak is safe until midnight tomorrow, but if you post today your streak will increase!`
+      case 0:
+      default:
+        return `Your streak is ending in ${timeToMidnight}!`;
+    }
+  }
 
   return (
     <div
@@ -85,7 +103,8 @@ const Streak = memo(() => {
 
           {!!streak && (
             <div className={cn(styles.notification, {
-              [styles.safe]: isSafe,
+              [styles.safe]: safeForDays === 7,
+              [styles.warning]: safeForDays < 7 && safeForDays > 0,
             })}
             />
           )}
@@ -96,10 +115,7 @@ const Streak = memo(() => {
               afterShow={_startStreakTimer}
               afterHide={_stopStreakTimer}
             >
-              {isSafe
-                ? 'Rest easy, your streak is safe for today!'
-                : `Your streak is ending in ${timeToMidnight}.`
-              }
+              {_streakTooltip()}
             </ReactTooltip>
           )}
         </div>
