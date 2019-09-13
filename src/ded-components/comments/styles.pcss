@@ -42,10 +42,10 @@
           text-decoration: none;
           display: flex;
           align-items: center;
+        }
 
-          &:hover {
-            color: var(--link) !important;
-          }
+        a.username:hover {
+          color: var(--link) !important;
         }
       }
 
@@ -72,6 +72,22 @@
       .editNote {
         font-size: .75em;
         opacity: .5;
+      }
+
+      .commentImage {
+        width: 90px;
+        display: inline-block;
+        margin-right: var(--pad-xs);
+      }
+
+      .banned {
+        margin-top: var(--pad);
+        display: block;
+        color: var(--error);
+      }
+
+      &.hasImage {
+        min-height: 90px;
       }
     }
 
@@ -114,10 +130,6 @@
       color: var(--light-color);
     }
 
-    a.username:hover {
-      color: var(--link);
-    }
-
     .replyButton, .editButton {
       color: var(--light-text);
     }
@@ -138,10 +150,6 @@
 
     .header .usernameContainer .username {
       color: var(--dark-color);
-    }
-
-    a.username:hover {
-        color: var(--link);
     }
 
     .replyButton, .editButton {

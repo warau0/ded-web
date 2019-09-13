@@ -16,21 +16,27 @@
   }
 
   .actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    text-align: right;
 
-    .submit {
-      margin-top: var(--pad-sm);
-      margin-left: var(--pad);
-      align-self: flex-end;
+    .options {
+      display: flex;
+      flex-direction: row;
+      margin: var(--pad-sm) 0;
+
+      .checkbox {
+        display: flex;
+        align-items: center;
+        font-size: 0.9em;
+        cursor: pointer;
+      }
+
+      .fileInput {
+        width: 100%;
+      }
     }
 
-    .checkbox {
-      display: flex;
-      align-items: center;
-      font-size: 0.9em;
-      cursor: pointer;
+    .submit {
+      align-self: flex-end;
     }
   }
 }

@@ -34,7 +34,7 @@ const Gallery = memo(({
 
         {submissions.filter(s => s.images[0] && s.images[0].thumbnail).map(submission => (
           <GalleryThumb
-            hidden={submission.nsfw && !showNsfw}
+            hidden={!!submission.nsfw && !showNsfw}
             key={submission.id}
             submissionId={submission.id}
             name={submission.images[0].thumbnail.file}

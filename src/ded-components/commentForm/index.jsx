@@ -2,6 +2,7 @@ import React, {
   memo,
   useContext,
   useState,
+  useRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -23,19 +24,52 @@ const CommentForm = memo(({
   const [text, setText] = useState('');
   const [anonymous, setAnonymous] = useState(false);
 
+  const fileInput = useRef(null);
+
   const [theme] = useContext(ThemeContext);
   const [_, fireEvent] = useContext(EventContext);
   const [
     postComment, postCommentLoading,
     postCommentError, clearPostCommentError,
+    setCommentError,
   ] = useApi(postUrl);
 
   const _postComment = () => {
     clearPostCommentError();
-    postComment(urlTargetId, { anonymous, text })
-      .then(() => {
-        fireEvent(EVENT.UPDATE_COMMENTS);
-      });
+    const file = fileInput.current.files[0];
+
+    if (file) {
+      const mb = parseFloat(file.size / 1024 / 1024).toFixed(2);
+      const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+      if (fileTypes.indexOf(file.type) === -1) {
+        setCommentError(`${file.name} is not an image (jpg, png, gif).`);
+        fileInput.current.value = null;
+        return;
+      }
+
+      if (mb > 3) {
+        setCommentError(`${file.name} is too big: ${mb} MB, max: 3 MB.`);
+        fileInput.current.value = null;
+        return;
+      }
+    }
+
+    const uploadForm = new FormData();
+    uploadForm.append('has_data', 1); // Track if backend receives data.
+    uploadForm.append('text', text);
+    uploadForm.append('anonymous', anonymous ? 1 : 0);
+    if (file) {
+      uploadForm.append('image', file);
+    }
+
+    postComment(urlTargetId, uploadForm, false).then(() => {
+      setText('');
+      fireEvent(EVENT.UPDATE_COMMENTS);
+      fileInput.current.value = null;
+    }).catch(() => {
+      fileInput.current.value = null;
+    });
   };
 
   return (
@@ -58,15 +92,19 @@ const CommentForm = memo(({
       <ErrorMessage error={postCommentError} />
 
       <div className={styles.actions}>
-        <label htmlFor='anonymous' className={styles.checkbox}>
-          <input
-            type='checkbox'
-            id='anonymous'
-            checked={anonymous}
-            onChange={() => setAnonymous(!anonymous)}
-          />
-          Anonymous
-        </label>
+        <div className={styles.options}>
+          <input className={styles.fileInput} type='file' ref={fileInput} />
+          <label htmlFor='anonymous' className={styles.checkbox}>
+            <input
+              type='checkbox'
+              id='anonymous'
+              checked={anonymous}
+              onChange={() => setAnonymous(!anonymous)}
+            />
+            Anonymous
+          </label>
+        </div>
+
         <Button
           onClick={_postComment}
           text='Submit'

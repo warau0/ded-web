@@ -54,5 +54,7 @@ export default (API) => {
 
   const clearError = () => setError(null);
 
-  return [callApi, loading, error, clearError];
+  const manuallySetError = e => setError(e);
+
+  return [callApi, loading, error, clearError, manuallySetError];
 };

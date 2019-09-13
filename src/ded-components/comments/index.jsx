@@ -81,7 +81,10 @@ const Comments = memo(({ className, comments, level }) => {
                   </div>
                 )}
                 {comment.user ? (
-                  <Link to={`/user/${comment.user.username}`} className={styles.username}>
+                  <Link
+                    to={`/user/${comment.user.username}`}
+                    className={styles.username}
+                  >
                     <img
                       src={comment.user.avatar ? comment.user.avatar.url : defaultAvatar}
                       className={styles.avatar}
@@ -129,11 +132,27 @@ const Comments = memo(({ className, comments, level }) => {
                 <ErrorMessage error={putCommentError} />
               </>
             ) : (
-              <p className={styles.content}>
+              <p className={cn(styles.content, { [styles.hasImage]: !!comment.image })}>
+                {!!comment.image && (
+                  <a
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={comment.image.url}
+                    className={styles.action}
+                  >
+                    <img
+                      align='left'
+                      src={comment.image.thumbnail.url}
+                      alt={comment.image.thumbnail.file}
+                      className={styles.commentImage}
+                    />
+                  </a>
+                )}
                 {comment.text}
                 {comment.created_at !== comment.updated_at && (
                   <span className={styles.editNote}>&nbsp;(edited)</span>
                 )}
+                {comment.banned && <strong className={styles.banned}>(USER WAS BANNED FOR THIS POST)</strong>}
               </p>
             )}
           </div>
