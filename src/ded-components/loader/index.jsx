@@ -6,7 +6,7 @@ import { ThemeContext } from 'ded-context';
 
 import * as styles from './styles.pcss';
 
-const Loader = memo(({ className, size, ...restProps }) => {
+const Loader = memo(({ className, ...restProps }) => {
   const [theme] = useContext(ThemeContext);
 
   return (
@@ -14,7 +14,6 @@ const Loader = memo(({ className, size, ...restProps }) => {
       className={cn(
         styles.loader,
         styles[theme],
-        styles[size],
         { [className]: className },
       )}
       {...restProps}
@@ -24,12 +23,10 @@ const Loader = memo(({ className, size, ...restProps }) => {
 
 Loader.defaultProps = {
   className: null,
-  size: 'md',
 };
 
 Loader.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
 };
 
 export default Loader;

@@ -74,9 +74,9 @@ const Streak = memo(() => {
       case 4:
       case 3:
       case 2:
-        return `Your streak is safe for another ${safeForDays} days, but if you post today your streak will increase!`
+        return `Your streak is safe for another ${safeForDays} days, but if you post today your streak will still increase!`;
       case 1:
-        return `Your streak is safe until midnight tomorrow, but if you post today your streak will increase!`
+        return `Your streak is safe until midnight tomorrow, but if you post today your streak will still increase!`;
       case 0:
       default:
         return `Your streak is ending in ${timeToMidnight}!`;
@@ -89,7 +89,7 @@ const Streak = memo(() => {
         [styles.inactive]: !streak && !streakLoading,
       })}
     >
-      {streakLoading ? <Loader size='sm' /> : (
+      {streakLoading ? <Loader /> : (
         <div className={styles.streakInner} data-tip data-for='streak-tooltip'>
           <img
             draggable='false'

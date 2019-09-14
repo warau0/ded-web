@@ -1,35 +1,13 @@
 .loader {
-  &.xs {
-    --size: .75em;
-    --thickness: 0.15em;
-  }
-
-  &.sm {
-    --size: 2em;
-    --thickness: .3em;
-  }
-
-  &.md {
-    --size: 4em;
-    --thickness: .5em;
-  }
-
-  &.lg {
-    --size: 6em;
-    --thickness: .6em;
-  }
-
-  &.xl {
-    --size: 8em;
-    --thickness: .8em;
-  }
+  --size: 2em;
+  --thickness: .2em;
 
   border-radius: 50%;
   width: var(--size);
   height: var(--size);
   min-height: var(--size);
   border: var(--thickness) solid;
-  animation: spin 1.1s infinite linear;
+  animation: spin 1.3s infinite linear;
 
   &.light {
     border-color: rgb(229, 229, 229);

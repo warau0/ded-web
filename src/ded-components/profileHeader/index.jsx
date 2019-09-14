@@ -87,7 +87,7 @@ const ProfileHeader = memo(({
           <label htmlFor='avatar' className={styles.avatarInput}>
             <div className={cn(styles.tint, { [styles.show]: updateAvatarLoading })}>
               {updateAvatarLoading ? (
-                <Loader size='sm' />
+                <Loader />
               ) : (
                 <Edit />
               )}
