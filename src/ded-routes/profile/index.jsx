@@ -37,6 +37,12 @@ const Profile = ({ match }) => {
   }, [lastEvent]);
 
   useEffect(() => {
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_PROFILE_USER) {
+      getUser(match.params.id).then(res => setUser(res.user));
+    }
+  }, [lastEvent]);
+
+  useEffect(() => {
     getSubmissions({ id: match.params.id }).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(res.submissions.data);

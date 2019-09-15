@@ -22,6 +22,7 @@ export const EVENT = {
   UPDATE_COMMENTS: 'UPDATE_COMMENTS',
   UPDATE_AVATAR: 'UPDATE_AVATAR',
   SETTINGS_CHANGED_HIDE_TIMER: 'SETTINGS_CHANGED_HIDE_TIMER',
+  UPDATE_PROFILE_USER: 'UPDATE_PROFILE_USER',
 };
 
 export const { API_URL } = config;
@@ -165,6 +166,16 @@ export const API = {
     POST: {
       METHOD: 'POST',
       URL: () => `${API_URL}/avatar`,
+    },
+  },
+  SOCIAL_LINKS: {
+    POST: {
+      METHOD: 'POST',
+      URL: () => `${API_URL}/social_links`,
+    },
+    DELETE: {
+      METHOD: 'DELETE',
+      URL: id => `${API_URL}/social_links/${id}`,
     },
   },
 };
