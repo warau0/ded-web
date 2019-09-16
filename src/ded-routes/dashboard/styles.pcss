@@ -40,14 +40,32 @@
   }
 }
 
-.somePlaceholder {
+.inDev {
   flex: 2;
-  background-color: white;
   min-height: 100px;
+  padding: var(--pad);
+  border-radius: var(--border-radius);
+  border: 2px solid;
 
   margin: var(--pad-md) .75rem var(--pad-md) 0;
 
   @mixin phone {
     margin: var(--pad-md) 0 .75rem 0;
   }
+
+  &.light {
+    background-color: var(--light-element);
+    border-color: var(--light-border);
+  }
+
+  &.dark {
+    background-color: var(--dark-element);
+    border-color: var(--dark-border);
+  }
+
+  a {
+    font-weight: 500;
+    color: var(--link);
+  }
 }
+

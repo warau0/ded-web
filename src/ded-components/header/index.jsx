@@ -26,6 +26,8 @@ export default memo(() => {
             <img src={logo} alt='Logo' />
             <span className={styles.title}>Just Draw!</span>
           </Link>
+
+          <Link to='/browse' className={styles.navLink}>Browse</Link>
         </div>
 
         <div className={styles.right}>
