@@ -66,6 +66,10 @@ const ProfileHeader = memo(({
     setRandomPattern(unusedPatterns[Math.floor(Math.random() * unusedPatterns.length)]);
   }, [user.id]);
 
+  useEffect(() => {
+    setAvatar(user.avatar ? user.avatar.url : null);
+  }, [user]);
+
   const _onAvatarSelect = (event) => {
     const file = event.target.files[0];
 
