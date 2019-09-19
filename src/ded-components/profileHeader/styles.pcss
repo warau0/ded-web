@@ -58,6 +58,22 @@
 
     .username {
       margin: var(--pad-lg);
+
+      .followButtonContainer {
+        display: inline-block;
+        margin-left: var(--pad);
+
+        .followButton {
+          padding: var(--pad-xs) var(--pad-sm);
+          margin-left: var(--pad-sm);
+          display: flex;
+
+          > svg {
+            margin-right: var(--pad-xs);
+            font-size: 1rem;
+          }
+        }
+      }
     }
   }
 

@@ -34,6 +34,10 @@ const patterns = [
 
 const ProfileHeader = memo(({
   user,
+  follow,
+  followUser,
+  followUserLoading,
+  setFollow,
 }) => {
   const [updateAvatar, updateAvatarLoading] = useApi(API.AVATAR.POST);
   const [postSocialLink, postSocialLinkLoading] = useApi(API.SOCIAL_LINKS.POST);
@@ -47,7 +51,7 @@ const ProfileHeader = memo(({
   const [newLink, setNewLink] = useState('');
 
   const [theme] = useContext(ThemeContext);
-  const [_, loggedInUser] = useContext(LoginContext);
+  const [isLoggedIn, loggedInUser] = useContext(LoginContext);
   const [__, fireEvent] = useContext(EventContext);
   const avatarInput = useRef(null);
 
@@ -104,6 +108,11 @@ const ProfileHeader = memo(({
     .then(() => fireEvent(EVENT.UPDATE_PROFILE_USER))
     .catch(e => toast.error(e.message));
 
+  const _followUser = () => followUser(user.id, { follow: !follow })
+    .then((res) => {
+      setFollow(res.follow);
+    });
+
   const _renderAvatar = () => {
     if (ownProfile) {
       return (
@@ -139,7 +148,22 @@ const ProfileHeader = memo(({
     <div className={cn(styles.header, styles[theme], styles[randomPattern])}>
       <div className={styles.userInfo}>
         {_renderAvatar()}
-        <h1 className={styles.username}>{user.username}</h1>
+        <h1 className={styles.username}>
+          {user.username}
+          {isLoggedIn && !ownProfile && (
+            <div className={styles.followButtonContainer}>
+              <Button
+                onClick={_followUser}
+                className={styles.followButton}
+                loading={followUserLoading}
+                brand={follow ? 'mono' : 'base'}
+              >
+                {follow ? <RemoveCircleOutline /> : <AddCircleOutline />}
+                {follow ? 'Unfollow' : 'Follow'}
+              </Button>
+            </div>
+          )}
+        </h1>
       </div>
 
       {user.social_links && user.social_links.map(link => (
@@ -181,6 +205,11 @@ const ProfileHeader = memo(({
   );
 });
 
+ProfileHeader.defaultProps = {
+  follow: null,
+  followUserLoading: false,
+};
+
 ProfileHeader.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
@@ -193,6 +222,13 @@ ProfileHeader.propTypes = {
       link: PropTypes.string,
     })),
   }).isRequired,
+  follow: PropTypes.shape({
+    user_id: PropTypes.number,
+    follow_id: PropTypes.number,
+  }),
+  followUser: PropTypes.func.isRequired,
+  followUserLoading: PropTypes.bool,
+  setFollow: PropTypes.func.isRequired,
 };
 
 export default ProfileHeader;

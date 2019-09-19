@@ -16,13 +16,23 @@ import * as styles from './styles.pcss';
 const Profile = ({ match }) => {
   const [getSubmissions, submissionsLoading] = useApi(API.USERS.SUBMISSIONS);
   const [getUser, userLoading] = useApi(API.USERS.SHOW);
+  const [followUser, followUserLoading] = useApi(API.USERS.FOLLOW);
+
   const [submissions, setSubmissions] = useState([]);
   const [user, setUser] = useState(null);
   const [paginator, setPaginator] = useState(null);
+  const [follow, setFollow] = useState(null);
 
-  const [__, loggedInUser] = useContext(LoginContext);
+  const [isLoggedIn, loggedInUser] = useContext(LoginContext);
   const [lastEvent] = useContext(EventContext);
   const [theme] = useContext(ThemeContext);
+
+  const _getUser = () => {
+    getUser(match.params.id).then((res) => {
+      setUser(res.user);
+      setFollow(res.follow);
+    });
+  };
 
   useEffect(() => {
     if (lastEvent
@@ -38,16 +48,24 @@ const Profile = ({ match }) => {
 
   useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.UPDATE_PROFILE_USER) {
-      getUser(match.params.id).then(res => setUser(res.user));
+      _getUser();
     }
   }, [lastEvent]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setFollow(null);
+    } else {
+      _getUser();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     getSubmissions({ id: match.params.id }).then((res) => {
       setPaginator(res.submissions);
       setSubmissions(res.submissions.data);
     });
-    getUser(match.params.id).then(res => setUser(res.user));
+    _getUser();
   }, [match.params.id]);
 
   const _loadMore = () => {
@@ -70,7 +88,15 @@ const Profile = ({ match }) => {
 
   return (
     <>
-      {user && <ProfileHeader user={user} />}
+      {user && (
+        <ProfileHeader
+          user={user}
+          follow={follow}
+          followUser={followUser}
+          followUserLoading={followUserLoading}
+          setFollow={setFollow}
+        />
+      )}
 
       <Gallery
         big

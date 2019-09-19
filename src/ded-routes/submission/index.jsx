@@ -151,7 +151,7 @@ const Submission = ({ match }) => {
           </div>
 
           {isLoggedIn && (
-            <div className={styles.likeContainer}>
+            <div>
               <Button
                 onClick={_likeSubmission}
                 className={styles.likeButton}

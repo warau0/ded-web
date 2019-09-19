@@ -139,6 +139,10 @@ export const API = {
       METHOD: 'GET',
       URL: ({ id, page = 1 }) => `${API_URL}/users/${id}/submissions?page=${page}`,
     },
+    FOLLOW: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/users/${id}/follow`,
+    },
   },
   STREAKS: {
     CURRENT: {
