@@ -125,6 +125,10 @@ export const API = {
       METHOD: 'POST',
       URL: id => `${API_URL}/submissions/${id}/comments`,
     },
+    LIKE: {
+      METHOD: 'PUT',
+      URL: id => `${API_URL}/submissions/${id}/like`,
+    },
   },
   USERS: {
     SHOW: {

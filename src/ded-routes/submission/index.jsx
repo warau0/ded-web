@@ -9,29 +9,37 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Info from '@material-ui/icons/Info';
 import Close from '@material-ui/icons/Close';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 
 import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
 import { cross as crossIcon, defaultAvatar } from 'ded-assets';
-import { ThemeContext, EventContext } from 'ded-context';
+import { ThemeContext, EventContext, LoginContext } from 'ded-context';
 import Loader from 'ded-components/loader';
 import SubmissionTags from 'ded-components/submissionTags';
 import Comments from 'ded-components/comments';
 import CommentForm from 'ded-components/commentForm';
 import Gallery from 'ded-components/gallery';
+import Button from 'ded-components/button';
 
 import * as styles from './styles.pcss';
 
 const Submission = ({ match }) => {
   const [getSubmission, submissionLoading] = useApi(API.SUBMISSIONS.SHOW);
   const [getComments, commentsLoading] = useApi(API.SUBMISSIONS.COMMENTS);
+  const [likeSubmission, likeSubmissionLoading] = useApi(API.SUBMISSIONS.LIKE);
+
   const [submission, setSubmission] = useState(null);
   const [comments, setComments] = useState([]);
   const [metaInfo, setMetaInfo] = useState(null);
+  const [like, setLike] = useState(null);
+
+  const [isLoggedIn] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
   const [lastEvent] = useContext(EventContext);
 
-  useEffect(() => {
+  const _getSubmission = () => {
     getSubmission(match.params.id).then((response) => {
       setSubmission({
         ...response.submission,
@@ -47,7 +55,13 @@ const Submission = ({ match }) => {
       });
 
       setComments(response.submission.comments);
+
+      setLike(response.like);
     });
+  };
+
+  useEffect(() => {
+    _getSubmission();
   }, [match.params.id]);
 
   useEffect(() => {
@@ -55,6 +69,14 @@ const Submission = ({ match }) => {
       getComments(match.params.id).then(res => setComments(res.comments));
     }
   }, [lastEvent]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setLike(null);
+    } else {
+      _getSubmission();
+    }
+  }, [isLoggedIn]);
 
   if (submissionLoading) {
     return (
@@ -74,6 +96,11 @@ const Submission = ({ match }) => {
       </div>
     );
   }
+
+  const _likeSubmission = () => likeSubmission(submission.id, { like: !like })
+    .then((res) => {
+      setLike(res.like);
+    });
 
   return (
     <div className={cn(styles.submissionContainer, styles[theme])}>
@@ -96,7 +123,7 @@ const Submission = ({ match }) => {
       </div>
 
       <div className={styles.infoContainer}>
-        <Link to='/' className={styles.close}><Close /></Link>
+        <Link to='/browse' className={styles.close}><Close /></Link>
 
         <Link className={styles.user} to={`/user/${submission.user.username}`}>
           <img
@@ -107,18 +134,34 @@ const Submission = ({ match }) => {
           <div className={styles.username}>{submission.user.username}</div>
         </Link>
 
-        <div className={styles.times}>
-          <p className={styles.timestamp} data-tip={submission.created_at}>
-            Posted
-            <b>{` ${submission.posted_at}`}</b>
-          </p>
-          <ReactTooltip />
-
-          {submission.hours > 0 && (
-            <p className={styles.timestamp}>
-              Spent
-              <b>{` ${submission.hours} hour${submission.hours !== 1 ? 's' : ''}`}</b>
+        <div className={styles.timesAndLike}>
+          <div className={styles.times}>
+            <p className={styles.timestamp} data-tip={submission.created_at}>
+              Posted
+              <b>{` ${submission.posted_at}`}</b>
             </p>
+            <ReactTooltip />
+
+            {submission.hours > 0 && (
+              <p className={styles.timestamp}>
+                Spent
+                <b>{` ${submission.hours} hour${submission.hours !== 1 ? 's' : ''}`}</b>
+              </p>
+            )}
+          </div>
+
+          {isLoggedIn && (
+            <div className={styles.likeContainer}>
+              <Button
+                onClick={_likeSubmission}
+                className={styles.likeButton}
+                loading={likeSubmissionLoading}
+                brand={like ? 'mono' : 'base'}
+              >
+                {like ? <RemoveCircleOutline /> : <AddCircleOutline />}
+                {like ? 'Unlike' : 'Like'}
+              </Button>
+            </div>
           )}
         </div>
 

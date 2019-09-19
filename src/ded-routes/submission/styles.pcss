@@ -24,9 +24,27 @@
   height: calc(100vh - var(--header-height));
   margin: calc(var(--pad-lg) * -1) 0;
 
-  .times {
-    margin-bottom: var(--pad);
-    font-size: 0.8em;
+  .timesAndLike {
+    display: flex;
+    justify-content: space-between;
+  
+    .times {
+      margin-bottom: var(--pad);
+      font-size: 0.8em;
+    }
+
+    .likeContainer {
+      .likeButton {
+        padding: var(--pad-xs) var(--pad-sm);
+        margin-left: var(--pad-sm);
+        display: flex;
+
+        > svg {
+          margin-right: var(--pad-xs);
+          font-size: 1rem;
+        }
+      }
+    }
   }
 
   .timestamp {
