@@ -82,10 +82,13 @@
 
   .newLinkInput {
     padding: var(--pad-xs);
+    height: var(--form-height);
+    border: 1px solid;
+    border-radius: var(--border-radius);
   }
 
   .newLinkButton {
-    padding: var(--pad-xs) var(--pad-sm);
+    padding: var(--pad-sm) var(--pad);
     margin-left: var(--pad-sm);
   }
 
@@ -129,11 +132,23 @@
   .username {
     color: var(--light-text);
   }
+
+  .newLinkInput {
+    background-color: var(--light-element);
+    color: var(--light-text);
+    border-color: var(--light-border);
+  }
 }
 
 .header.dark {
   .username {
     color: var(--dark-text);
+  }
+
+  .newLinkInput {
+    background-color: var(--dark-header);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
   }
 }
 

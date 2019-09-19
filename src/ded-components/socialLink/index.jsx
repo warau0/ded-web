@@ -37,6 +37,7 @@ const Icon = ({ url }) => {
     case lUrl.indexOf('patreon.com') !== -1:
       icon = socialPatreon; break;
     case lUrl.indexOf('paypal.com') !== -1:
+    case lUrl.indexOf('paypal.me') !== -1:
       icon = socialPaypal; break;
     case lUrl.indexOf('tumblr.com') !== -1:
       icon = socialTumblr; break;

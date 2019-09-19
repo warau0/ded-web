@@ -163,7 +163,13 @@ const ProfileHeader = memo(({
           )}
           {addingLink && (
             <div>
-              <input className={styles.newLinkInput} onChange={e => setNewLink(e.target.value)} value={newLink} placeholder='link' />
+              <input
+                className={styles.newLinkInput}
+                onChange={e => setNewLink(e.target.value)}
+                onKeyUp={(e) => { if (e.key === 'Enter') _postSocialLink(); }}
+                value={newLink}
+                placeholder='...'
+              />
               <Button className={styles.newLinkButton} loading={postSocialLinkLoading} disabled={!newLink} brand='success' onClick={_postSocialLink}>
                 Add
               </Button>
