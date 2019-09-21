@@ -170,7 +170,7 @@ const ProfileHeader = memo(({
             )}
           </div>
           <div className={styles.roles}>
-            {user.roles && user.roles.length && user.roles.map(
+            {user.roles && user.roles.length > 0 && user.roles.map(
               role => (
                 <span className={cn(styles.role, styles[role.slug])} key={role.slug}>
                   {role.title}
