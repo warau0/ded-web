@@ -155,7 +155,7 @@ const ProfileHeader = memo(({
         <h1 className={styles.username}>
           <div>
             {user.username}
-            {isLoggedIn && (
+            {isLoggedIn && !ownProfile && (
               <div className={styles.followButtonContainer}>
                 <Button
                   onClick={_followUser}
