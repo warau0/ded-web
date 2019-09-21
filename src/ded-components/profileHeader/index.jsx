@@ -153,20 +153,31 @@ const ProfileHeader = memo(({
       <div className={styles.userInfo}>
         {_renderAvatar()}
         <h1 className={styles.username}>
-          {user.username}
-          {isLoggedIn && !ownProfile && (
-            <div className={styles.followButtonContainer}>
-              <Button
-                onClick={_followUser}
-                className={styles.followButton}
-                loading={followUserLoading}
-                brand={follow ? 'mono' : 'base'}
-              >
-                {follow ? <RemoveCircleOutline /> : <AddCircleOutline />}
-                {follow ? 'Unfollow' : 'Follow'}
-              </Button>
-            </div>
-          )}
+          <div>
+            {user.username}
+            {isLoggedIn && (
+              <div className={styles.followButtonContainer}>
+                <Button
+                  onClick={_followUser}
+                  className={styles.followButton}
+                  loading={followUserLoading}
+                  brand={follow ? 'mono' : 'base'}
+                >
+                  {follow ? <RemoveCircleOutline /> : <AddCircleOutline />}
+                  {follow ? 'Unfollow' : 'Follow'}
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className={styles.roles}>
+            {user.roles && user.roles.length && user.roles.map(
+              role => (
+                <span className={cn(styles.role, styles[role.slug])} key={role.slug}>
+                  {role.title}
+                </span>
+              ),
+            )}
+          </div>
         </h1>
       </div>
 
@@ -174,7 +185,12 @@ const ProfileHeader = memo(({
         <div key={link.id} className={styles.socialLinkContainer}>
           <SocialLink url={link.link} />
           {ownProfile && (
-            <Button className={styles.deleteLinkButton} disabled={deleteSocialLinkLoading} brand='mono' onClick={() => _deleteSocialLink(link.id)}>
+            <Button
+              className={styles.deleteLinkButton}
+              disabled={deleteSocialLinkLoading}
+              brand='mono'
+              onClick={() => _deleteSocialLink(link.id)}
+            >
               <RemoveCircleOutline />
             </Button>
           )}
@@ -198,7 +214,13 @@ const ProfileHeader = memo(({
                 value={newLink}
                 placeholder='...'
               />
-              <Button className={styles.newLinkButton} loading={postSocialLinkLoading} disabled={!newLink} brand='success' onClick={_postSocialLink}>
+              <Button
+                className={styles.newLinkButton}
+                loading={postSocialLinkLoading}
+                disabled={!newLink}
+                brand='success'
+                onClick={_postSocialLink}
+              >
                 Add
               </Button>
             </div>
@@ -224,6 +246,11 @@ ProfileHeader.propTypes = {
     social_links: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       link: PropTypes.string,
+    })),
+    roles: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      slug: PropTypes.string,
     })),
   }).isRequired,
   follow: PropTypes.shape({

@@ -75,6 +75,29 @@
         }
       }
     }
+
+    .roles {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: var(--pad-sm);
+      max-width: 400px;
+    
+      .role {
+        font-size: .75rem;
+        border-radius: 10px;
+        padding: 2px var(--pad-sm);
+        margin-right: var(--pad-sm);
+        margin-top: var(--pad-sm);
+        background-color: #777777;
+        color: #FFFFFF;
+
+        /* https://materialuicolors.co/ */
+        &.admin {
+          background-color: #F44336;
+          color: #FFFFFF;
+        }
+      }
+    }
   }
 
   .addLink {

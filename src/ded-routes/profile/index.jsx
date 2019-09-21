@@ -29,7 +29,6 @@ const Profile = ({ match }) => {
 
   const _getUser = () => {
     getUser(match.params.id).then((res) => {
-      console.log(res.user);
       setUser(res.user);
       setFollow(res.follow);
     });
