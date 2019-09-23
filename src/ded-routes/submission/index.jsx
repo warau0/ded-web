@@ -107,7 +107,7 @@ const Submission = ({ match }) => {
       <div className={cn(styles.images, { [styles.single]: submission.images.length === 1 })}>
         {submission.images.map(image => (
           <div className={styles.art} key={image.id}>
-            <img src={image.url} draggable='false' alt={image.file} />
+            <img src={image.url} alt={image.file} />
             <div className={styles.actions}>
               <a
                 target='_blank'
@@ -203,13 +203,19 @@ const Submission = ({ match }) => {
 
           <div>
             {metaInfo && metaInfo.previous_user_submission_id ? (
-              <Link to={`/submission/${metaInfo.previous_user_submission_id}`} data-tip={`${submission.user.username}'s previous submission`}>
+              <Link
+                to={`/submission/${metaInfo.previous_user_submission_id}`}
+                data-tip={`${submission.user.username}'s previous submission`}
+              >
                 <KeyboardArrowLeft className={cn(styles.navigationArrow, styles.active)} />
                 <ReactTooltip />
               </Link>
             ) : <KeyboardArrowLeft className={styles.navigationArrow} />}
             {metaInfo && metaInfo.next_user_submission_id ? (
-              <Link to={`/submission/${metaInfo.next_user_submission_id}`} data-tip={`${submission.user.username}'s next submission`}>
+              <Link
+                to={`/submission/${metaInfo.next_user_submission_id}`}
+                data-tip={`${submission.user.username}'s next submission`}
+              >
                 <KeyboardArrowRight className={cn(styles.navigationArrow, styles.active)} />
                 <ReactTooltip />
               </Link>

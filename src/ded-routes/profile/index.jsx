@@ -37,7 +37,7 @@ const Profile = ({ match }) => {
   useEffect(() => {
     if (lastEvent
       && lastEvent.event === EVENT.UPDATE_GALLERY
-      && loggedInUser.sub === parseInt(match.params.id, 10)
+      && (loggedInUser.sub === parseInt(match.params.id, 10) || loggedInUser.username === match.params.id)
     ) {
       getSubmissions({ id: match.params.id }).then((res) => {
         setPaginator(res.submissions);

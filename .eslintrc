@@ -21,6 +21,7 @@
     }
   },
   "rules": {
+    "max-len": ["warn", { "code": 120 }],
     "linebreak-style": "off",
     "no-underscore-dangle": "off",
     "jsx-quotes": ["error", "prefer-single"],

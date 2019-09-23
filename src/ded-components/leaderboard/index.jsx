@@ -127,7 +127,11 @@ const Leaderboard = memo(({ className }) => {
             {!leaderboards[offset].scoresIncludePersonal && leaderboards[offset].personal && (
               <tr>
                 <td>You</td>
-                <td><Link to={`/user/${leaderboards[offset].personal.username}`}>{leaderboards[offset].personal.username}</Link></td>
+                <td>
+                  <Link to={`/user/${leaderboards[offset].personal.username}`}>
+                    {leaderboards[offset].personal.username}
+                  </Link>
+                </td>
                 <td>
                   {formatNumber(leaderboards[offset].personal.total_hours < 1000
                     ? leaderboards[offset].personal.total_hours

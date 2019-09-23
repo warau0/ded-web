@@ -10,22 +10,12 @@ export default () => {
 
   return (
     <Layout className={styles[theme]}>
+      {/* eslint-disable max-len */}
       <div className={styles.row}>
         <div className={styles.textBlockLeft}>
-          <h2>
-            <a
-              tabIndex={-1}
-              className={styles.hiddenLink}
-              target='_blank'
-              rel='noopener noreferrer'
-              href='https://www.youtube.com/watch?v=7mBqm8uO4Cg'
-            >
-              {'OwO'}
-            </a>
-            {' — What\'s this?'}
-          </h2>
+          <h2>{'What\'s this?'}</h2>
           <p>{'Are you looking to hone your craftsmanship? If so, you\'ve come to the right place.'}</p>
-          <p>What we do here is simple. We post work.</p>
+          <p>What we do here is simple. We post our work.</p>
           <p>{'This is not a place to gather a following, there is no audience here. Instead you\'ll find yourself in a group of peers - others who are working on improving themselves.'}</p>
           <p>{'Social media is not a great place for your studies and failures, nor a place you\'ll receive much critique. These are the training grounds, a place for your failures and trial runs. A place to hone your skills before unleashing them upon the world.'}</p>
         </div>
@@ -131,6 +121,7 @@ export default () => {
       />
 
       <h3>Alright, now get back to drawing.</h3>
+      {/* eslint-enable max-len */}
     </Layout>
   );
 };

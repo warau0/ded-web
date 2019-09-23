@@ -383,7 +383,13 @@ export default memo(() => {
               </div>
               <div className={styles.submitContainer}>
                 <Button text='Cancel' brand='mono' square onClick={_closeEditModal} />
-                <Button text='Submit' brand='success' square onClick={_submitPlan} loading={putLoading || postLoading} />
+                <Button
+                  text='Submit'
+                  brand='success'
+                  square
+                  onClick={_submitPlan}
+                  loading={putLoading || postLoading}
+                />
               </div>
             </div>
           </div>

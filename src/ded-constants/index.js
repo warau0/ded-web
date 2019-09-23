@@ -101,6 +101,10 @@ export const API = {
       METHOD: 'GET',
       URL: page => `${API_URL}/submissions?page=${page}`,
     },
+    FOLLOWED_INDEX: {
+      METHOD: 'GET',
+      URL: page => `${API_URL}/followed_submissions?page=${page}`,
+    },
     SHOW: {
       METHOD: 'GET',
       URL: id => `${API_URL}/submissions/${id}`,

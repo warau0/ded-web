@@ -239,7 +239,9 @@ export default memo(() => {
           </div>
 
           <div className={styles.actions}>
-            {(!active && logs.length > 0) && <Button brand='danger' className={styles.resetButton} text='Reset' onClick={reset} />}
+            {(!active && logs.length > 0) && (
+              <Button brand='danger' className={styles.resetButton} text='Reset' onClick={reset} />
+            )}
             {active
               ? <Button text='Stop' onClick={stop} />
               : <Button brand='success' text='Start' onClick={start} />

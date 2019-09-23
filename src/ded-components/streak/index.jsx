@@ -68,12 +68,14 @@ const Streak = memo(() => {
   const _streakTooltip = () => {
     switch (safeForDays) {
       case 7:
+        // eslint-disable-next-line max-len
         return `Rest easy, your streak is safe for another ${safeForDays} days! If you post more today your streak won't change.`;
       case 6:
       case 5:
       case 4:
       case 3:
       case 2:
+        // eslint-disable-next-line max-len
         return `Your streak is safe for another ${safeForDays} days, but if you post today your streak will still increase!`;
       case 1:
         return `Your streak is safe until midnight tomorrow, but if you post today your streak will still increase!`;
@@ -81,7 +83,7 @@ const Streak = memo(() => {
       default:
         return `Your streak is ending in ${timeToMidnight}!`;
     }
-  }
+  };
 
   return (
     <div
