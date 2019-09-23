@@ -8,11 +8,15 @@ import {
   logo,
   socialArtstation,
   socialDeviantart,
+  socialGumroad,
   socialInstagram,
   socialKofi,
   socialPatreon,
   socialPaypal,
+  socialPicarto,
+  socialRedbubble,
   socialTumblr,
+  socialTwitch,
   socialTwitter,
   socialYoutube,
 } from 'ded-assets';
@@ -30,6 +34,8 @@ const Icon = ({ url }) => {
       icon = socialArtstation; break;
     case lUrl.indexOf('deviantart.com') !== -1:
       icon = socialDeviantart; break;
+    case lUrl.indexOf('gumroad.com') !== -1:
+      icon = socialGumroad; break;
     case lUrl.indexOf('instagram.com') !== -1:
       icon = socialInstagram; break;
     case lUrl.indexOf('ko-fi.com') !== -1:
@@ -39,8 +45,14 @@ const Icon = ({ url }) => {
     case lUrl.indexOf('paypal.com') !== -1:
     case lUrl.indexOf('paypal.me') !== -1:
       icon = socialPaypal; break;
+    case lUrl.indexOf('picarto.tv') !== -1:
+      icon = socialPicarto; break;
+    case lUrl.indexOf('redbubble.com') !== -1:
+      icon = socialRedbubble; break;
     case lUrl.indexOf('tumblr.com') !== -1:
       icon = socialTumblr; break;
+    case lUrl.indexOf('twitch.tv') !== -1:
+      icon = socialTwitch; break;
     case lUrl.indexOf('twitter.com') !== -1:
       icon = socialTwitter; break;
     case lUrl.indexOf('youtube.com') !== -1:
