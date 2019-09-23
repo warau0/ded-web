@@ -11,13 +11,14 @@ export default () => {
   return (
     <Layout className={styles[theme]}>
       {/* eslint-disable max-len */}
+      {/* eslint-disable react/jsx-curly-brace-presence */}
       <div className={styles.row}>
         <div className={styles.textBlockLeft}>
-          <h2>{'What\'s this?'}</h2>
-          <p>{'Are you looking to hone your craftsmanship? If so, you\'ve come to the right place.'}</p>
+          <h2>{`What's this?`}</h2>
+          <p>{`Are you looking to hone your craftsmanship? If so, you've come to the right place.`}</p>
           <p>What we do here is simple. We post our work.</p>
-          <p>{'This is not a place to gather a following, there is no audience here. Instead you\'ll find yourself in a group of peers - others who are working on improving themselves.'}</p>
-          <p>{'Social media is not a great place for your studies and failures, nor a place you\'ll receive much critique. These are the training grounds, a place for your failures and trial runs. A place to hone your skills before unleashing them upon the world.'}</p>
+          <p>{`This is not a place to gather a following, there is no audience here. Instead you'll find yourself in a group of peers - others who are working on improving themselves.`}</p>
+          <p>{`Social media is not a great place for your studies and failures, nor a place you'll receive much critique. These are the training grounds, a place for your failures and trial runs. A place to hone your skills before unleashing them upon the world.`}</p>
         </div>
 
         <div>
@@ -36,32 +37,32 @@ export default () => {
           <ul>
             <li>
               <b>Feedback.</b>
-              {' You\'ll be responsible for spotting all of your own mistakes, and even if you spot something, how do you fix it?'}
+              {` You'll be responsible for spotting all of your own mistakes, and even if you spot something, how do you fix it?`}
             </li>
             <li>
               <b>Motivation.</b>
-              {' Seeing others work hard can really light a fire under your ass.'}
+              {` Seeing others work hard can really light a fire under your ass.`}
             </li>
             <li>
               <b>Inspiration.</b>
-              {' Seeing someone\'s unfinished pieces and study routine can help you understand how they\'ve gotten to where they are.'}
+              {` Seeing someone's unfinished pieces and study routine can help you understand how they've gotten to where they are.`}
             </li>
             <li>
               <b>Ass pats.</b>
-              {' Showing off your hard work feels nice, someone might even drop you a '}
-              <i>{'\'nice\''}</i>
+              {` Showing off your hard work feels nice, someone might even drop you a `}
+              <i>{`'nice'`}</i>
               .
             </li>
           </ul>
           <p>
-            {'This site is small. Extremely small. Microscopic. You\'ll get to know the faces. Every drawing is on display here - it\'s different posting here than dumping something into a 0 follower Twitter void.'}
+            {`This site is small. Extremely small. Microscopic. You'll get to know the faces. Every drawing is on display here - it's different posting here than dumping something into a 0 follower Twitter void.`}
           </p>
         </div>
       </div>
 
-      <h2>{'Alright, I\'m in. Where and how do I start?'}</h2>
+      <h2>{`Alright, I'm in. Where and how do I start?`}</h2>
       <p>
-        {'Are you an absolute beginner? If so, here\'s a decent article to get you started on the important bits: '}
+        {`Are you an absolute beginner? If so, here's a decent article to get you started on the important bits: `}
         <a
           target='_blank'
           rel='noopener noreferrer'
@@ -71,7 +72,27 @@ export default () => {
           Beginner guide
         </a>
       </p>
-      <p>As for the site, simply create an account and start posting what you produce.</p>
+      <p>{`As for the site, simply create an account and start posting what you produce.`}</p>
+      <p><b>{`The rules are simple:`}</b></p>
+      <ul>
+        <li>
+          <b>{`Spend at least 30 minutes`}</b>
+          {` on everything you post.`}
+        </li>
+        <li>
+          <b>{`Tag your explicit NSFW`}</b>
+          {` posts as such. This does not have to include artistic nudity such as figure drawing, however tag it if you want to.`}
+        </li>
+        <li>
+          <b>{`Don't post illegal shit`}</b>
+          {`, regardless of your own country's law. I.e. no loli porn.`}
+        </li>
+        <li>
+          <b>{`Don't shitpost`}</b>
+          {` or leave otherwise unhelpful crude comments. It's no problem to be blunt, but don't just say something is shit - please elaborate.`}
+        </li>
+      </ul>
+      <p>Should you fail to follow any of these rules, warnings and bans will gladly be handed out.</p>
       <div className={styles.row}>
         <div>
           <img className={styles.gettingStarted} src='https://cdn.justdraw.lol/intro/getting_started.jpg' alt='Getting started' />
@@ -82,9 +103,9 @@ export default () => {
 
           <img className={styles.mangamania} src='https://cdn.justdraw.lol/intro/mangamania.jpg' alt='Tempting mangamania' />
 
-          <p>{'Don\'t fall into the trap of eternal mindless doodling. It\'s key that you study and apply the knowledge if you want to improve. Mileage is important, but be smart about how you spend all that time.'}</p>
-          {/* eslint-disable-next-line max-len */}
-          <p>Be careful not to burn yourself out, though. Draw what you want to draw and then supplement with studies when you feel stuck.</p>
+          <h2>{`So I just draw huh? Pretty easy`}</h2>
+          <p>{`Don't fall into the trap of eternal mindless doodling. It's key that you study and apply the knowledge if you want to improve. Mileage is important, but be smart about how you spend all that time.`}</p>
+          <p>{`Be careful not to burn yourself out, though. Draw what you want to draw and then supplement with studies when you feel stuck.`}</p>
 
           <img className={styles.youCanDoIt} src='https://cdn.justdraw.lol/intro/you_can_do_it.png' alt='You can do it' />
         </div>
@@ -120,8 +141,9 @@ export default () => {
         allowFullScreen
       />
 
-      <h3>Alright, now get back to drawing.</h3>
+      <h3>{`Alright, now get back to drawing.`}</h3>
       {/* eslint-enable max-len */}
+      {/* eslint-enable react/jsx-curly-brace-presence */}
     </Layout>
   );
 };
