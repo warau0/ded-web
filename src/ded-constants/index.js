@@ -147,6 +147,10 @@ export const API = {
       METHOD: 'PUT',
       URL: id => `${API_URL}/users/${id}/follow`,
     },
+    LIKES: {
+      METHOD: 'GET',
+      URL: ({ id, page = 1 }) => `${API_URL}/users/${id}/liked_submissions?page=${page}`,
+    },
   },
   STREAKS: {
     CURRENT: {

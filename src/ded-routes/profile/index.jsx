@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -15,13 +20,17 @@ import * as styles from './styles.pcss';
 
 const Profile = ({ match }) => {
   const [getSubmissions, submissionsLoading] = useApi(API.USERS.SUBMISSIONS);
+  const [getLikes, likesLoading] = useApi(API.USERS.LIKES);
   const [getUser, userLoading] = useApi(API.USERS.SHOW);
   const [followUser, followUserLoading] = useApi(API.USERS.FOLLOW);
 
-  const [submissions, setSubmissions] = useState([]);
   const [user, setUser] = useState(null);
-  const [paginator, setPaginator] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [submissionsPaginator, setSubmissionsPaginator] = useState(null);
+  const [likesPaginator, setLikesPaginator] = useState(null);
   const [follow, setFollow] = useState(null);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [isLoggedIn, loggedInUser] = useContext(LoginContext);
   const [lastEvent] = useContext(EventContext);
@@ -40,7 +49,7 @@ const Profile = ({ match }) => {
       && (loggedInUser.sub === parseInt(match.params.id, 10) || loggedInUser.username === match.params.id)
     ) {
       getSubmissions({ id: match.params.id }).then((res) => {
-        setPaginator(res.submissions);
+        setSubmissionsPaginator(res.submissions);
         setSubmissions(res.submissions.data);
       });
     }
@@ -53,27 +62,41 @@ const Profile = ({ match }) => {
   }, [lastEvent]);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      setFollow(null);
-    } else {
-      _getUser();
-    }
-  }, [isLoggedIn]);
+    _getUser();
+  }, [isLoggedIn, match.params.id]);
 
   useEffect(() => {
     getSubmissions({ id: match.params.id }).then((res) => {
-      setPaginator(res.submissions);
+      setSubmissionsPaginator(res.submissions);
       setSubmissions(res.submissions.data);
     });
-    _getUser();
+    getLikes({ id: match.params.id }).then((res) => {
+      setLikesPaginator(res.likes);
+      setLikes(res.likes.data);
+    });
   }, [match.params.id]);
 
-  const _loadMore = () => {
-    getSubmissions({ id: match.params.id, page: paginator.current_page + 1 }).then((res) => {
-      setPaginator(res.submissions);
+  const _loadMoreSubmissions = () => {
+    getSubmissions({ id: match.params.id, page: submissionsPaginator.current_page + 1 }).then((res) => {
+      setSubmissionsPaginator(res.submissions);
       setSubmissions(submissions.concat(res.submissions.data));
     });
   };
+
+  const _loadMoreLikes = () => {
+    getLikes({ id: match.params.id, page: likesPaginator.current_page + 1 }).then((res) => {
+      setLikesPaginator(res.likes);
+      setLikes(likes.concat(res.likes.data));
+    });
+  };
+
+  const _selectPostsTab = useCallback(() => {
+    setTabIndex(0);
+  }, [setTabIndex]);
+
+  const _selectLikesTab = useCallback(() => {
+    setTabIndex(1);
+  }, [setTabIndex]);
 
   if (!user && !userLoading && (!submissions || (submissions && !submissions.length))) {
     return (
@@ -98,30 +121,88 @@ const Profile = ({ match }) => {
         />
       )}
 
-      <Gallery
-        big
-        loading={submissionsLoading}
-        submissions={submissions}
-        padEmptyLabel
-      />
+      <div className={cn(styles.tabs, styles[theme])}>
+        <Button
+          brand='ghost'
+          square
+          plainFocus
+          className={cn(styles.tab, {
+            [styles.active]: tabIndex === 0,
+          })}
+          onClick={_selectPostsTab}
+          text='Posts'
+        />
+        <Button
+          brand='ghost'
+          square
+          plainFocus
+          className={cn(styles.tab, {
+            [styles.active]: tabIndex === 1,
+          })}
+          onClick={_selectLikesTab}
+          text='Likes'
+        />
+      </div>
 
-      {paginator && paginator.next_page_url && !submissionsLoading && (
-        <div className={styles.moreButtonContainer}>
-          <Button
-            aria-label='Load more'
-            round
-            brand='base'
-            className={styles.moreButton}
-            noPadding
-            onClick={_loadMore}
-          >
-            <KeyboardArrowDown />
-          </Button>
-        </div>
+      {tabIndex === 0 && (
+        <>
+          <Gallery
+            big
+            loading={submissionsLoading}
+            submissions={submissions}
+            padEmptyLabel
+          />
+
+          {submissionsPaginator && submissionsPaginator.next_page_url && !submissionsLoading && (
+            <div className={styles.moreButtonContainer}>
+              <Button
+                aria-label='Load more'
+                round
+                brand='base'
+                className={styles.moreButton}
+                noPadding
+                onClick={_loadMoreSubmissions}
+              >
+                <KeyboardArrowDown />
+              </Button>
+            </div>
+          )}
+
+          {submissions.length > 0 && submissionsPaginator && !submissionsPaginator.next_page_url && (
+            <i className={styles.theEndLabel}>This is the end.</i>
+          )}
+        </>
       )}
 
-      {submissions.length > 0 && paginator && !paginator.next_page_url && (
-        <i className={styles.theEndLabel}>This is the end.</i>
+      {tabIndex === 1 && (
+        <>
+          <Gallery
+            big
+            loading={likesLoading}
+            submissions={likes}
+            padEmptyLabel
+            submissionInObject
+          />
+
+          {likesPaginator && likesPaginator.next_page_url && !likesLoading && (
+            <div className={styles.moreButtonContainer}>
+              <Button
+                aria-label='Load more'
+                round
+                brand='base'
+                className={styles.moreButton}
+                noPadding
+                onClick={_loadMoreLikes}
+              >
+                <KeyboardArrowDown />
+              </Button>
+            </div>
+          )}
+
+          {likes.length > 0 && likesPaginator && !likesPaginator.next_page_url && (
+            <i className={styles.theEndLabel}>This is the end.</i>
+          )}
+        </>
       )}
     </>
   );

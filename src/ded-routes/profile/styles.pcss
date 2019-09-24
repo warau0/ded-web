@@ -1,3 +1,14 @@
+.tabs {
+  display: flex;
+  justify-content: center;
+  height: var(--header-height);
+
+  .tab {
+    height: 100%;
+    width: 150px;
+  }
+}
+
 .errorContainer {
   display: flex;
   flex-direction: column;
@@ -38,5 +49,29 @@
 .errorContainer.dark {
   img {
     filter: invert(100%);
+  }
+}
+
+.tabs.light {
+  background-color: var(--light-header);
+
+  .tab {
+    color: var(--light-text);
+
+    &.active {
+      background-color: var(--light-bg);
+    }
+  }
+}
+
+.tabs.dark {
+  background-color: var(--dark-header);
+
+  .tab {
+    color: var(--dark-text);
+
+    &.active {
+      background-color: var(--dark-bg);
+    }
   }
 }

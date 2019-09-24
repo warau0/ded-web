@@ -14,10 +14,16 @@ const Gallery = memo(({
   loading,
   submissions,
   padEmptyLabel,
+  submissionInObject,
 }) => {
   const showNsfw = useMemo(() => JSON.parse(
     localStorage.getItem(STORAGE.SETTINGS_SHOW_NSFW) || false,
   ), []);
+
+  const _noThumbFilter = (obj) => {
+    const submission = submissionInObject ? obj.submission : obj;
+    return submission.images[0] && submission.images[0].thumbnail;
+  };
 
   return (
     <>
@@ -32,16 +38,20 @@ const Gallery = memo(({
           </i>
         )}
 
-        {submissions.filter(s => s.images[0] && s.images[0].thumbnail).map(submission => (
-          <GalleryThumb
-            hidden={!!submission.nsfw && !showNsfw}
-            key={submission.id}
-            submissionId={submission.id}
-            name={submission.images[0].thumbnail.file}
-            url={submission.images[0].thumbnail.url}
-            multi={submission.images.length > 1}
-          />
-        ))}
+        {submissions.filter(_noThumbFilter).map((obj) => {
+          const submission = submissionInObject ? obj.submission : obj;
+
+          return (
+            <GalleryThumb
+              hidden={!!submission.nsfw && !showNsfw}
+              key={submission.id}
+              submissionId={submission.id}
+              name={submission.images[0].thumbnail.file}
+              url={submission.images[0].thumbnail.url}
+              multi={submission.images.length > 1}
+            />
+          );
+        })}
       </div>
 
       {loading && (
@@ -59,6 +69,7 @@ Gallery.defaultProps = {
   loading: false,
   submissions: [],
   padEmptyLabel: false,
+  submissionInObject: false,
 };
 
 Gallery.propTypes = {
@@ -76,6 +87,7 @@ Gallery.propTypes = {
     })),
   })),
   padEmptyLabel: PropTypes.bool,
+  submissionInObject: PropTypes.bool,
 };
 
 export default Gallery;
