@@ -76,20 +76,16 @@ export default () => {
       <p><b>{`The rules are simple:`}</b></p>
       <ul>
         <li>
-          <b>{`Spend at least 30 minutes`}</b>
-          {` on everything you post.`}
+          <b>{`Spend at least 30 minutes.`}</b>
+          {` If you have something quicker, ask yourself if this is worth posting.`}
         </li>
         <li>
-          <b>{`Tag your explicit NSFW`}</b>
-          {` posts as such. This does not have to include artistic nudity such as figure drawing, however tag it if you want to.`}
-        </li>
-        <li>
-          <b>{`Don't post illegal shit`}</b>
-          {`, regardless of your own country's law. I.e. no loli porn.`}
+          <b>{`Tag your explicit NSFW.`}</b>
+          {` This does not have to include artistic nudity such as figure drawing, however tag it if you want to.`}
         </li>
         <li>
           <b>{`Don't shitpost`}</b>
-          {` or leave otherwise unhelpful crude comments. It's no problem to be blunt, but don't just say something is shit - please elaborate.`}
+          {` or leave otherwise unhelpful crude comments. It's ok to be blunt, but don't just say something is shit - please elaborate.`}
         </li>
       </ul>
       <p>Should you fail to follow any of these rules, warnings and bans will gladly be handed out.</p>
