@@ -53,10 +53,10 @@ export default () => {
         <div className={styles.row}>
           <div className={cn(styles.inDev, styles[theme])}>
             {/* eslint-disable max-len */}
-            <p>{`Hi! This website is still under development in a big way!`}</p>
-            <p>{`I'm still unsure about many aspect of this website. I do know however, in it's purest form, you can post images and form a gallery of sorts. This part of the website is done - What's left is all the extra bits.`}</p>
+            <p>{`Hi! This website is under development - expect sudden changes.`}</p>
+            <p>{`I'm still unsure about many aspect of justdraw.lol, However, in it's purest form it's just a place where you can upload images and leave comments. This part of the website is done - What's left is all the extra bits.`}</p>
             <p>
-              {`If you would like a look at the list of things I'm working on / want to work on, you can find that here: `}
+              {`If you would like a look at the list of things I'm currently working on and what I want to work on in the near future, you can find that here: `}
               <a target='_blank' rel='noopener noreferrer' href='https://trello.com/b/S5bC886G/ded'>Trello board</a>
             </p>
             {/* eslint-enable max-len */}
