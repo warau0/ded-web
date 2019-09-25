@@ -81,11 +81,10 @@
 
   .schedule {
     display: flex;
-    border: 2px solid;
+    border-top: 2px solid var(--primary);
     transition: .3s height ease;
     overflow: hidden;
     width: 100%;
-    border-radius: var(--border-radius);
     overflow-x: auto;
 
     .loadingContainer {
@@ -179,6 +178,10 @@
           margin-left: 35px;
           display: flex;
           position: relative;
+
+          &:last-child {
+            border: 0;
+          }
 
           .timestamp {
             position: absolute;
@@ -375,7 +378,6 @@
 .scheduleContainer.light {
   .schedule {
     background-color: var(--light-element);
-    border-color: var(--light-border);
 
     .dayView .days .hour {
       border-color: var(--light-border);
@@ -402,7 +404,6 @@
 .scheduleContainer.dark {
   .schedule {
     background-color: var(--dark-element);
-    border-color: var(--dark-border);
 
     .dayView .days .hour {
       border-color: var(--dark-border);

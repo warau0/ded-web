@@ -58,15 +58,11 @@
       overflow: hidden;
       border-radius: var(--border-radius);
 
-      .menuHeader {
-        margin: 0;
-        padding: var(--pad);
-      }
-
       .menuList {
         list-style: none;
         padding: 0;
         margin: 0;
+        border-top: 1px solid;
 
         li {
           p, a, button, div {
@@ -90,6 +86,7 @@
       .notifications {
         max-height: 125px;
         overflow-x: auto;
+        border: 0;
 
         .notification {
           border-bottom: 1px solid;
@@ -121,18 +118,18 @@
 
   .triangleContainer .triangle {
     border-color: var(--light-border);
-    background: var(--light-bg);
+    background: var(--light-element);
   }
 
   .menuContent {
-    .menuHeader {
-      background-color: var(--light-bg);
-    }
-
-    .menuList li {
-      a, button {
-        &:hover, &:focus {
-          background-color: var(--light-hover);
+    .menuList {
+      border-color: var(--light-border);
+    
+      li {
+        a, button {
+          &:hover, &:focus {
+            background-color: var(--light-hover);
+          }
         }
       }
     }
@@ -150,18 +147,18 @@
 
   .triangleContainer .triangle {
     border-color: var(--dark-border);
-    background: var(--dark-header);
+    background: var(--dark-element);
   }
 
   .menuContent {
-    .menuHeader {
-      background-color: var(--dark-header);
-    }
+    .menuList {
+      border-color: var(--dark-border);
 
-    .menuList li {
-      a, button {
-        &:hover, &:focus {
-          background-color: var(--dark-hover);
+      li {
+        a, button {
+          &:hover, &:focus {
+            background-color: var(--dark-hover);
+          }
         }
       }
     }

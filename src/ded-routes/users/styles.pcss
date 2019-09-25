@@ -1,0 +1,79 @@
+.userContainer {
+  margin-top: var(--pad-md);
+  display: flex;
+  flex-wrap: wrap;
+
+  @mixin phone {
+    justify-content: center;
+  }
+
+  .user {
+    margin-right: var(--pad);
+    margin-bottom: var(--pad);
+    max-width: 60px;
+    text-decoration: none;
+    transition: color .2s ease-in-out;
+
+    .username {
+      text-align: center;
+      font-weight: 500;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .avatar {
+      height: 60px;
+      width: 60px;
+      border-radius: 40px;
+      margin-top: var(--pad-sm);
+    }
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.moreButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin: var(--pad) 0;
+
+  .moreButton {
+    bottom: -15px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.theEndLabel {
+  display: block;
+  text-align: center;
+  padding: var(--pad-md);
+  opacity: .75;
+}
+
+.userContainer.light {
+  .user {
+    color: var(--light-color);
+
+    &:hover {
+      color: var(--link);
+    }
+  }
+}
+
+.userContainer.dark {
+  .user {
+    color: var(--dark-color);
+
+    &:hover {
+      color: var(--link);
+    }
+  }
+}

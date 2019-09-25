@@ -1,11 +1,12 @@
 .tabs {
   display: flex;
   justify-content: center;
-  height: var(--header-height);
+  height: 3rem;
 
   .tab {
     height: 100%;
     width: 150px;
+    font-weight: 500;
   }
 }
 
@@ -60,6 +61,7 @@
 
     &.active {
       background-color: var(--light-bg);
+      color: var(--link);
     }
   }
 }
@@ -72,6 +74,7 @@
 
     &.active {
       background-color: var(--dark-bg);
+      color: var(--link);
     }
   }
 }

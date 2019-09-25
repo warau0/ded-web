@@ -135,6 +135,10 @@ export const API = {
     },
   },
   USERS: {
+    INDEX: {
+      METHOD: 'GET',
+      URL: page => `${API_URL}/users?page=${page}`,
+    },
     SHOW: {
       METHOD: 'GET',
       URL: id => `${API_URL}/users/${id}`,

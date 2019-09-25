@@ -140,19 +140,19 @@ export default memo(() => {
           </div>
 
           <div className={styles.menuContent}>
-            <h3 className={styles.menuHeader}>Notifications</h3>
             <ul className={cn(styles.menuList, styles.notifications)}>
               {_renderNotifications()}
             </ul>
 
-            <h3 className={styles.menuHeader}>Settings</h3>
             <ul className={styles.menuList}>
               <li>
-                <ThemeButton />
+                <Link onClick={_hideMenu} to='/browse'>Browse</Link>
+              </li>
+              <li>
+                <Link onClick={_hideMenu} to='/users'>Users</Link>
               </li>
             </ul>
 
-            <h3 className={styles.menuHeader}>Account</h3>
             <ul className={styles.menuList}>
               <li>
                 <Link onClick={_hideMenu} to={`/user/${user ? user.username : null}`}>Your profile</Link>
