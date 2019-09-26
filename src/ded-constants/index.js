@@ -155,6 +155,10 @@ export const API = {
       METHOD: 'GET',
       URL: ({ id, page = 1 }) => `${API_URL}/users/${id}/liked_submissions?page=${page}`,
     },
+    SEARCH: {
+      METHOD: 'GET',
+      URL: ({ page, query }) => `${API_URL}/users/search?page=${page}&query=${query}`,
+    },
   },
   STREAKS: {
     CURRENT: {
