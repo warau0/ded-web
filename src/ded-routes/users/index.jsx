@@ -65,7 +65,13 @@ export default () => {
   return (
     <Layout>
       <div className={cn(styles.searchContainer, styles[theme])}>
-        <input maxLength={225} onChange={e => setQuery(e.target.value)} value={query} placeholder='...' />
+        <input
+          maxLength={225}
+          onChange={e => setQuery(e.target.value)}
+          value={query}
+          placeholder='...'
+          onKeyUp={(e) => { if (e.key === 'Enter') _search(); }}
+        />
         <Button loading={searchLoading} disabled={!query || searchLoading} onClick={_search}>Search</Button>
         {showSearchResult && (
           <Button className={styles.clearButton} brand='mono' onClick={_removeSearchResult}>Clear</Button>
