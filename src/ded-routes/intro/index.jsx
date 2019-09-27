@@ -87,6 +87,10 @@ export default () => {
           <b>{`Don't shitpost`}</b>
           {` or leave otherwise unhelpful crude comments. It's ok to be blunt, but don't just say something is shit - please elaborate.`}
         </li>
+        <li>
+          <b>{`Don't discuss politics.`}</b>
+          {` This is an art platform, keep things art related.`}
+        </li>
       </ul>
       <p>Should you fail to follow any of these rules, warnings and bans will gladly be handed out.</p>
       <div className={styles.row}>
