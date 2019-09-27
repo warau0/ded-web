@@ -133,6 +133,10 @@ export const API = {
       METHOD: 'PUT',
       URL: id => `${API_URL}/submissions/${id}/like`,
     },
+    TAGGED_INDEX: {
+      METHOD: 'GET',
+      URL: ({ page = 1, tagId }) => `${API_URL}/tagged_submissions?tag_id=${tagId}&page=${page}`,
+    },
   },
   USERS: {
     INDEX: {

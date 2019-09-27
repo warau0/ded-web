@@ -11,15 +11,18 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import { useApi } from 'ded-hooks';
 import { API, EVENT } from 'ded-constants';
 import { EventContext, LoginContext, ThemeContext } from 'ded-context';
+import { cross as crossIcon } from 'ded-assets';
 import Gallery from 'ded-components/gallery';
 import ProfileHeader from 'ded-components/profileHeader';
 import Button from 'ded-components/button';
-import { cross as crossIcon } from 'ded-assets';
+import Layout from 'ded-components/layout';
+import SubmissionTags from 'ded-components/submissionTags';
 
 import * as styles from './styles.pcss';
 
 const Profile = ({ match }) => {
   const [getSubmissions, submissionsLoading] = useApi(API.USERS.SUBMISSIONS);
+  const [getTaggedSubmissions, taggedSubmissionsLoading] = useApi(API.SUBMISSIONS.TAGGED_INDEX);
   const [getLikes, likesLoading] = useApi(API.USERS.LIKES);
   const [getUser, userLoading] = useApi(API.USERS.SHOW);
   const [followUser, followUserLoading] = useApi(API.USERS.FOLLOW);
@@ -31,6 +34,10 @@ const Profile = ({ match }) => {
   const [likesPaginator, setLikesPaginator] = useState(null);
   const [follow, setFollow] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
+  const [selectedTag, setSelectedTag] = useState(null);
+  const [showTaggedSubmissions, setShowTaggedSubmissions] = useState(false);
+  const [taggedSubmissions, setTaggedSubmissions] = useState([]);
+  const [taggedSubmissionsPaginator, setTaggedSubmissionsPaginator] = useState([]);
 
   const [isLoggedIn, loggedInUser] = useContext(LoginContext);
   const [lastEvent] = useContext(EventContext);
@@ -77,17 +84,27 @@ const Profile = ({ match }) => {
   }, [match.params.id]);
 
   const _loadMoreSubmissions = () => {
-    getSubmissions({ id: match.params.id, page: submissionsPaginator.current_page + 1 }).then((res) => {
-      setSubmissionsPaginator(res.submissions);
-      setSubmissions(submissions.concat(res.submissions.data));
-    });
+    getSubmissions({ id: match.params.id, page: submissionsPaginator.current_page + 1 })
+      .then((res) => {
+        setSubmissionsPaginator(res.submissions);
+        setSubmissions(submissions.concat(res.submissions.data));
+      });
   };
 
   const _loadMoreLikes = () => {
-    getLikes({ id: match.params.id, page: likesPaginator.current_page + 1 }).then((res) => {
-      setLikesPaginator(res.likes);
-      setLikes(likes.concat(res.likes.data));
-    });
+    getLikes({ id: match.params.id, page: likesPaginator.current_page + 1 })
+      .then((res) => {
+        setLikesPaginator(res.likes);
+        setLikes(likes.concat(res.likes.data));
+      });
+  };
+
+  const _loadMoreTaggedSubmissions = () => {
+    getLikes({ page: taggedSubmissionsPaginator.current_page + 1, tagId: selectedTag.id })
+      .then((res) => {
+        setTaggedSubmissionsPaginator(res.submission);
+        setTaggedSubmissions(taggedSubmissions.concat(res.submissions.data));
+      });
   };
 
   const _selectPostsTab = useCallback(() => {
@@ -97,6 +114,18 @@ const Profile = ({ match }) => {
   const _selectLikesTab = useCallback(() => {
     setTabIndex(1);
   }, [setTabIndex]);
+
+  const _selectTag = (tag) => {
+    if (tag !== selectedTag || !showTaggedSubmissions) {
+      setShowTaggedSubmissions(true);
+      setSelectedTag(tag);
+      getTaggedSubmissions({ page: 1, tagId: tag.id })
+        .then((res) => {
+          setTaggedSubmissionsPaginator(res.submission);
+          setTaggedSubmissions(res.submissions.data);
+        });
+    }
+  };
 
   if (!user && !userLoading && (!submissions || (submissions && !submissions.length))) {
     return (
@@ -146,14 +175,38 @@ const Profile = ({ match }) => {
 
       {tabIndex === 0 && (
         <>
+          {user && user.tags.length && (
+            <Layout className={styles.tags}>
+              <SubmissionTags tags={user.tags} onClick={_selectTag} />
+            </Layout>
+          )}
+
+          {showTaggedSubmissions && (
+            <>
+              <Layout className={styles.taggedInfoLabel}>
+                <Button
+                  brand='element'
+                  className={styles.clearTaggedSubmissionsButton}
+                  onClick={() => setShowTaggedSubmissions(false)}
+                  text='Clear'
+                />
+                {`Submissions tagged `}
+                <b>{selectedTag.text}</b>
+                :
+              </Layout>
+            </>
+          )}
+
           <Gallery
             big
-            loading={submissionsLoading}
-            submissions={submissions}
+            loading={showTaggedSubmissions ? submissionsLoading : taggedSubmissionsLoading}
+            submissions={showTaggedSubmissions ? taggedSubmissions : submissions}
             padEmptyLabel
           />
 
-          {submissionsPaginator && submissionsPaginator.next_page_url && !submissionsLoading && (
+          {((!showTaggedSubmissions && submissionsPaginator && submissionsPaginator.next_page_url && !submissionsLoading) // eslint-disable-line max-len
+            || (showTaggedSubmissions && taggedSubmissionsPaginator && taggedSubmissionsPaginator.next_page_url && !taggedSubmissionsLoading) // eslint-disable-line max-len
+          ) && (
             <div className={styles.moreButtonContainer}>
               <Button
                 aria-label='Load more'
@@ -161,14 +214,16 @@ const Profile = ({ match }) => {
                 brand='base'
                 className={styles.moreButton}
                 noPadding
-                onClick={_loadMoreSubmissions}
+                onClick={showTaggedSubmissions ? _loadMoreTaggedSubmissions : _loadMoreSubmissions}
               >
                 <KeyboardArrowDown />
               </Button>
             </div>
           )}
 
-          {submissions.length > 0 && submissionsPaginator && !submissionsPaginator.next_page_url && (
+          {((!showTaggedSubmissions && submissions.length > 0 && submissionsPaginator && !submissionsPaginator.next_page_url) // eslint-disable-line max-len
+          || (showTaggedSubmissions && taggedSubmissions.length > 0 && taggedSubmissionsPaginator && !taggedSubmissionsPaginator.next_page_url) // eslint-disable-line max-len
+          ) && (
             <i className={styles.theEndLabel}>This is the end.</i>
           )}
         </>

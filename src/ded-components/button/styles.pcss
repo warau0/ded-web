@@ -106,4 +106,26 @@
       box-shadow: 0px 0px 0px 4px rgba(220, 53, 69, 0.25);
     }
   }
+
+  &.element {
+    &.light {
+      border-color: var(--light-border);
+      background-color: var(--light-element);
+      color: var(--light-text);
+
+      &:hover, &:focus {
+        box-shadow: 0px 0px 0px 4px var(--focus);
+      }
+    }
+
+    &.dark {
+      border-color: var(--dark-border);
+      background-color: var(--dark-element);
+      color: var(--dark-text);
+
+      &:hover, &:focus {
+        box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
 }

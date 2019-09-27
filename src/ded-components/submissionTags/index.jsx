@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { ThemeContext } from 'ded-context';
+import Button from 'ded-components/button';
 
 import * as styles from './styles.pcss';
 
-const SubmissionTags = memo(({ tags }) => {
+const SubmissionTags = memo(({ tags, onClick }) => {
   const [theme] = useContext(ThemeContext);
 
   if (tags.length === 0) return null;
+
+  const Wrapper = onClick ? Button : 'div';
 
   return (
     <div
@@ -19,9 +22,14 @@ const SubmissionTags = memo(({ tags }) => {
       )}
     >
       {tags.map(tag => (
-        <div key={tag.id} className={cn(styles.tag, styles[tag.color])}>
+        <Wrapper
+          key={tag.id}
+          className={cn(styles.tag, styles[tag.color])}
+          {...onClick && { onClick: () => onClick(tag) }}
+          {...onClick && { plainText: true }}
+        >
           {tag.text}
-        </div>
+        </Wrapper>
       ))}
     </div>
   );
@@ -29,6 +37,7 @@ const SubmissionTags = memo(({ tags }) => {
 
 SubmissionTags.defaultProps = {
   tags: [],
+  onClick: undefined,
 };
 
 SubmissionTags.propTypes = {
@@ -36,6 +45,7 @@ SubmissionTags.propTypes = {
     text: PropTypes.string,
     color: PropTypes.string,
   })),
+  onClick: PropTypes.func,
 };
 
 export default SubmissionTags;
