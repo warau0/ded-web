@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
@@ -9,6 +14,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Info from '@material-ui/icons/Info';
 import Close from '@material-ui/icons/Close';
+import Edit from '@material-ui/icons/Edit';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 
@@ -22,6 +28,7 @@ import Comments from 'ded-components/comments';
 import CommentForm from 'ded-components/commentForm';
 import Gallery from 'ded-components/gallery';
 import Button from 'ded-components/button';
+import EditSubmissionModal from 'ded-components/editSubmissionModal';
 
 import * as styles from './styles.pcss';
 
@@ -34,8 +41,9 @@ const Submission = ({ match }) => {
   const [comments, setComments] = useState([]);
   const [metaInfo, setMetaInfo] = useState(null);
   const [like, setLike] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  const [isLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, loggedInUser] = useContext(LoginContext);
   const [theme] = useContext(ThemeContext);
   const [lastEvent] = useContext(EventContext);
 
@@ -65,6 +73,12 @@ const Submission = ({ match }) => {
   }, [match.params.id]);
 
   useEffect(() => {
+    if (lastEvent && lastEvent.event === EVENT.UPDATE_SUBMISSION) {
+      _getSubmission();
+    }
+  }, [lastEvent]);
+
+  useEffect(() => {
     if (lastEvent && lastEvent.event === EVENT.UPDATE_COMMENTS) {
       getComments(match.params.id).then(res => setComments(res.comments));
     }
@@ -77,6 +91,19 @@ const Submission = ({ match }) => {
       _getSubmission();
     }
   }, [isLoggedIn]);
+
+  const _likeSubmission = () => likeSubmission(submission.id, { like: !like })
+    .then((res) => {
+      setLike(res.like);
+    });
+
+  const _editSubmission = useCallback(() => {
+    setShowEditModal(true);
+  });
+
+  const _closeEditModal = useCallback(() => {
+    setShowEditModal(false);
+  });
 
   if (submissionLoading) {
     return (
@@ -97,10 +124,7 @@ const Submission = ({ match }) => {
     );
   }
 
-  const _likeSubmission = () => likeSubmission(submission.id, { like: !like })
-    .then((res) => {
-      setLike(res.like);
-    });
+  const ownSubmission = loggedInUser && loggedInUser.sub === submission.user.id;
 
   return (
     <div className={cn(styles.submissionContainer, styles[theme])}>
@@ -123,6 +147,16 @@ const Submission = ({ match }) => {
       </div>
 
       <div className={styles.infoContainer}>
+        {ownSubmission && (
+          <Button
+            brand='ghost'
+            plainFocus
+            onClick={_editSubmission}
+            className={styles.edit}
+          >
+            <Edit />
+          </Button>
+        )}
         <Link to='/browse' className={styles.close}><Close /></Link>
 
         <Link className={styles.user} to={`/user/${submission.user.username}`}>
@@ -237,6 +271,10 @@ const Submission = ({ match }) => {
           )
           : <Comments comments={comments} />}
       </div>
+
+      {ownSubmission && (
+        <EditSubmissionModal show={showEditModal} submission={submission} onClose={_closeEditModal} />
+      )}
     </div>
   );
 };

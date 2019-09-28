@@ -124,7 +124,7 @@
     padding: var(--pad);
     position: relative;
 
-    .close {
+    .close, .edit {
       position: absolute;
       top: var(--pad-xs);
       right: var(--pad-xs);
@@ -135,6 +135,10 @@
       &:hover {
         opacity: 1;
       }
+    }
+
+    .edit {
+      margin-right: 2rem;
     }
 
     .user {
@@ -221,7 +225,7 @@
 }
 
 .submissionContainer.light {
-  .navigationArrow, .close {
+  .navigationArrow, .close, .edit {
     color: var(--light-text);
   }
 
@@ -239,7 +243,7 @@
 }
 
 .submissionContainer.dark {
-  .navigationArrow, .close {
+  .navigationArrow, .close, .edit {
     color: var(--dark-text);
   }
 

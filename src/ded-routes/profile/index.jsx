@@ -119,7 +119,7 @@ const Profile = ({ match }) => {
     if (tag !== selectedTag || !showTaggedSubmissions) {
       setShowTaggedSubmissions(true);
       setSelectedTag(tag);
-      getTaggedSubmissions({ page: 1, tagId: tag.id })
+      getTaggedSubmissions({ id: match.params.id, page: 1, tagId: tag.id })
         .then((res) => {
           setTaggedSubmissionsPaginator(res.submission);
           setTaggedSubmissions(res.submissions.data);

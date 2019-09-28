@@ -23,6 +23,7 @@ export const EVENT = {
   UPDATE_AVATAR: 'UPDATE_AVATAR',
   SETTINGS_CHANGED_HIDE_TIMER: 'SETTINGS_CHANGED_HIDE_TIMER',
   UPDATE_PROFILE_USER: 'UPDATE_PROFILE_USER',
+  UPDATE_SUBMISSION: 'UPDATE_SUBMISSION',
 };
 
 export const { API_URL } = config;
@@ -135,7 +136,7 @@ export const API = {
     },
     TAGGED_INDEX: {
       METHOD: 'GET',
-      URL: ({ page = 1, tagId }) => `${API_URL}/tagged_submissions?tag_id=${tagId}&page=${page}`,
+      URL: ({ id, page = 1, tagId }) => `${API_URL}/users/${id}/tagged_submissions?tag_id=${tagId}&page=${page}`,
     },
   },
   USERS: {

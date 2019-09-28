@@ -1,0 +1,151 @@
+.innerContent {
+  display: flex;
+  flex-direction: column;
+
+  .maxLengthLabel, .bigSizeLabel {
+    padding: var(--pad-sm);
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 500;
+  }
+
+  .maxLengthLabel {
+    background-color: var(--primary);
+    color: var(--dark-text);
+  }
+
+  .bigSizeLabel {
+    background-color: var(--warning);
+    color: var(--light-text);
+  }
+
+  .inputContainer {
+    margin: var(--pad);
+
+    .inputRow {
+      display: flex;
+
+      .label {
+        flex-direction: column;
+        display: flex;
+        flex: 1;
+        font-size: .8rem;
+        font-weight: 500;
+
+        .labelText {
+          margin: var(--pad-sm) 0;
+        }
+      }
+
+      .hours {
+        width: 75px;
+        flex: 0;
+        margin-right: var(--pad);
+
+        input {
+          padding: var(--pad-xs);
+          height: var(--form-height);
+          border: 1px solid;
+          border-radius: var(--border-radius);
+        }
+      }
+
+      .tags {
+        height: 100%;
+        font-weight: 400;
+      }
+
+      .checkboxes {
+        width: 75px;
+        margin-right: var(--pad);
+
+        .checkbox {
+          height: 25px;
+          font-weight: 500;
+          font-size: .8rem;
+          display: flex;
+          align-items: center;
+
+          label {
+            display: flex;
+            cursor: pointer;
+          }
+
+          input {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .textareaContainer {
+        flex: 1;
+
+        textarea {
+          border: 1px solid;
+          border-radius: var(--border-radius);
+          padding: var(--pad-sm);
+          width: 100% !important;
+          min-height: 50px;
+        }
+      }
+    }
+
+    .submitContainer {
+      margin-top: var(--pad);
+      display: flex;
+      justify-content: flex-end;
+
+      :last-child {
+        margin-left: var(--pad);
+      }
+    }
+  }
+}
+
+.innerContent.light {
+  .inputContainer .inputRow {
+    input, textarea, .tags > div {
+      background-color: var(--light-header);
+      color: var(--light-text);
+      border-color: var(--light-form-border);
+    }
+  }
+}
+
+.innerContent.dark {
+  .inputContainer .inputRow {
+    input, textarea, .tags > div {
+      background-color: var(--dark-header);
+      color: var(--dark-text);
+      border-color: var(--dark-form-border);
+    }
+  }
+
+  .tags {
+    :global {
+      .tags__input input {
+        color: var(--dark-text) !important;
+      }
+
+      .tags__multi-value {
+        background-color: var(--dark-bg);
+
+        .tags__multi-value__label {
+          color: var(--dark-text);
+        }
+      }
+
+      .tags__clear-indicator, .tags__dropdown-indicator {
+        color: var(--dark-text);
+
+        &:hover {
+          color: #FFFFFF;
+        }
+      }
+
+      .tags__option--is-focused {
+        background-color: var(--dark-bg);
+      }
+    }
+  }
+}
