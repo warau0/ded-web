@@ -19,6 +19,10 @@ const EditSubmissionModal = ({ show, submission, onClose }) => {
     editSubmission, editSubmissionLoading,
     editSubmissionError, clearEditSubmissionError,
   ] = useApi(API.SUBMISSIONS.PUT);
+  const [
+    deleteSubmission, deleteSubmissionLoading,
+    deleteSubmissionError, clearDeleteSubmissionError,
+  ] = useApi(API.SUBMISSIONS.DELETE);
 
   const [theme] = useContext(ThemeContext);
   const [_, fireEvent] = useContext(EventContext);
@@ -63,13 +67,21 @@ const EditSubmissionModal = ({ show, submission, onClose }) => {
     clearEditSubmissionError();
     editSubmission(submission.id, {
       description,
-      hours,
+      hours: hours || 0,
       nsfw: nsfw ? 1 : 0,
       private: priv ? 1 : 0,
       tags: JSON.stringify(tags || []),
     }).then(() => {
       fireEvent(EVENT.UPDATE_SUBMISSION);
       onClose();
+    });
+  };
+
+  const _delete = () => {
+    clearDeleteSubmissionError();
+    deleteSubmission(submission.id).then(() => {
+      onClose();
+      window.location = '/browse';
     });
   };
 
@@ -81,7 +93,7 @@ const EditSubmissionModal = ({ show, submission, onClose }) => {
     >
       <div className={cn(styles.innerContent, styles[theme])}>
 
-        <ErrorMessage error={editSubmissionError} />
+        <ErrorMessage error={editSubmissionError || deleteSubmissionError} />
 
         <div className={styles.inputContainer}>
           <div className={styles.inputRow}>
@@ -160,14 +172,21 @@ const EditSubmissionModal = ({ show, submission, onClose }) => {
               brand='mono'
               square
               onClick={onClose}
-              disabled={editSubmissionLoading}
+              disabled={editSubmissionLoading || deleteSubmissionLoading}
+            />
+            <Button
+              text='Delete'
+              brand='danger'
+              square
+              onClick={_delete}
+              loading={editSubmissionLoading || deleteSubmissionLoading}
             />
             <Button
               text='Save'
               brand='success'
               square
               onClick={_submit}
-              loading={editSubmissionLoading}
+              loading={editSubmissionLoading || deleteSubmissionLoading}
             />
           </div>
         </div>
