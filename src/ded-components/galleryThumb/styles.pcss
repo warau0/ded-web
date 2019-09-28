@@ -5,6 +5,15 @@
 
   img {
     width: 100%;
+
+    &.nsfw {
+      filter: blur(5px) brightness(50%);
+    }
+  }
+
+  .nsfwOverlay {
+    position: absolute;
+    z-index: 1;
   }
 
   .multi {

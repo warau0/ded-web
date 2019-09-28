@@ -26,9 +26,11 @@ const GalleryThumb = memo(({
       })}
     >
       {multi && <Filter className={styles.multi} />}
+      {hidden && <img className={styles.nsfwOverlay} src={nsfw} alt='nsfw' />}
       <img
-        src={hidden ? nsfw : url}
+        src={url}
         alt={name}
+        className={cn({ [styles.nsfw]: hidden })}
       />
     </Link>
   );
