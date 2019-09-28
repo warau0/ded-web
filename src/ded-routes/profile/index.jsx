@@ -175,7 +175,7 @@ const Profile = ({ match }) => {
 
       {tabIndex === 0 && (
         <>
-          {user && user.tags.length && (
+          {user && user.tags.length > 0 && (
             <Layout className={styles.tags}>
               <SubmissionTags tags={user.tags} onClick={_selectTag} />
             </Layout>
